@@ -9,9 +9,9 @@ const Contact = () => {
     const [message, setMessage] = useState('');
     const handleSubmit=(e)=>{
         e.preventDefault();
-        const SERVICE_ID = "service_nlt83zq";
-        const TEMPLATE_ID = "template_3n2ogss";
-        const PUBLIC_KEY = "kL3_fXr-YyqZQRFW_";
+        const SERVICE_ID = "service_bqdlgt4";
+        const TEMPLATE_ID = "template_womo199";
+        const PUBLIC_KEY = "UW3ajgM-RPVJmFRLe";
         const templateParams={
             from_name: name,
             from_email: email,

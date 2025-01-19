@@ -6,22 +6,24 @@ import { BrowserRouter, Route,Link,Routes } from 'react-router-dom'
 import About from "./components/about";
 import Skills from "./components/skills"
 import Contact from "./components/contact";
+import Projects from "./components/projects";
 
 function App() {
   return (
-    <div>
-      <Navbar/>
+    <div className="relative">
       <BrowserRouter>
-      <Routes>
-        <Route path='/' Component={Content} />
-        <Route path='/about' Component={About} />
-        <Route path='/skills' Component={Skills} />
-        <Route path='/contact' Component={Contact} />
-      </Routes>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Content />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/skills" element={<Skills />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
       </BrowserRouter>
-        
     </div>
   );
 }
+
 
 export default App;
