@@ -1,8 +1,7 @@
 import React from "react";
 import Content from "./components/content";
-import Frontpageanimation from "./components/frontpageanimation";
 import Navbar from "./components/navbar";
-import { BrowserRouter, Route,Link,Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import About from "./components/about";
 import Skills from "./components/skills"
 import Contact from "./components/contact";

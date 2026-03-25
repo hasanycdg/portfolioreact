@@ -1,6 +1,7 @@
 import React from 'react';
 import { LuUser } from "react-icons/lu";
 import { GoDot } from "react-icons/go";
+import { education, experience, focusAreas, languages, profile } from '../data/profile';
 
 const About = () => {
   return (
@@ -15,14 +16,14 @@ const About = () => {
 
         <div className='md:pt-5'>
           <h1 className='md:text-5xl text-4xl md:font-medium font-semibold'>
-            Full Stack Developer{' '}
+            {profile.role}{' '}
             <br className='md:hidden' />
             <span className='bg-gradient-to-r from-[#833be7cb] to-[#5521c5] bg-clip-text text-transparent'>
-              AI enthusiast{' '}
+              AWS & AI focus{' '}
             </span>
             <br />
             <span className='md:text-4xl text-3xl font-poppins font-normal md:font-medium'>
-              Based In Austria.
+              Based in Austria.
             </span>
           </h1>
           <hr className='md:w-44 w-32 md:mb-0 mb-4 h-3 mt-3 md:ml-0 lg:mt-4 bg-gradient-to-r from-[#c580f0ed] to-[#c580f0c8]' />
@@ -30,24 +31,18 @@ const About = () => {
 
         <div className='md:w-12/12 md:mt-10'>
           <p className='font-poppins text-justify'>
-            I'm a Full Stack Developer with a B.Sc. in Computer Science from the University of Innsbruck (2025).
-            I specialize in building production-ready web applications, AI-powered systems — including RAG-based chatbots —
-            and scalable cloud infrastructure on AWS. Currently working at florianmatthias, where I develop custom
-            WordPress solutions, manage deployments, and integrate AI features for client projects.
-            I'm relocating to Zürich in August 2026 and open to new opportunities there.
+            {profile.summary}
           </p>
         </div>
 
         {/* Skills highlights */}
         <div className='md:mt-10 mt-8'>
-          <h2 className='text-2xl font-poppins font-medium'>What I work with</h2>
+          <h2 className='text-2xl font-poppins font-medium'>Core focus</h2>
           <hr className='w-40 h-1 mt-2 mb-4 bg-gradient-to-r from-[#c580f0ed] to-[#c580f0c8]' />
           <div className='font-poppins space-y-1 text-sm text-gray-700'>
-            <p><GoDot className='inline' /><span className='pl-2'>Frontend: React, JavaScript, HTML, CSS</span></p>
-            <p><GoDot className='inline' /><span className='pl-2'>Backend: Node.js, PHP, Python, C#, Flask, Spring Boot</span></p>
-            <p><GoDot className='inline' /><span className='pl-2'>AI & Data: RAG systems, Embeddings, Vector Search, ML</span></p>
-            <p><GoDot className='inline' /><span className='pl-2'>Cloud: AWS (EC2, S3, CloudFront, Lambda), Docker</span></p>
-            <p><GoDot className='inline' /><span className='pl-2'>CMS: WordPress (ACF, Custom Blocks, Plugins, APIs)</span></p>
+            {focusAreas.map((area) => (
+              <p key={area}><GoDot className='inline' /><span className='pl-2'>{area}</span></p>
+            ))}
           </div>
         </div>
       </div>
@@ -58,31 +53,47 @@ const About = () => {
         <div className='md:w-96'>
           <h2 className='text-3xl font-poppins font-medium md:ml-10'>Languages</h2>
           <hr className='md:w-64 w-32 md:mb-0 mb-2 md:h-1 h-1 mt-3 md:ml-10 lg:mt-1 bg-gradient-to-r from-[#c580f0ed] to-[#c580f0c8]' />
-          <p className='md:mt-5 mt-3 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-xl pl-4'>Kurdish <span className='text-sm text-gray-500'>(Native)</span></span></p>
-          <p className='md:mt-2 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-xl pl-4'>Turkish <span className='text-sm text-gray-500'>(C1)</span></span></p>
-          <p className='md:mt-2 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-xl pl-4'>German <span className='text-sm text-gray-500'>(B2)</span></span></p>
-          <p className='md:mt-2 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-xl pl-4'>English <span className='text-sm text-gray-500'>(B2)</span></span></p>
+          {languages.map((language, index) => (
+            <p key={language.name} className={`${index === 0 ? 'md:mt-5 mt-3' : 'md:mt-2'} md:ml-2 font-poppins`}>
+              <GoDot className='inline' />
+              <span className='md:pl-12 text-xl pl-4'>
+                {language.name} <span className='text-sm text-gray-500'>({language.level})</span>
+              </span>
+            </p>
+          ))}
         </div>
 
         <div className='md:mt-6 mt-5'>
           <h2 className='text-3xl font-poppins font-medium md:ml-10 md:mt-0 mt-5'>Location</h2>
           <hr className='md:w-64 w-32 md:mb-0 mb-4 md:h-1 h-1 mt-3 md:ml-10 lg:mt-1 bg-gradient-to-r from-[#c580f0ed] to-[#c580f0c8]' />
-          <p className='md:mt-4 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-xl pl-4'>Innsbruck, Austria</span></p>
-          <p className='md:mt-2 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-base pl-4 text-gray-500'>→ Relocating to Zürich, Aug 2026</span></p>
+          <p className='md:mt-4 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-xl pl-4'>{profile.baseLocation}</span></p>
+          <p className='md:mt-2 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-base pl-4 text-gray-500'>{profile.relocation}</span></p>
         </div>
 
         <div className='md:mt-6 mt-5'>
-          <h2 className='text-3xl font-poppins font-medium md:ml-10 md:mt-0 mt-5'>Nationality</h2>
+          <h2 className='text-3xl font-poppins font-medium md:ml-10 md:mt-0 mt-5'>Experience</h2>
           <hr className='md:w-64 w-32 md:mb-0 mb-4 md:h-1 h-1 mt-3 md:ml-10 lg:mt-1 bg-gradient-to-r from-[#c580f0ed] to-[#c580f0c8]' />
-          <p className='md:mt-4 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-xl pl-4'>Turkish</span></p>
+          {experience.map((item, index) => (
+            <p key={item.company} className={`${index === 0 ? 'md:mt-4' : 'md:mt-2'} md:ml-2 font-poppins`}>
+              <GoDot className='inline' />
+              <span className='md:pl-12 text-base pl-4'>
+                {item.role}, {item.company} <span className='text-sm text-gray-500'>({item.period})</span>
+              </span>
+            </p>
+          ))}
         </div>
 
         <div className='md:mt-6 mt-5'>
-          <h2 className='text-3xl font-poppins font-medium md:ml-10 md:mt-0 mt-5'>Interests</h2>
+          <h2 className='text-3xl font-poppins font-medium md:ml-10 md:mt-0 mt-5'>Education</h2>
           <hr className='md:w-64 w-32 md:mb-0 mb-4 md:h-1 h-1 mt-3 md:ml-10 lg:mt-1 bg-gradient-to-r from-[#c580f0ed] to-[#c580f0c8]' />
-          <p className='md:mt-4 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-xl pl-4'>AI-powered web apps</span></p>
-          <p className='md:mt-2 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-xl pl-4'>Building side projects</span></p>
-          <p className='md:mt-2 md:ml-2 font-poppins'><GoDot className='inline' /><span className='md:pl-12 text-xl pl-4'>Open source</span></p>
+          {education.map((item, index) => (
+            <p key={item.school} className={`${index === 0 ? 'md:mt-4' : 'md:mt-2'} md:ml-2 font-poppins`}>
+              <GoDot className='inline' />
+              <span className='md:pl-12 text-base pl-4'>
+                {item.degree}, {item.school} <span className='text-sm text-gray-500'>({item.period})</span>
+              </span>
+            </p>
+          ))}
         </div>
 
       </div>

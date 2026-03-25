@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
-import { LuHome,LuUser,LuLightbulb,LuLayers, LuPhone,LuMenu } from "react-icons/lu";
-import { IoIosClose } from "react-icons/io";
+import { LuHome,LuUser,LuLightbulb,LuLayers, LuPhone } from "react-icons/lu";
 import {Divide as Hamburger} from 'hamburger-react'
 
 const Navbar = () => {

@@ -1,16 +1,22 @@
 import React from 'react';
-import { LuHome,LuUser,LuLightbulb,LuLayers, LuPhone } from "react-icons/lu";
-import bash from './icons/bash.svg';
-import docker from './icons/docker.svg';
-import k8s from './icons/kubernetes.svg';
-import selenium from './icons/selenium.svg';
-import tailwind from './icons/tailwind.svg';
-import mongo from './icons/mongodb.svg';
-import { DotLottiePlayer, Controls } from '@dotlottie/react-player';
+import { LuLightbulb } from "react-icons/lu";
+import { DotLottiePlayer } from '@dotlottie/react-player';
 import '@dotlottie/react-player/dist/index.css';   
 import Animation from './lottiefiles/skills.lottie'; 
+import { skillGroups } from '../data/profile';
 
 const skills = () => {
+  const iconMap = {
+    "PHP": "php",
+    "Node.js": "nodejs",
+    "C#": "dotnet",
+    "Java": "java",
+    "WordPress": "wordpress",
+    "AWS": "aws",
+    "PostgreSQL": "postgres",
+    "Git": "git",
+  };
+
   return (
     <div className='md:p-22 md:pt-24 p-8 flex justify-between md:pb-22 md:px-40 md:h-full select-none bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] bg-[white] md:mt-0 mt-6 pt-16'>
         <div className=''>
@@ -21,41 +27,30 @@ const skills = () => {
                 </div>
             </div>
             <div>
-                <h1 className='font-poppins text-4xl font-medium'>My <span className='bg-gradient-to-r from-[#833be7cb] to-[#5521c5] bg-clip-text text-transparent'>Technical</span><br className='md:block hidden'/> Experience/<span className='md:hidden block'> </span><span>Skills.</span></h1>
+                <h1 className='font-poppins text-4xl font-medium'>My <span className='bg-gradient-to-r from-[#833be7cb] to-[#5521c5] bg-clip-text text-transparent'>Technical</span><br className='md:block hidden'/> Profile</h1>
                 <hr className='md:w-44 w-32 md:mb-0 mb-4 h-3 mt-3 md:ml-0 lg:mt-4 bg-gradient-to-r from-[#bf77eced] to-[#c580f0c8]'></hr>
             </div>
             <div>
-                <div className='md:w-full md:h-12 md:mt-10'>
-                    <h1 className='md:font-semibold font-bold md:text-2xl md:pt-1.5 md:inline-block md:mr-5 md:mb-0 mb-1'>DevOps</h1>
-                    <img src={docker} alt="docker" style={{ width: 40, height: 40 }} className='inline md:pb-3 mr-2 md:mr-2'/>
-                </div>
-                <div>
-                    <h1 className='md:font-semibold font-bold md:text-2xl md:pt-2 md:inline-block md:mr-5 md:mb-0 mb-1'>Web Dev</h1>
-                    <img src="https://skillicons.dev/icons?i=react" alt="react" style={{ width: 45, height: 45 }} className='inline md:pb-3 mr-2 md:mr-2 md:mb-0 mb-2 md:mt-0 mt-2'/>
-                    <img src='https://skillicons.dev/icons?i=html' alt="html5" style={{ width: 45, height: 45 }} className='mr-2 inline md:pb-3 md:mr-1'/>
-                    <img src='https://skillicons.dev/icons?i=css' alt="css" style={{ width: 45, height: 45 }} className='mr-2 inline md:pb-3 md:mr-1'/>
-                    <img src='https://skillicons.dev/icons?i=js' alt="js" style={{ width: 45, height: 45 }} className='inline md:pb-3 mr-2 md:mr-1 md:mt-0 '/>
-                    <img src='https://skillicons.dev/icons?i=postgresql' alt="mysql" style={{ width: 45, height: 45 }} className='inline md:pb-3 mr-2 md:mr-1 md:mt-0'/>
-                </div>
-                <div>
-                    <h1 className='md:font-semibold font-bold md:text-2xl md:pt-1.5 md:inline-block md:mr-5 md:mb-0 mb-2.5 md:mt-0 mt-2'>Languages</h1>
-                    <img src='https://skillicons.dev/icons?i=c' alt="c" style={{ width: 45, height: 45 }} className='inline md:pb-3 md:mr-1 mr-2'/>
-                    <img src='https://skillicons.dev/icons?i=cpp' alt="c++" style={{ width: 45, height: 45 }} className='inline md:pb-3 md:mr-1 mr-2'/>
-                    <img src='https://skillicons.dev/icons?i=r' alt="r" style={{ width: 45, height: 45 }} className='inline md:pb-3 md:mr-1 mr-2'/>
-                    <img src='https://skillicons.dev/icons?i=python&theme=dark' alt="python" style={{ width: 45, height: 45 }} className='inline md:pb-3 mr-2 md:mr-1'/>
-                    <img src='https://skillicons.dev/icons?i=java&theme=light' alt="java" style={{ width: 45, height: 45 }} className='inline md:pb-3 mr-2 md:mr-1'/>
-                    <img src='https://skillicons.dev/icons?i=c' alt="c" style={{ width: 45, height: 45 }} className='inline md:pb-3 md:mr-1 mr-2'/>
-
-                </div>
-                <div>
-                    <h1 className='md:font-semibold font-bold md:text-2xl md:pt-1.5 md:inline-block md:mr-5 md:mb-0 mb-2 md:mt-0 mt-2'>Others Skills</h1>
-                    <img src='https://skillicons.dev/icons?i=git' alt="git" style={{ width: 45, height: 45 }} className='inline md:pb-3 md:mr-1 mr-2'/>
-                    <img src='https://skillicons.dev/icons?i=github' alt="github" style={{ width: 45, height: 45 }} className='inline md:pb-3 md:mr-1 mr-2'/>
-                    <img src='https://skillicons.dev/icons?i=flask' alt="flask" style={{ width: 45, height: 45 }} className='inline md:pb-3 md:mr-1 mr-2'/>
-                    <img src='https://skillicons.dev/icons?i=linux&theme=dark' alt="linux" style={{ width: 45, height: 45 }} className='inline md:pb-3 md:mr-1 mr-2'/>
-                    <img src='https://skillicons.dev/icons?i=vscode' alt="vscode" style={{ width: 45, height: 45 }} className='mr-2 inline md:pb-3 md:mr-1'/>
-
-                </div>
+                {skillGroups.map((group, index) => (
+                    <div key={group.title} className={index === 0 ? 'md:w-full md:mt-10' : 'md:mt-6 mt-4'}>
+                        <h1 className='md:font-semibold font-bold md:text-2xl md:inline-block md:mr-5 md:mb-0 mb-2'>{group.title}</h1>
+                        <div className='md:mt-2 font-poppins text-slate-700'>
+                            <p>{group.items.join(', ')}</p>
+                        </div>
+                        <div className='mt-3 flex flex-wrap gap-2'>
+                            {group.items
+                              .filter((item) => iconMap[item])
+                              .map((item) => (
+                                <img
+                                  key={item}
+                                  src={`https://skillicons.dev/icons?i=${iconMap[item]}`}
+                                  alt={item}
+                                  style={{ width: 42, height: 42 }}
+                                />
+                              ))}
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
         <div className='hidden lg:block'>
