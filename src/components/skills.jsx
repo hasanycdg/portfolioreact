@@ -7,13 +7,24 @@ import { skillGroups } from '../data/profile';
 
 const skills = () => {
   const iconMap = {
+    "React": "react",
+    "TypeScript": "ts",
+    "JavaScript": "js",
+    "HTML": "html",
+    "CSS": "css",
+    "Bootstrap": "bootstrap",
     "PHP": "php",
     "Node.js": "nodejs",
+    "Python": "python",
     "C#": "dotnet",
     "Java": "java",
+    "Spring Boot": "spring",
     "WordPress": "wordpress",
     "AWS": "aws",
     "PostgreSQL": "postgres",
+    "SQLite": "sqlite",
+    "Rust": "rust",
+    "Tauri": "tauri",
     "Git": "git",
   };
 

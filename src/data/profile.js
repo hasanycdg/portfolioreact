@@ -65,24 +65,28 @@ export const education = [
 
 export const skillGroups = [
   {
-    title: "Backend",
-    items: ["PHP", "Node.js", "C#", "Java"],
+    title: "Frontend & UI",
+    items: ["React", "TypeScript", "JavaScript", "HTML", "CSS", "Bootstrap", "Plotly"],
   },
   {
-    title: "CMS",
-    items: ["WordPress", "ACF", "Custom Blocks", "Plugin Development"],
+    title: "Backend & APIs",
+    items: ["Node.js", "PHP", "Python", "Flask", "Java", "Spring Boot", "C#", "API Integrations"],
   },
   {
-    title: "Cloud",
-    items: ["AWS", "EC2", "S3", "CloudFront"],
+    title: "AI & Data",
+    items: ["RAG Systems", "AI Chatbots", "PostgreSQL", "SQLite", "SQL", "Random Forest", "Neural Networks"],
   },
   {
-    title: "Databases",
-    items: ["PostgreSQL", "SQL"],
+    title: "WordPress & CMS",
+    items: ["WordPress", "ACF", "Custom Blocks", "Plugin Development", "Meta Boxes", "Iframe Embeds"],
   },
   {
-    title: "Tools & Delivery",
-    items: ["Git", "API Integrations", "Deployment", "Maintenance"],
+    title: "Cloud & Infrastructure",
+    items: ["AWS", "EC2", "S3", "CloudFront", "MQTT", "Deployment", "Maintenance"],
+  },
+  {
+    title: "Desktop, Tooling & Workflow",
+    items: ["Rust", "Tauri", "CLI Tools", "Monorepo Workflows", "XLIFF", "Localization", "Git"],
   },
 ];
 
