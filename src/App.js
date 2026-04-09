@@ -6,6 +6,7 @@ import About from "./components/about";
 import Skills from "./components/skills"
 import Contact from "./components/contact";
 import Projects from "./components/projects";
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </BrowserRouter>
+      <Analytics />
     </div>
   );
 }
