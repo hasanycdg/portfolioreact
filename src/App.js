@@ -1,28 +1,8 @@
 import React from "react";
-import Content from "./components/content";
-import Navbar from "./components/navbar";
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import About from "./components/about";
-import Skills from "./components/skills"
-import Contact from "./components/contact";
-import Projects from "./components/projects";
+import GlassPortfolio from "./components/glassPortfolio";
 
 function App() {
-  return (
-    <div className="relative">
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Content />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/skills" element={<Skills />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+  return <GlassPortfolio />;
 }
-
 
 export default App;
