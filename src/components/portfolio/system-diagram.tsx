@@ -7,10 +7,10 @@ import type { DiagramCopy } from "@/lib/portfolio-data";
 const nodes = [
   { id: "frontend", x: 16, y: 24, icon: LayoutTemplate },
   { id: "backend", x: 46, y: 15, icon: ServerCog },
-  { id: "ai", x: 76, y: 27, icon: Network },
+  { id: "ai", x: 70, y: 27, icon: Network },
   { id: "wordpress", x: 18, y: 70, icon: Activity },
-  { id: "cloud", x: 50, y: 82, icon: Cloud },
-  { id: "performance", x: 80, y: 70, icon: Gauge },
+  { id: "cloud", x: 47, y: 82, icon: Cloud },
+  { id: "performance", x: 73, y: 70, icon: Gauge },
 ] as const;
 
 const edges: Array<[string, string]> = [

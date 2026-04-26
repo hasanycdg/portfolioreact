@@ -181,7 +181,7 @@ const profileBase = {
   linkedin: "https://www.linkedin.com/in/hasan-yuecedag",
   github: "https://github.com/hasanycdg",
   portfolio: "https://hasanyucedagportfolio.vercel.app/",
-  cvPath: "/Hasan_Yucedag_lebenslauf.pdf",
+  cvPath: "/Hasan_Yuecedag_Developer_Resume.pdf",
 };
 
 const commonSections: NavSection[] = [
