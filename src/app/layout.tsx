@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const sans = Space_Grotesk({
@@ -69,6 +70,7 @@ export default function RootLayout({
       <body className={`${sans.variable} ${mono.variable}`}>
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
