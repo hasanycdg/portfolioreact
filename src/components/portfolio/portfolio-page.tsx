@@ -1,140 +1,110 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
-import {
-  ArrowRight,
-  ChevronDown,
-  Command,
-  Download,
-  ExternalLink,
-  Globe,
-  Mail,
-  Terminal,
-  User,
-} from "lucide-react";
-import {
-  defaultLocale,
-  portfolioByLocale,
-  type Locale,
-  type MatrixColumn,
-} from "@/lib/portfolio-data";
-import { AnimatedCounter } from "./animated-counter";
-import { BootSequence } from "./boot-sequence";
-import { CommandPalette } from "./command-palette";
-import { SystemDiagram } from "./system-diagram";
-
-const sectionReveal = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
-  },
-};
-
-const heroReveal = {
-  hidden: { opacity: 0, y: 18 },
-  visible: (index: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] as const },
-  }),
-};
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { defaultLocale, portfolioByLocale, type Locale } from "@/lib/portfolio-data";
+import { ContactForm } from "./contact-form";
+import { GithubIcon, LinkedinIcon } from "./brand-icons";
 
 function classNames(...items: Array<string | false | null | undefined>) {
   return items.filter(Boolean).join(" ");
 }
 
-function ArchitectureFlow({
-  steps,
-  moduleId,
-  ariaLabel,
-}: {
-  steps: string[];
-  moduleId: string;
-  ariaLabel: string;
-}) {
-  const reduceMotion = useReducedMotion();
-  const nodes = steps.length;
-  const progressPoints = steps.map((_, index) =>
-    nodes <= 1 ? 0 : Number(((index * 100) / (nodes - 1)).toFixed(2)),
-  );
+/* ── word-by-word reveal for the hero headline ─────────────────────────── */
 
+const wordVariants = {
+  hidden: { y: "110%" },
+  visible: (i: number) => ({
+    y: "0%",
+    transition: {
+      duration: 0.95,
+      delay: 0.18 + i * 0.045,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  }),
+};
+
+function HeroHeadline({
+  segments,
+  reduceMotion,
+}: {
+  segments: Array<{ text: string; emphasis?: boolean }>;
+  reduceMotion: boolean;
+}) {
+  if (reduceMotion) {
+    return (
+      <h1 className="hero-headline">
+        {segments.map((segment, index) =>
+          segment.emphasis ? (
+            <em key={index}>{segment.text}</em>
+          ) : (
+            <span key={index}>{segment.text}</span>
+          ),
+        )}
+      </h1>
+    );
+  }
+
+  let wordIndex = 0;
   return (
-    <div className="arch-diagram" role="presentation" aria-label={ariaLabel}>
-      <svg className="arch-svg" viewBox="0 0 100 14" preserveAspectRatio="none" aria-hidden>
-        {progressPoints.slice(0, -1).map((point, index) => (
-          <line
-            key={`${moduleId}-line-${index}`}
-            x1={point}
-            y1={7}
-            x2={progressPoints[index + 1]}
-            y2={7}
-            stroke="rgba(118, 165, 149, 0.52)"
-            strokeWidth="0.46"
-            strokeDasharray="2.1 1.8"
-          />
-        ))}
-        {!reduceMotion ? (
-          <motion.circle
-            r="1.05"
-            fill="rgba(135, 230, 194, 0.95)"
-            animate={{
-              cx: progressPoints,
-              cy: Array.from({ length: progressPoints.length }, () => 7),
-              opacity: [0.16, 1, 0.3, 1, 0.16],
-            }}
-            transition={{
-              duration: 2.8,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
-            }}
-          />
-        ) : null}
-      </svg>
-      <div className="arch-track">
-        {steps.map((item, index) => (
-          <div key={`${moduleId}-${item}`} className="arch-step">
-            <span className="arch-bullet" aria-hidden />
-            <span>{item}</span>
-            {index < steps.length - 1 ? <ArrowRight size={13} className="text-[#7f9690]" /> : null}
-          </div>
-        ))}
-      </div>
-    </div>
+    <h1 className="hero-headline" aria-label={segments.map((s) => s.text).join("")}>
+      {segments.map((segment, segIndex) => {
+        const words = segment.text.split(/(\s+)/);
+        return (
+          <span key={segIndex} className={segment.emphasis ? "italic-segment" : undefined}>
+            {words.map((word, wIdx) => {
+              if (/^\s+$/.test(word)) return <span key={`s-${segIndex}-${wIdx}`}>{word}</span>;
+              const currentIndex = wordIndex++;
+              const inner = segment.emphasis ? <em>{word}</em> : word;
+              return (
+                <span key={`w-${segIndex}-${wIdx}`} className="word" aria-hidden>
+                  <motion.span
+                    className="word-inner"
+                    custom={currentIndex}
+                    initial="hidden"
+                    animate="visible"
+                    variants={wordVariants}
+                  >
+                    {inner}
+                  </motion.span>
+                </span>
+              );
+            })}
+          </span>
+        );
+      })}
+    </h1>
   );
 }
+
+/* ── generic fade-up reveal on scroll ──────────────────────────────────── */
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
+/* ── main component ────────────────────────────────────────────────────── */
 
 export function PortfolioPage() {
   const reduceMotion = useReducedMotion();
   const [locale, setLocale] = useState<Locale>(defaultLocale);
   const content = useMemo(() => portfolioByLocale[locale], [locale]);
 
-  const [bootVisible, setBootVisible] = useState(!reduceMotion);
-  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [portraitOpen, setPortraitOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState(portfolioByLocale[defaultLocale].sections[0].id);
-  const [expandedSystem, setExpandedSystem] = useState(
-    portfolioByLocale[defaultLocale].systems[0]?.id ?? "",
-  );
-  const [typedCommand, setTypedCommand] = useState(reduceMotion ? content.commandPreview : "");
-  const [hoverRow, setHoverRow] = useState<number | null>(null);
-  const [hoverCol, setHoverCol] = useState<number | null>(null);
-
-  const { scrollYProgress } = useScroll();
-  const topProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 28,
-    mass: 0.22,
-  });
+  const [cursor, setCursor] = useState({ x: -200, y: -200 });
 
   useEffect(() => {
     const stored = window.localStorage.getItem("portfolio-locale");
-    if (stored === "en" || stored === "de") {
-      setLocale(stored);
-    }
+    if (stored === "en" || stored === "de") setLocale(stored);
   }, []);
 
   useEffect(() => {
@@ -143,872 +113,581 @@ export function PortfolioPage() {
   }, [locale]);
 
   useEffect(() => {
-    if (reduceMotion) {
-      setTypedCommand(content.commandPreview);
-      return;
-    }
-
-    setTypedCommand("");
-    let index = 0;
-    const interval = window.setInterval(() => {
-      index += 1;
-      setTypedCommand(content.commandPreview.slice(0, index));
-      if (index >= content.commandPreview.length) {
-        window.clearInterval(interval);
-      }
-    }, 28);
-
-    return () => window.clearInterval(interval);
-  }, [reduceMotion, content.commandPreview]);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-        event.preventDefault();
-        setPaletteOpen((previous) => !previous);
-      }
+    const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setPaletteOpen(false);
+        setMenuOpen(false);
+        setPortraitOpen(false);
       }
     };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   useEffect(() => {
-    const root = document.documentElement;
-
-    const setPointer = (event: PointerEvent) => {
-      root.style.setProperty("--spotlight-x", `${event.clientX}px`);
-      root.style.setProperty("--spotlight-y", `${event.clientY}px`);
-    };
-
-    window.addEventListener("pointermove", setPointer, { passive: true });
-    return () => window.removeEventListener("pointermove", setPointer);
-  }, []);
-
-  useEffect(() => {
-    const getSectionNodes = () =>
-      content.sections
-        .map((section) => document.getElementById(section.id))
-        .filter((node): node is HTMLElement => node instanceof HTMLElement);
-
-    let sectionNodes = getSectionNodes();
+    if (reduceMotion) return;
     let frame = 0;
-
-    const updateActiveSection = () => {
-      if (sectionNodes.length === 0) return;
-
-      const triggerY = window.innerHeight * 0.34;
-      let currentId = sectionNodes[0].id;
-
-      for (const node of sectionNodes) {
-        const top = node.getBoundingClientRect().top;
-        if (top <= triggerY) {
-          currentId = node.id;
-        } else {
-          break;
-        }
-      }
-
-      setActiveSection((previous) => (previous === currentId ? previous : currentId));
-    };
-
-    const onScroll = () => {
+    const onMove = (event: PointerEvent) => {
       if (frame) return;
       frame = window.requestAnimationFrame(() => {
         frame = 0;
-        updateActiveSection();
+        setCursor({ x: event.clientX, y: event.clientY });
       });
     };
-
-    const onResize = () => {
-      sectionNodes = getSectionNodes();
-      updateActiveSection();
-    };
-
-    updateActiveSection();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
-
+    window.addEventListener("pointermove", onMove, { passive: true });
     return () => {
       if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onResize);
+      window.removeEventListener("pointermove", onMove);
     };
-  }, [content.sections]);
+  }, [reduceMotion]);
 
-  const closePalette = useCallback(() => setPaletteOpen(false), []);
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
-  const sectionIndex = useMemo(
-    () => Object.fromEntries(content.sections.map((section, index) => [section.id, index + 1])),
-    [content.sections],
-  );
-  const activeMeta = content.sections.find((section) => section.id === activeSection) ?? content.sections[0];
+  const inViewProps = reduceMotion
+    ? {}
+    : {
+        initial: "hidden" as const,
+        whileInView: "visible" as const,
+        viewport: { once: true, amount: 0.2 },
+        variants: fadeUp,
+      };
 
   return (
     <>
-      <AnimatePresence>
-        {bootVisible ? (
-          <BootSequence
-            onComplete={() => setBootVisible(false)}
-            reducedMotion={Boolean(reduceMotion)}
-            copy={content.boot}
-          />
-        ) : null}
-      </AnimatePresence>
-
-      <div className="spotlight-overlay" aria-hidden />
-
-      <a className="skip-link" href="#main-content">
+      <a className="skip-link" href="#main">
         {content.ui.skipToMain}
       </a>
 
-      <motion.span
-        aria-hidden
-        className="fixed left-0 top-0 z-[125] h-[2px] w-full origin-left bg-[linear-gradient(90deg,#46a785,#9adfc8)]"
-        style={{ scaleX: topProgress }}
-      />
+      {!reduceMotion ? (
+        <div
+          aria-hidden
+          className="cursor-glow"
+          style={{ transform: `translate3d(${cursor.x}px, ${cursor.y}px, 0) translate(-50%, -50%)` }}
+        />
+      ) : null}
 
-      <nav aria-label="Section progress" className="section-rail hidden xl:flex">
-        {content.sections.map((section) => {
-          const active = activeSection === section.id;
+      <header className="topbar" data-scrolled={scrolled}>
+        <div className="shell topbar-inner">
+          <a href="#home" className="brand" aria-label={content.profile.name}>
+            Hasan Yücedag
+          </a>
 
-          return (
-            <a key={section.id} href={`#${section.id}`} className="group flex items-center gap-2.5">
-              <span
-                className={classNames(
-                  "h-2.5 w-2.5 rounded-full border transition-colors",
-                  active
-                    ? "border-[#9fddc8] bg-[#6fc4a8]"
-                    : "border-[#38514d] bg-[#0d1413] group-hover:bg-[#1a2a27]",
-                )}
-              />
-              <span
-                className={classNames(
-                  "font-mono text-[0.64rem] uppercase tracking-[0.18em] transition-colors",
-                  active ? "text-[#b5d5cb]" : "text-[#6f8c84] group-hover:text-[#9cbcb3]",
-                )}
-              >
-                {section.short}
-              </span>
+          <nav className="nav-links" aria-label="Primary">
+            <a href="#services" className="nav-link">
+              {content.ui.navServices}
             </a>
-          );
-        })}
-      </nav>
+            <a href="#work" className="nav-link">
+              {content.ui.navWork}
+            </a>
+            <a href="#about" className="nav-link">
+              {content.ui.navAbout}
+            </a>
+            <a href="#contact" className="nav-link">
+              {content.ui.navContact}
+            </a>
+          </nav>
 
-      <div className="active-layer-hud" aria-live="polite">
-        <span>{activeMeta.short}</span>
-        <p>{activeMeta.label}</p>
-      </div>
-
-      <div className="cc-shell pb-20">
-        <header className="sticky top-4 z-[95] pt-4">
-          <div className="cc-topbar">
-            <div className="flex items-center gap-3">
-              <span className="rounded border border-[#2b3f3c] bg-[#0e1514] px-2.5 py-1 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[#90aea5]">
-                Hasan OS
-              </span>
-              <button
-                type="button"
-                onClick={() => setPortraitOpen(true)}
-                className="group inline-flex items-center gap-2 rounded-lg border border-[#2b403c] bg-[#0d1514] p-1.5 transition-colors hover:bg-[#14201f]"
-                aria-label={locale === "de" ? "Porträt von Hasan anzeigen" : "Show portrait of Hasan"}
-              >
-                <span className="relative h-8 w-8 overflow-hidden rounded-md border border-[#3c5952]">
-                  <Image
-                    src="/images/hasan-yucedag.jpeg"
-                    alt="Portrait of Hasan Yücedag"
-                    fill
-                    className="object-cover object-[center_18%]"
-                    sizes="32px"
-                  />
-                </span>
-                <span className="hidden text-xs text-[#9bb7af] sm:block">
-                  {locale === "de" ? "Image of Hasan" : "Image of Hasan"}
-                </span>
-              </button>
-              <p className="hidden text-sm text-[#d9e7e2] md:block">{content.ui.topbarSubtitle}</p>
-            </div>
-
-            <div className="hidden items-center gap-5 md:flex">
-              {content.sections.map((item) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  className="text-sm text-[#8ca7a0] transition-colors hover:text-[#d6e5e0]"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div
-                aria-label={content.ui.languageSwitcher}
-                className="inline-flex items-center rounded-lg border border-[#2c413d] bg-[#0f1716] p-1"
-              >
-                {(["en", "de"] as const).map((option) => (
+          <div className="nav-actions">
+            <div className="lang-toggle" aria-label={content.ui.languageSwitcher}>
+              {(["de", "en"] as const).map((option, idx) => (
+                <span key={option}>
+                  {idx > 0 ? <span className="lang-sep">/</span> : null}
                   <button
-                    key={option}
                     type="button"
                     onClick={() => setLocale(option)}
-                    className={classNames(
-                      "rounded-md px-2.5 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.12em] transition-colors",
-                      locale === option
-                        ? "bg-[#1f3430] text-[#d7ece5]"
-                        : "text-[#86a39b] hover:bg-[#162221]",
-                    )}
+                    data-active={locale === option}
+                    aria-pressed={locale === option}
                   >
                     {option}
                   </button>
-                ))}
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setPaletteOpen(true)}
-                className="inline-flex items-center gap-2 rounded-lg border border-[#2c413d] bg-[#0f1716] px-3 py-2 text-sm text-[#d3e1dd] transition-colors hover:bg-[#15211f]"
-              >
-                <Command size={14} />
-                <span>{content.ui.openPalette}</span>
-              </button>
+                </span>
+              ))}
             </div>
+
+            <button
+              type="button"
+              className="menu-button"
+              aria-expanded={menuOpen}
+              aria-label={menuOpen ? content.ui.closeMenu : content.ui.openMenu}
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              <span className="menu-button-bar" />
+              <span className="menu-button-bar" />
+              <span className="menu-button-bar" />
+            </button>
           </div>
-        </header>
+        </div>
+      </header>
 
-        <main id="main-content" className="space-y-6 pt-6 sm:space-y-8 sm:pt-8">
-          <motion.section
-            id="overview"
-            variants={sectionReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.14 }}
-            className="cc-layer-dark"
+      <AnimatePresence>
+        {menuOpen ? (
+          <motion.div
+            className="mobile-menu"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
           >
-            <motion.span
-              aria-hidden
-              className="section-scan"
-              initial={reduceMotion ? undefined : { scaleX: 0, opacity: 0.35 }}
-              whileInView={reduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            />
-            <div className="layer-head">
-              <p className="layer-index">
-                {content.ui.layerLabel} 0{sectionIndex.overview}
-              </p>
-              <p className="layer-title">{content.ui.overviewLayerTitle}</p>
+            {content.sections
+              .filter((s) => s.id !== "home")
+              .map((section) => (
+                <a key={section.id} href={`#${section.id}`} onClick={() => setMenuOpen(false)}>
+                  {section.label}
+                </a>
+              ))}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+
+      <main id="main">
+        {/* HERO */}
+        <section id="home" className="shell hero">
+          <HeroHeadline
+            segments={content.ui.heroHeadlineSegments}
+            reduceMotion={Boolean(reduceMotion)}
+          />
+
+          <motion.div
+            className="hero-meta"
+            initial={reduceMotion ? undefined : { opacity: 0, y: 14 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <p className="hero-meta-text">{content.ui.heroSubcopy}</p>
+            <div className="hero-cta-row">
+              <a href="#work" className="btn btn-primary">
+                {content.ui.heroPrimaryCta}
+                <ArrowDownRight size={15} />
+              </a>
+              <a href="#contact" className="btn-text">
+                {content.ui.heroSecondaryCta}
+              </a>
             </div>
+          </motion.div>
+        </section>
 
-            <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr]">
-              <div>
-                <motion.p custom={0} variants={heroReveal} className="eyebrow-dark">
-                  {content.profile.name} / {content.profile.role}
-                </motion.p>
-                <motion.h1 custom={1} variants={heroReveal} className="hero-title mt-4">
-                  {content.profile.headline}
-                </motion.h1>
-                <motion.p custom={2} variants={heroReveal} className="hero-copy mt-6">
-                  {content.profile.subcopy}
-                </motion.p>
+        {/* SERVICES */}
+        <section id="services" className="section section-tint">
+          <div className="shell">
+            <motion.div className="section-head" {...inViewProps}>
+              <span className="eyebrow">{content.ui.servicesEyebrow}</span>
+              <h2 className="section-head-title">{content.ui.servicesTitle}</h2>
+            </motion.div>
 
-                <motion.div custom={3} variants={heroReveal} className="mt-6 grid gap-3 text-sm sm:grid-cols-2">
-                  <div className="info-chip">
-                    <p className="chip-label">{content.ui.currentLocation}</p>
-                    <p className="chip-value">{content.profile.location}</p>
-                  </div>
-                  <div className="info-chip">
-                    <p className="chip-label">{content.ui.relocation}</p>
-                    <p className="chip-value">{content.profile.relocation}</p>
-                  </div>
-                </motion.div>
-
-                <motion.div custom={4} variants={heroReveal} className="mt-7 flex flex-wrap gap-3">
-                  <a className="cc-button-primary" href="#systems">
-                    {content.ui.viewSystems}
-                    <ArrowRight size={15} />
-                  </a>
-                  <a className="cc-button-secondary" href={content.profile.cvPath} download>
-                    <Download size={15} />
-                    {content.ui.downloadCv}
-                  </a>
-                  <a className="cc-button-secondary" href="#contact">
-                    <Mail size={15} />
-                    {content.ui.contact}
-                  </a>
-                </motion.div>
-
-                <motion.div custom={5} variants={heroReveal} className="terminal-line mt-8">
-                  <div className="terminal-head">
-                    <Terminal size={14} />
-                    <span>{content.ui.terminalChannel}</span>
-                  </div>
-                  <p className="terminal-command">
-                    <span className="text-[#85d0b4]">$</span> {typedCommand}
-                    <motion.span
-                      aria-hidden
-                      className="ml-1 inline-block h-4 w-[7px] bg-[#82c6ad] align-middle"
-                      animate={reduceMotion ? undefined : { opacity: [1, 0.2, 1] }}
-                      transition={reduceMotion ? undefined : { duration: 0.92, repeat: Number.POSITIVE_INFINITY }}
-                    />
-                  </p>
-                </motion.div>
-              </div>
-
-              <motion.div
-                initial={reduceMotion ? undefined : { opacity: 0, y: 16 }}
-                whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.55, delay: 0.1 }}
-              >
-                <SystemDiagram copy={content.diagram} />
-              </motion.div>
-            </div>
-
-            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {content.metrics.map((metric, index) => (
-                <motion.article
-                  key={metric.label}
-                  className="metric-module"
-                  initial={reduceMotion ? undefined : { opacity: 0, y: 14 }}
-                  whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.44, delay: 0.08 + index * 0.05 }}
+            <motion.div className="service-list" {...inViewProps}>
+              {content.services.map((service, index) => (
+                <a
+                  key={service.id}
+                  href={service.caseStudyId ? `#${service.caseStudyId}` : "#work"}
+                  className="service-row"
+                  aria-label={`${service.title} — ${content.ui.serviceMore}`}
                 >
-                  <p className="metric-label">{metric.label}</p>
-                  <p className="metric-value">
-                    <AnimatedCounter from={metric.from} to={metric.to} suffix={metric.suffix} prefix={metric.prefix} />
-                  </p>
-                  <p className="metric-note">{metric.note}</p>
+                  <span className="service-num">0{index + 1}</span>
+                  <div className="service-content">
+                    <h3 className="service-title">{service.title}</h3>
+                    <div>
+                      <p className="service-copy">{service.copy}</p>
+                      <div className="service-stack-row">
+                        {service.stack.map((tech) => (
+                          <span key={tech} className="tag">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <ArrowUpRight size={22} className="service-arrow" aria-hidden />
+                </a>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* WORK */}
+        <section id="work" className="section">
+          <div className="shell">
+            <motion.div className="section-head" {...inViewProps}>
+              <span className="eyebrow">{content.ui.workEyebrow}</span>
+              <h2 className="section-head-title">{content.ui.workTitle}</h2>
+            </motion.div>
+
+            <div className="case-list">
+              {content.cases.map((caseStudy, index) => (
+                <motion.article
+                  key={caseStudy.id}
+                  id={caseStudy.id}
+                  className="case-entry"
+                  {...inViewProps}
+                >
+                  <div className="case-meta-col">
+                    <span className="case-num">
+                      {String(index + 1).padStart(2, "0")} / {String(content.cases.length).padStart(2, "0")}
+                    </span>
+                    <h3 className="case-title">{caseStudy.title}</h3>
+                    <p className="case-context">{caseStudy.context}</p>
+                    <span className="case-status">
+                      <span className="case-status-dot" data-status={caseStudy.status} aria-hidden />
+                      {content.ui.statusLabels[caseStudy.status]}
+                    </span>
+                    <p className="case-stack-line">
+                      <span className="eyebrow-num">{content.ui.caseStack}</span>
+                      {caseStudy.stack.join(" · ")}
+                    </p>
+                  </div>
+
+                  <div className="case-body">
+                    <div>
+                      <p className="case-block-label">{content.ui.caseProblem}</p>
+                      <p className="case-block-text">{caseStudy.problem}</p>
+                    </div>
+                    <div>
+                      <p className="case-block-label">{content.ui.caseSolution}</p>
+                      <p className="case-block-text">{caseStudy.solution}</p>
+                    </div>
+                    <div>
+                      <p className="case-block-label">{content.ui.caseResults}</p>
+                      <ul className="case-results">
+                        {caseStudy.results.map((result) => (
+                          <li key={result}>{result}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </motion.article>
               ))}
             </div>
-          </motion.section>
+          </div>
+        </section>
 
-          <motion.section
-            id="systems"
-            variants={sectionReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            className="cc-layer-light"
-          >
-            <motion.span
-              aria-hidden
-              className="section-scan"
-              initial={reduceMotion ? undefined : { scaleX: 0, opacity: 0.35 }}
-              whileInView={reduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            />
-            <div className="layer-head">
-              <p className="layer-index">
-                {content.ui.layerLabel} 0{sectionIndex.systems}
-              </p>
-              <p className="layer-title">{content.ui.systemsLayerTitle}</p>
-            </div>
+        {/* ABOUT */}
+        <section id="about" className="section section-tint">
+          <div className="shell">
+            <motion.div className="section-head" {...inViewProps}>
+              <span className="eyebrow">{content.ui.aboutEyebrow}</span>
+              <h2 className="section-head-title">{content.ui.aboutTitle}</h2>
+            </motion.div>
 
-            <div className="section-header-grid">
-              <h2 className="section-title-light">{content.ui.systemsTitle}</h2>
-              <p className="section-copy-light">{content.ui.systemsCopy}</p>
-            </div>
+            <motion.div className="about-grid" {...inViewProps}>
+              <button
+                type="button"
+                className="about-photo-wrap"
+                onClick={() => setPortraitOpen(true)}
+                aria-label={locale === "de" ? "Porträt vergrößern" : "Enlarge portrait"}
+              >
+                <div className="about-photo-img" style={{ position: "relative", width: "100%", height: "100%" }}>
+                  <Image
+                    src="/images/hasan-yucedag.jpeg"
+                    alt={content.profile.name}
+                    fill
+                    sizes="(max-width: 768px) 80vw, 380px"
+                    className="object-cover object-[center_18%]"
+                  />
+                </div>
+              </button>
 
-            <div className="mt-8 space-y-4">
-              {content.systems.map((system, index) => {
-                const isOpen = expandedSystem === system.id;
-
-                return (
-                  <motion.article
-                    key={system.id}
-                    className="module-shell group"
-                    initial={reduceMotion ? undefined : { opacity: 0, y: 18 }}
-                    whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.45, delay: index * 0.05 }}
-                    whileHover={reduceMotion ? undefined : { y: -3 }}
-                  >
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="space-y-2">
-                        <p className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[#6a7c76]">
-                          {content.ui.moduleLabel} {index + 1}
-                        </p>
-                        <h3 className="module-title">{system.name}</h3>
-                      </div>
-
-                      <span
-                        className={classNames(
-                          "status-pill",
-                          system.status === "production" && "status-prod",
-                          system.status === "scaling" && "status-scaling",
-                          system.status === "delivered" && "status-delivered",
-                        )}
-                      >
-                        {content.ui.statusLabels[system.status]}
-                      </span>
-                    </div>
-
-                    <p className="module-summary">{system.summary}</p>
-
-                    <div className="module-hover-depth" aria-hidden>
-                      <span>{content.ui.layerMap}</span>
-                      <p>{content.ui.layerMapValue}</p>
-                    </div>
-
-                    <ArchitectureFlow
-                      steps={system.architecture}
-                      moduleId={system.id}
-                      ariaLabel={`${system.name} architecture diagram`}
-                    />
-
-                    <button
-                      type="button"
-                      onClick={() => setExpandedSystem(isOpen ? "" : system.id)}
-                      className="module-toggle"
-                      aria-expanded={isOpen}
-                      aria-controls={`${system.id}-details`}
-                    >
-                      <span>{isOpen ? content.ui.hideInternals : content.ui.inspectInternals}</span>
-                      <ChevronDown size={16} className={classNames("transition-transform", isOpen && "rotate-180")} />
-                    </button>
-
-                    <AnimatePresence initial={false}>
-                      {isOpen ? (
-                        <motion.div
-                          id={`${system.id}-details`}
-                          key="details"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
-                          className="overflow-hidden"
-                        >
-                          <div className="module-detail-grid">
-                            <div>
-                              <p className="detail-title">{content.ui.stackLabel}</p>
-                              <ul className="detail-list">
-                                {system.stack.map((item) => (
-                                  <li key={item}>{item}</li>
-                                ))}
-                              </ul>
-                            </div>
-                            <div>
-                              <p className="detail-title">{content.ui.impactLabel}</p>
-                              <ul className="detail-list">
-                                {system.impact.map((item) => (
-                                  <li key={item}>{item}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          </div>
-                        </motion.div>
-                      ) : null}
-                    </AnimatePresence>
-                  </motion.article>
-                );
-              })}
-            </div>
-          </motion.section>
-
-          <motion.section
-            id="timeline"
-            variants={sectionReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            className="cc-layer-dark"
-          >
-            <motion.span
-              aria-hidden
-              className="section-scan"
-              initial={reduceMotion ? undefined : { scaleX: 0, opacity: 0.35 }}
-              whileInView={reduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            />
-            <div className="layer-head">
-              <p className="layer-index">
-                {content.ui.layerLabel} 0{sectionIndex.timeline}
-              </p>
-              <p className="layer-title">{content.ui.timelineLayerTitle}</p>
-            </div>
-
-            <div className="section-header-grid">
-              <h2 className="section-title-dark">{content.ui.timelineTitle}</h2>
-              <p className="section-copy-dark">{content.ui.timelineCopy}</p>
-            </div>
-
-            <div className="terminal-log-grid mt-8">
-              {content.timeline.map((entry, index) => (
-                <motion.article
-                  key={`${entry.period}-${entry.role}`}
-                  className="log-module"
-                  initial={reduceMotion ? undefined : { opacity: 0, y: 16 }}
-                  whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.48, delay: index * 0.06 }}
-                >
-                  {!reduceMotion ? (
-                    <motion.span
-                      aria-hidden
-                      className="log-scan"
-                      animate={{ x: ["-30%", "140%"], opacity: [0, 0.75, 0] }}
-                      transition={{
-                        duration: 2.4,
-                        delay: index * 0.2,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "linear",
-                      }}
-                    />
-                  ) : null}
-                  <header className="log-headline">
-                    <p className="log-period">[{entry.period}]</p>
-                    <p className="log-role">{entry.role}</p>
-                    <p className="log-org">@ {entry.org}</p>
-                  </header>
-
-                  <ul className="log-lines">
-                    {entry.logs.map((line) => (
-                      <li key={line}>
-                        <span className="text-[#8fd0b8]">&gt;</span>
-                        <span>{line}</span>
+              <div className="about-text">
+                {content.ui.aboutBody.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+                <div className="about-education">
+                  <p className="about-education-label">{content.ui.educationLabel}</p>
+                  <ul className="education-list">
+                    {content.education.map((entry) => (
+                      <li key={`${entry.degree}-${entry.school}`} className="education-item">
+                        <span>
+                          <span className="education-degree">{entry.degree}</span>
+                          <span className="education-school">· {entry.school}</span>
+                        </span>
+                        {entry.period ? <span className="education-meta">{entry.period}</span> : <span />}
+                        {entry.note ? <p className="education-note">{entry.note}</p> : null}
                       </li>
                     ))}
                   </ul>
-                </motion.article>
-              ))}
-            </div>
-          </motion.section>
+                </div>
 
-          <motion.section
-            id="matrix"
-            variants={sectionReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            className="cc-layer-light"
-          >
-            <motion.span
-              aria-hidden
-              className="section-scan"
-              initial={reduceMotion ? undefined : { scaleX: 0, opacity: 0.35 }}
-              whileInView={reduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            />
-            <div className="layer-head">
-              <p className="layer-index">
-                {content.ui.layerLabel} 0{sectionIndex.matrix}
-              </p>
-              <p className="layer-title">{content.ui.matrixLayerTitle}</p>
-            </div>
+                <div className="about-links">
+                  <a href={content.profile.linkedin} target="_blank" rel="noreferrer" className="btn-text">
+                    <LinkedinIcon size={14} /> LinkedIn
+                  </a>
+                  <a href={content.profile.github} target="_blank" rel="noreferrer" className="btn-text">
+                    <GithubIcon size={14} /> GitHub
+                  </a>
+                  <a href={`mailto:${content.profile.email}`} className="btn-text">
+                    {content.profile.email}
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
-            <div className="section-header-grid">
-              <h2 className="section-title-light">{content.ui.matrixTitle}</h2>
-              <p className="section-copy-light">{content.ui.matrixCopy}</p>
-            </div>
+        {/* EXPERIENCE */}
+        <section id="experience" className="section">
+          <div className="shell">
+            <motion.div className="section-head" {...inViewProps}>
+              <span className="eyebrow">{content.ui.experienceEyebrow}</span>
+              <h2 className="section-head-title">{content.ui.experienceTitle}</h2>
+            </motion.div>
 
-            <div className="matrix-table-wrapper mt-8 hidden lg:block">
-              <table className="w-full border-collapse text-left">
-                <thead>
-                  <tr>
-                    <th className="matrix-head sticky left-0 z-10 bg-[#0f1716]">{content.ui.matrixDomain}</th>
-                    {content.matrixColumns.map((column, colIndex) => (
-                      <th
-                        key={column}
-                        className={classNames("matrix-head", hoverCol === colIndex && "matrix-head-active")}
-                        onMouseEnter={() => setHoverCol(colIndex)}
-                        onMouseLeave={() => setHoverCol(null)}
-                      >
-                        {content.matrixColumnLabels[column]}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {content.capabilityMatrix.map((row, rowIndex) => (
-                    <tr key={row.area}>
-                      <th
-                        scope="row"
-                        className={classNames(
-                          "matrix-row-title sticky left-0 z-10 bg-[#0b1211]",
-                          hoverRow === rowIndex && "matrix-row-title-active",
-                        )}
-                        onMouseEnter={() => setHoverRow(rowIndex)}
-                        onMouseLeave={() => setHoverRow(null)}
-                      >
-                        {row.area}
-                      </th>
-                      {content.matrixColumns.map((column, colIndex) => (
-                        <td
-                          key={`${row.area}-${column}`}
-                          className={classNames(
-                            "matrix-cell",
-                            hoverRow === rowIndex && "matrix-cell-highlight",
-                            hoverCol === colIndex && "matrix-cell-highlight",
-                          )}
-                          onMouseEnter={() => {
-                            setHoverRow(rowIndex);
-                            setHoverCol(colIndex);
-                          }}
-                          onMouseLeave={() => {
-                            setHoverRow(null);
-                            setHoverCol(null);
-                          }}
-                        >
-                          {row.cells[column as MatrixColumn].map((item) => (
-                            <span key={item} className="matrix-chip">
-                              {item}
-                            </span>
-                          ))}
-                        </td>
+            <motion.div className="timeline" {...inViewProps}>
+              {content.timeline.map((entry) => (
+                <article key={`${entry.period}-${entry.role}`} className="timeline-entry">
+                  <span className="timeline-period">{entry.period}</span>
+                  <div>
+                    <h3 className="timeline-role">{entry.role}</h3>
+                    <p className="timeline-org">{entry.org}</p>
+                    <ul className="timeline-logs">
+                      {entry.logs.map((log) => (
+                        <li key={log}>— {log}</li>
                       ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="mt-8 space-y-3 lg:hidden">
-              {content.capabilityMatrix.map((row) => (
-                <article key={row.area} className="mobile-matrix-module">
-                  <h3 className="text-base font-semibold text-[#d5e6e1]">{row.area}</h3>
-                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                    {content.matrixColumns.map((column) => (
-                      <div key={`${row.area}-${column}`} className="mobile-cell">
-                        <p className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-[#8ea9a1]">
-                          {content.matrixColumnLabels[column]}
-                        </p>
-                        <ul className="mt-1 space-y-1 text-sm text-[#bfd4cd]">
-                          {row.cells[column].map((entry) => (
-                            <li key={entry}>{entry}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+                    </ul>
                   </div>
                 </article>
               ))}
-            </div>
-          </motion.section>
+            </motion.div>
+          </div>
+        </section>
 
-          <motion.section
-            id="about"
-            variants={sectionReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            className="cc-layer-dark"
-          >
-            <motion.span
-              aria-hidden
-              className="section-scan"
-              initial={reduceMotion ? undefined : { scaleX: 0, opacity: 0.35 }}
-              whileInView={reduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            />
-            <div className="layer-head">
-              <p className="layer-index">
-                {content.ui.layerLabel} 0{sectionIndex.about}
-              </p>
-              <p className="layer-title">{content.ui.aboutLayerTitle}</p>
-            </div>
+        {/* SKILLS */}
+        <section id="skills" className="section section-tint">
+          <div className="shell">
+            <motion.div className="section-head" {...inViewProps}>
+              <span className="eyebrow">{content.ui.skillsEyebrow}</span>
+              <h2 className="section-head-title">{content.ui.skillsTitle}</h2>
+            </motion.div>
 
-            <div className="section-header-grid">
-              <h2 className="section-title-dark">{content.ui.aboutTitle}</h2>
-              <p className="section-copy-dark">{content.ui.aboutCopy}</p>
-            </div>
-
-            <div className="mt-8 grid gap-4 xl:grid-cols-2">
-              <article className="archive-module">
-                <div className="archive-head">
-                  <h3>{content.ui.additionalSystems}</h3>
-                  <a href={content.profile.github} target="_blank" rel="noreferrer">
-                    {content.ui.github}
-                    <ExternalLink size={14} />
-                  </a>
+            <motion.div className="skills-grid" {...inViewProps}>
+              {content.skills.map((group) => (
+                <div key={group.title}>
+                  <p className="skill-group-label">{group.title}</p>
+                  <ul className="skill-items">
+                    {group.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
                 </div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
 
+        {/* ARCHIVE */}
+        <section id="archive" className="section">
+          <div className="shell">
+            <motion.div className="section-head" {...inViewProps}>
+              <span className="eyebrow">{content.ui.archiveEyebrow}</span>
+              <h2 className="section-head-title">{content.ui.archiveTitle}</h2>
+            </motion.div>
+
+            <motion.div className="archive-grid" {...inViewProps}>
+              <div>
+                <h3 className="archive-block-head">
+                  <span>{content.ui.additionalProjects}</span>
+                  <a href={content.profile.github} target="_blank" rel="noreferrer" className="link-underline">
+                    GitHub ↗
+                  </a>
+                </h3>
                 <ul className="archive-list">
                   {content.archiveProjects.map((project) => (
-                    <li key={project.title}>
-                      <div>
-                        <p className="archive-title">{project.title}</p>
-                        <p className="archive-desc">{project.description}</p>
-                      </div>
-                      <div className="archive-meta">
-                        <p>{project.stack.join(" / ")}</p>
+                    <li key={project.title} className="archive-item">
+                      <div className="archive-item-row">
+                        <p className="archive-item-title">{project.title}</p>
                         {project.href ? (
-                          <a href={project.href} target="_blank" rel="noreferrer">
-                            {content.ui.openLink}
-                            <ExternalLink size={12} />
+                          <a href={project.href} target="_blank" rel="noreferrer" className="archive-item-link">
+                            {content.ui.openLink} ↗
                           </a>
                         ) : null}
                       </div>
+                      <p className="archive-item-desc">{project.description}</p>
+                      <p className="archive-item-stack">{project.stack.join(" · ")}</p>
                     </li>
                   ))}
                 </ul>
-              </article>
+              </div>
 
-              <article className="archive-module">
-                <div className="archive-head">
-                  <h3>{content.ui.publications}</h3>
-                </div>
-
+              <div>
+                <h3 className="archive-block-head">
+                  <span>{content.ui.publications}</span>
+                </h3>
                 <ul className="archive-list">
                   {content.publications.map((paper) => (
-                    <li key={`${paper.year}-${paper.title}`}>
-                      <div>
-                        <p className="archive-title">
-                          {paper.year} - {paper.title}
+                    <li key={`${paper.year}-${paper.title}`} className="archive-item">
+                      <div className="archive-item-row">
+                        <p className="archive-item-title">
+                          {paper.year} — {paper.title}
                         </p>
-                        <p className="archive-desc">{paper.description}</p>
-                      </div>
-                      <div className="archive-meta">
                         <a
                           href={paper.href}
                           target={paper.href.startsWith("http") ? "_blank" : undefined}
                           rel={paper.href.startsWith("http") ? "noreferrer" : undefined}
+                          className="archive-item-link"
                         >
-                          {content.ui.readLink}
-                          <ExternalLink size={12} />
+                          {content.ui.readLink} ↗
                         </a>
                       </div>
+                      <p className="archive-item-desc">{paper.description}</p>
                     </li>
                   ))}
                 </ul>
-              </article>
-            </div>
-          </motion.section>
-
-          <motion.section
-            id="contact"
-            variants={sectionReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.18 }}
-            className="cc-layer-light"
-          >
-            <motion.span
-              aria-hidden
-              className="section-scan"
-              initial={reduceMotion ? undefined : { scaleX: 0, opacity: 0.35 }}
-              whileInView={reduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            />
-            <div className="layer-head">
-              <p className="layer-index">
-                {content.ui.layerLabel} 0{sectionIndex.contact}
-              </p>
-              <p className="layer-title">{content.ui.contactLayerTitle}</p>
-            </div>
-
-            <div className="endpoint-shell">
-              <div>
-                <p className="eyebrow-light">{content.ui.readyToConnect}</p>
-                <h2 className="section-title-light mt-3">{content.ui.contactTitle}</h2>
-                <p className="section-copy-light mt-4 max-w-2xl">{content.ui.contactCopy}</p>
               </div>
-
-              <div className="endpoint-grid">
-                <a href={`mailto:${content.profile.email}`} className="endpoint-item">
-                  <Mail size={16} />
-                  <div>
-                    <p>{content.ui.email}</p>
-                    <span>{content.profile.email}</span>
-                  </div>
-                </a>
-                <a href={content.profile.linkedin} target="_blank" rel="noreferrer" className="endpoint-item">
-                  <User size={16} />
-                  <div>
-                    <p>{content.ui.linkedin}</p>
-                    <span>{content.ui.linkedinMeta}</span>
-                  </div>
-                </a>
-                <a href={content.profile.github} target="_blank" rel="noreferrer" className="endpoint-item">
-                  <Globe size={16} />
-                  <div>
-                    <p>{content.ui.github}</p>
-                    <span>{content.ui.githubMeta}</span>
-                  </div>
-                </a>
-                <a href={content.profile.cvPath} download className="endpoint-item">
-                  <Download size={16} />
-                  <div>
-                    <p>{content.ui.cv}</p>
-                    <span>{content.ui.cvMeta}</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </motion.section>
-        </main>
-
-        <footer className="pt-8">
-          <div className="rounded-xl border border-[#253533] bg-[#0a1010] px-4 py-4 text-xs text-[#86a098] sm:flex sm:items-center sm:justify-between sm:px-5">
-            <p>
-              {content.profile.name} - {content.profile.role}
-            </p>
-            <p className="mt-2 font-mono uppercase tracking-[0.14em] sm:mt-0">{content.ui.footerBuiltWith}</p>
+            </motion.div>
           </div>
-        </footer>
-      </div>
+        </section>
 
-      <button type="button" onClick={() => setPaletteOpen(true)} className="floating-command">
-        <Command size={15} />
-        {content.ui.floatingCommand}
-      </button>
+        {/* CONTACT */}
+        <section id="contact" className="section section-tint">
+          <div className="shell">
+            <motion.div className="section-head" {...inViewProps}>
+              <span className="eyebrow">{content.ui.contactEyebrow}</span>
+            </motion.div>
 
-      <CommandPalette
-        open={paletteOpen}
-        onClose={closePalette}
-        sections={content.sections}
-        cvPath={content.profile.cvPath}
-        linkedin={content.profile.linkedin}
-        github={content.profile.github}
-        copy={content.palette}
-      />
+            <motion.div className="contact-block" {...inViewProps}>
+              <div>
+                <h2 className="contact-headline">{content.ui.contactTitle}</h2>
+                <p className="contact-copy">{content.ui.contactCopy}</p>
+
+                <dl className="contact-channels">
+                  <a href={`mailto:${content.profile.email}`} className="contact-channel">
+                    <dt className="contact-channel-key">{content.ui.contactChannelEmail}</dt>
+                    <dd className="contact-channel-val" style={{ margin: 0 }}>
+                      {content.profile.email}
+                    </dd>
+                  </a>
+                  <a
+                    href={content.profile.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="contact-channel"
+                  >
+                    <dt className="contact-channel-key">{content.ui.contactChannelLinkedin}</dt>
+                    <dd className="contact-channel-val" style={{ margin: 0 }}>
+                      hasan-yuecedag ↗
+                    </dd>
+                  </a>
+                  <a
+                    href={content.profile.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="contact-channel"
+                  >
+                    <dt className="contact-channel-key">{content.ui.contactChannelGithub}</dt>
+                    <dd className="contact-channel-val" style={{ margin: 0 }}>
+                      @hasanycdg ↗
+                    </dd>
+                  </a>
+                  <a
+                    href={content.profile.githubWork}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="contact-channel"
+                  >
+                    <dt className="contact-channel-key">{content.ui.contactChannelGithubWork}</dt>
+                    <dd className="contact-channel-val" style={{ margin: 0 }}>
+                      @florianmatthiashasan ↗
+                    </dd>
+                  </a>
+                  <a href={content.profile.cvPath} download className="contact-channel">
+                    <dt className="contact-channel-key">{content.ui.contactChannelCv}</dt>
+                    <dd className="contact-channel-val" style={{ margin: 0 }}>
+                      PDF ↓
+                    </dd>
+                  </a>
+                  <div className="contact-channel" style={{ cursor: "default" }}>
+                    <dt className="contact-channel-key">{content.ui.contactChannelLocation}</dt>
+                    <dd className="contact-channel-val" style={{ margin: 0 }}>
+                      {content.profile.location}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+
+              <ContactForm ui={content.ui} locale={locale} />
+            </motion.div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="footer">
+        <div className="shell footer-grid">
+          <div className="footer-meta">
+            <p>
+              © {new Date().getFullYear()} {content.ui.footerName}
+            </p>
+            <p>{content.ui.footerLocation}</p>
+            <p>{content.ui.footerStack}</p>
+          </div>
+          <div className="footer-links">
+            <a href="#home" className="footer-link link-underline">
+              {content.ui.footerBackToTop} ↑
+            </a>
+            <a href={`mailto:${content.profile.email}`} className="footer-link link-underline">
+              {content.profile.email}
+            </a>
+            <a
+              href={content.profile.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="footer-link link-underline"
+            >
+              LinkedIn
+            </a>
+            <a
+              href={content.profile.github}
+              target="_blank"
+              rel="noreferrer"
+              className="footer-link link-underline"
+            >
+              GitHub
+            </a>
+            <a
+              href={content.profile.githubWork}
+              target="_blank"
+              rel="noreferrer"
+              className="footer-link link-underline"
+            >
+              {content.ui.contactChannelGithubWork} ↗
+            </a>
+          </div>
+        </div>
+      </footer>
 
       <AnimatePresence>
         {portraitOpen ? (
           <motion.div
-            className="fixed inset-0 z-[140] flex items-center justify-center bg-black/72 p-4"
+            className="portrait-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setPortraitOpen(false)}
           >
             <motion.div
-              initial={{ opacity: 0, y: 12, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 8, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              className="w-full max-w-[520px] overflow-hidden rounded-2xl border border-[#344743] bg-[#0b1211] shadow-[0_30px_80px_-40px_rgba(0,0,0,0.95)]"
+              className="portrait-frame"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
               onClick={(event) => event.stopPropagation()}
+              style={{ position: "relative" }}
             >
-              <div className="relative aspect-[4/5] w-full">
-                <Image
-                  src="/images/hasan-yucedag.jpeg"
-                  alt="Portrait of Hasan Yücedag"
-                  fill
-                  priority
-                  className="object-cover object-[center_18%]"
-                  sizes="(max-width: 640px) 92vw, 520px"
-                />
-              </div>
-              <div className="flex items-center justify-between border-t border-[#243835] px-4 py-3">
-                <p className="text-sm text-[#d1e3de]">{content.profile.name}</p>
-                <button
-                  type="button"
-                  onClick={() => setPortraitOpen(false)}
-                  className="rounded-md border border-[#34514b] px-2.5 py-1 text-xs text-[#9ec0b6] transition-colors hover:bg-[#13201d]"
-                >
-                  {locale === "de" ? "Schließen" : "Close"}
-                </button>
-              </div>
+              <Image
+                src="/images/hasan-yucedag.jpeg"
+                alt={content.profile.name}
+                fill
+                priority
+                className="object-cover object-[center_18%]"
+                sizes="(max-width: 640px) 92vw, 480px"
+              />
             </motion.div>
           </motion.div>
         ) : null}

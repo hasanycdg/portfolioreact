@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-const sans = Space_Grotesk({
+const sans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
+  weight: ["300", "400", "500", "600"],
 });
 
-const mono = IBM_Plex_Mono({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-mono",
@@ -19,40 +20,30 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hasanyucedagportfolio.vercel.app"),
-  title: "Hasan Yücedag | Software Engineer / Fullstack Developer",
+  title: "Hasan Yücedag — Software Engineer",
   description:
-    "Job-focused portfolio of Hasan Yücedag, Software Engineer and Fullstack Developer building production web systems, AI-powered solutions, and custom WordPress platforms.",
+    "Fullstack engineering, AI integration, and performance work for teams that need serious software — not demos.",
   keywords: [
     "Hasan Yücedag",
-    "Software Engineer Zurich",
-    "Fullstack Developer Switzerland",
-    "WordPress Plugin Development",
-    "AI Web Systems",
+    "Software Engineer",
+    "Fullstack Developer",
+    "Next.js",
+    "TypeScript",
+    "AI Integration",
+    "WordPress",
     "AWS",
-    "Performance Optimization",
   ],
   openGraph: {
-    title: "Hasan Yücedag | Software Engineer / Fullstack Developer",
-    description:
-      "Production-focused fullstack engineer moving to Zurich in August 2026. Experience across custom WordPress systems, cloud delivery, and AI-powered web products.",
+    title: "Hasan Yücedag — Software Engineer",
+    description: "Fullstack engineering, AI integration, and performance work.",
     type: "website",
     url: "/",
-    siteName: "Hasan Yücedag Portfolio",
-    images: [
-      {
-        url: "/android-chrome-512x512.png",
-        width: 512,
-        height: 512,
-        alt: "Hasan Yücedag portfolio logo",
-      },
-    ],
+    siteName: "Hasan Yücedag",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hasan Yücedag | Software Engineer / Fullstack Developer",
-    description:
-      "Fullstack engineer with production experience in AI web systems, WordPress engineering, and cloud deployment.",
-    images: ["/android-chrome-512x512.png"],
+    title: "Hasan Yücedag — Software Engineer",
+    description: "Fullstack engineering, AI integration, and performance work.",
   },
   icons: {
     icon: "/favicon.ico",
@@ -66,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="de">
       <body className={`${sans.variable} ${mono.variable}`}>
         {children}
         <Analytics />
