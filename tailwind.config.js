@@ -8,19 +8,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        canvas: "var(--color-canvas)",
-        surface: "var(--color-surface)",
-        line: "var(--color-line)",
-        ink: "var(--color-ink)",
-        muted: "var(--color-muted)",
-        accent: "var(--color-accent)",
-      },
-      boxShadow: {
-        panel: "var(--shadow-panel)",
+        base: "var(--bg-base)",
+        elevated: "var(--bg-elevated)",
+        primary: "var(--text-primary)",
+        secondary: "var(--text-secondary)",
+        muted: "var(--text-muted)",
+        accent: "var(--accent)",
+        "accent-strong": "var(--accent-strong)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        mono: ["var(--font-mono)"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
       },
     },
   },

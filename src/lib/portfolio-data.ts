@@ -3,28 +3,27 @@ export type Locale = "en" | "de";
 export type NavSection = {
   id: string;
   label: string;
-  short: string;
-};
-
-export type MetricCounter = {
-  label: string;
-  from: number;
-  to: number;
-  suffix?: string;
-  prefix?: string;
-  note: string;
 };
 
 export type SystemStatus = "production" | "scaling" | "delivered";
 
-export type SystemModule = {
+export type ServiceCard = {
   id: string;
-  name: string;
-  status: SystemStatus;
-  summary: string;
-  architecture: string[];
+  title: string;
+  copy: string;
   stack: string[];
-  impact: string[];
+  caseStudyId?: string;
+};
+
+export type CaseStudy = {
+  id: string;
+  title: string;
+  context: string;
+  status: SystemStatus;
+  problem: string;
+  solution: string;
+  results: string[];
+  stack: string[];
 };
 
 export type TimelineEntry = {
@@ -34,11 +33,16 @@ export type TimelineEntry = {
   logs: string[];
 };
 
-export type MatrixColumn = "Build" | "Optimize" | "Deploy" | "Maintain";
+export type SkillGroup = {
+  title: string;
+  items: string[];
+};
 
-export type CapabilityRow = {
-  area: string;
-  cells: Record<MatrixColumn, string[]>;
+export type EducationEntry = {
+  degree: string;
+  school: string;
+  period?: string;
+  note?: string;
 };
 
 export type ArchiveProject = {
@@ -55,93 +59,102 @@ export type Publication = {
   href: string;
 };
 
-export type BootCopy = {
-  initMessage: string;
-  steps: [string, string, string, string];
-};
-
-export type DiagramCopy = {
-  title: string;
-  online: string;
-  nodes: {
-    frontend: string;
-    backend: string;
-    ai: string;
-    wordpress: string;
-    cloud: string;
-    performance: string;
-  };
-};
-
-export type PaletteCopy = {
-  ariaLabel: string;
-  placeholder: string;
-  noMatch: string;
-  jumpPrefix: string;
-  downloadCv: string;
-  openLinkedin: string;
-  openGithub: string;
-  externalHint: string;
+export type ContactReason = {
+  value: "job" | "project" | "other";
+  label: string;
 };
 
 export type UiCopy = {
   skipToMain: string;
-  topbarSubtitle: string;
-  openPalette: string;
   languageSwitcher: string;
-  layerLabel: string;
+  openMenu: string;
+  closeMenu: string;
 
-  overviewLayerTitle: string;
-  currentLocation: string;
-  relocation: string;
-  viewSystems: string;
-  downloadCv: string;
-  contact: string;
+  navHome: string;
+  navServices: string;
+  navWork: string;
+  navAbout: string;
+  navContact: string;
 
-  systemsLayerTitle: string;
-  systemsTitle: string;
-  systemsCopy: string;
-  moduleLabel: string;
+  heroAvailable: string;
+  /**
+   * Headline rendered as array of segments. Segment with emphasis:true is rendered with italic + accent.
+   */
+  heroHeadlineSegments: Array<{ text: string; emphasis?: boolean }>;
+  heroSubcopy: string;
+  heroPrimaryCta: string;
+  heroSecondaryCta: string;
+
+  servicesEyebrow: string;
+  servicesTitle: string;
+  servicesCopy: string;
+  serviceMore: string;
+
+  workEyebrow: string;
+  workTitle: string;
+  workCopy: string;
+  caseProblem: string;
+  caseSolution: string;
+  caseResults: string;
+  caseStack: string;
   statusLabels: Record<SystemStatus, string>;
-  layerMap: string;
-  layerMapValue: string;
-  inspectInternals: string;
-  hideInternals: string;
-  stackLabel: string;
-  impactLabel: string;
 
-  timelineLayerTitle: string;
-  timelineTitle: string;
-  timelineCopy: string;
-
-  matrixLayerTitle: string;
-  matrixTitle: string;
-  matrixCopy: string;
-  matrixDomain: string;
-
-  aboutLayerTitle: string;
+  aboutEyebrow: string;
   aboutTitle: string;
-  aboutCopy: string;
-  additionalSystems: string;
+  aboutBody: string[];
+
+  experienceEyebrow: string;
+  experienceTitle: string;
+
+  educationLabel: string;
+
+  skillsEyebrow: string;
+  skillsTitle: string;
+
+  archiveEyebrow: string;
+  archiveTitle: string;
+  additionalProjects: string;
   publications: string;
   openLink: string;
   readLink: string;
 
-  contactLayerTitle: string;
-  readyToConnect: string;
+  contactEyebrow: string;
   contactTitle: string;
   contactCopy: string;
-  email: string;
-  linkedin: string;
-  linkedinMeta: string;
-  github: string;
-  githubMeta: string;
-  cv: string;
-  cvMeta: string;
+  contactFormLabel: string;
+  contactChannelEmail: string;
+  contactChannelLinkedin: string;
+  contactChannelGithub: string;
+  contactChannelGithubWork: string;
+  contactChannelCv: string;
+  contactChannelLocation: string;
 
-  footerBuiltWith: string;
-  floatingCommand: string;
-  terminalChannel: string;
+  formName: string;
+  formNamePlaceholder: string;
+  formEmail: string;
+  formEmailPlaceholder: string;
+  formCompany: string;
+  formCompanyPlaceholder: string;
+  formReason: string;
+  formMessage: string;
+  formMessagePlaceholder: string;
+  formSubmit: string;
+  formSubmitting: string;
+  formErrorName: string;
+  formErrorEmail: string;
+  formErrorReason: string;
+  formErrorMessage: string;
+  formErrorServer: string;
+  formSuccessTitle: string;
+  formSuccessText: string;
+  formSuccessReset: string;
+  formDisclaimer: string;
+  reasons: ContactReason[];
+
+  footerName: string;
+  footerLocation: string;
+  footerStack: string;
+  footerBackToTop: string;
 };
 
 export type PortfolioContent = {
@@ -149,170 +162,156 @@ export type PortfolioContent = {
     name: string;
     role: string;
     location: string;
-    relocation: string;
-    headline: string;
-    subcopy: string;
     email: string;
     linkedin: string;
     github: string;
-    portfolio: string;
+    githubWork: string;
     cvPath: string;
   };
-  commandPreview: string;
   sections: NavSection[];
-  metrics: MetricCounter[];
-  systems: SystemModule[];
+  services: ServiceCard[];
+  cases: CaseStudy[];
   timeline: TimelineEntry[];
-  matrixColumns: MatrixColumn[];
-  matrixColumnLabels: Record<MatrixColumn, string>;
-  capabilityMatrix: CapabilityRow[];
+  education: EducationEntry[];
+  skills: SkillGroup[];
   archiveProjects: ArchiveProject[];
   publications: Publication[];
   ui: UiCopy;
-  palette: PaletteCopy;
-  boot: BootCopy;
-  diagram: DiagramCopy;
 };
 
 const profileBase = {
-  name: "Hasan Yucedag",
-  role: "Software Engineer / Fullstack Developer",
+  name: "Hasan Yücedag",
+  role: "Software Engineer",
   email: "yucedagh1@gmail.com",
   linkedin: "https://www.linkedin.com/in/hasan-yuecedag",
   github: "https://github.com/hasanycdg",
-  portfolio: "https://hasanyucedagportfolio.vercel.app/",
+  githubWork: "https://github.com/florianmatthiashasan",
   cvPath: "/Hasan_Yuecedag_Developer_Resume.pdf",
 };
 
-const commonSections: NavSection[] = [
-  { id: "overview", label: "System Overview", short: "OVR" },
-  { id: "systems", label: "Deployed Systems", short: "SYS" },
-  { id: "timeline", label: "Execution Timeline", short: "LOG" },
-  { id: "matrix", label: "Capability Matrix", short: "MAT" },
-  { id: "about", label: "Operator Profile", short: "BIO" },
-  { id: "contact", label: "Collaboration Endpoint", short: "END" },
+const enSections: NavSection[] = [
+  { id: "home", label: "Index" },
+  { id: "services", label: "Services" },
+  { id: "work", label: "Work" },
+  { id: "about", label: "About" },
+  { id: "contact", label: "Contact" },
 ];
 
-const commonMatrixColumns: MatrixColumn[] = ["Build", "Optimize", "Deploy", "Maintain"];
+const deSections: NavSection[] = [
+  { id: "home", label: "Index" },
+  { id: "services", label: "Leistungen" },
+  { id: "work", label: "Arbeiten" },
+  { id: "about", label: "Über" },
+  { id: "contact", label: "Kontakt" },
+];
 
 const enContent: PortfolioContent = {
   profile: {
     ...profileBase,
-    location: "Innsbruck, Austria",
-    relocation: "Relocating to Zurich, Switzerland in August 2026",
-    headline: "Software Engineer building AI-powered, performance-focused web systems.",
-    subcopy:
-      "I build production-ready software systems for real clients — combining fullstack engineering, AI-powered workflows, cloud infrastructure, and performance-focused architecture.",
+    location: "Innsbruck",
   },
-  commandPreview: "deploy --target zurich --role software-engineer",
-  sections: commonSections,
-  metrics: [
+  sections: enSections,
+  services: [
     {
-      label: "PageSpeed",
-      from: 80,
-      to: 95,
-      suffix: "+",
-      note: "Performance optimization in production websites.",
+      id: "fullstack",
+      title: "Fullstack engineering",
+      copy:
+        "End-to-end product development from data model to UI. Production-ready code, deployed and maintainable, with full technical ownership.",
+      stack: ["Next.js", "TypeScript", "Node.js", "PHP", "PostgreSQL"],
+      caseStudyId: "modular-cms",
     },
     {
-      label: "Client Systems",
-      from: 0,
-      to: 5,
-      suffix: "+",
-      note: "Custom plugin and AI workflows adopted by multiple clients.",
+      id: "ai",
+      title: "AI integration",
+      copy:
+        "Practical AI built into real products — RAG chatbots, custom WordPress plugins, content workflows. Built to ship, not to demo.",
+      stack: ["Python", "OpenAI", "RAG", "Vector DBs", "WordPress Plugin API"],
+      caseStudyId: "ai-seo-plugin",
     },
     {
-      label: "Cloud Tracks",
-      from: 0,
-      to: 2,
-      note: "AWS delivery + Azure AZ-104 certification path.",
-    },
-    {
-      label: "Core Domains",
-      from: 0,
-      to: 7,
-      note: "Fullstack, AI, WordPress, cloud, performance, APIs, client delivery.",
+      id: "performance",
+      title: "Performance & infrastructure",
+      copy:
+        "Lifting PageSpeed scores, cutting bundles, setting up resilient AWS delivery. Measurable, with before/after numbers.",
+      stack: ["AWS EC2", "S3", "CloudFront", "Core Web Vitals", "Caching"],
+      caseStudyId: "performance-aws",
     },
   ],
-  systems: [
+  cases: [
     {
       id: "ai-seo-plugin",
-      name: "AI SEO Optimization Plugin for WordPress",
+      title: "AI SEO plugin for WordPress",
+      context: "florianmatthias · 2024 — present",
       status: "production",
-      summary:
-        "Built from scratch an AI-powered WordPress plugin used by multiple clients. It generates alt text, fills Yoast SEO metadata, creates internal links automatically and improves on-page SEO workflows.",
-      architecture: [
-        "WordPress Admin",
-        "AI Service",
-        "Yoast SEO",
-        "Media Library",
-        "Internal Linking Engine",
+      problem:
+        "Editorial teams spend hours manually maintaining alt texts, Yoast metadata, and internal links. The process does not scale with content volume.",
+      solution:
+        "Built a WordPress plugin from scratch that integrates AI pipelines into the editorial workflow. Alt texts, metadata, and internal links are suggested automatically — the editor approves with one click.",
+      results: [
+        "Used in production by multiple client sites.",
+        "Noticeable reduction in time spent per published article.",
+        "Consistent SEO quality across editorial teams.",
       ],
-      stack: ["PHP", "WordPress", "Plugin API", "Yoast Hooks", "Prompt Pipelines"],
-      impact: [
-        "Reduced repetitive editorial SEO work.",
-        "Improved metadata consistency across content teams.",
-        "Enabled faster publish workflows with better on-page quality.",
-      ],
+      stack: ["PHP", "WordPress Plugin API", "OpenAI", "Yoast Hooks", "Prompt pipelines"],
     },
     {
       id: "rag-chatbot",
-      name: "RAG-based AI Chatbot for Client Websites",
+      title: "RAG chatbot for client websites",
+      context: "florianmatthias · 2025",
       status: "production",
-      summary:
-        "Built chatbot systems using uploaded and site-specific knowledge sources to answer user questions and reduce manual support effort.",
-      architecture: [
-        "Documents / Website Content",
-        "Embeddings",
-        "Retrieval",
-        "LLM Answer",
-        "Website Widget",
-      ],
-      stack: ["Python", "RAG", "Vector Retrieval", "API Integrations", "Web Embedding"],
-      impact: [
+      problem:
+        "Clients receive repetitive support questions during and outside business hours. Manual handling blocks the team and slows response times.",
+      solution:
+        "Implemented a chatbot system using site-specific knowledge sources and uploaded documents. Embeddings plus retrieval feed an LLM, embedded as a widget on the client's site.",
+      results: [
         "Reduced repetitive support load through automated answers.",
-        "Improved response availability beyond business hours.",
-        "Shipped practical AI features for client-facing websites.",
+        "24/7 response availability beyond business hours.",
+        "Production AI features shipped for customer-facing websites.",
       ],
+      stack: ["Python", "RAG", "Vector retrieval", "API integrations", "Web embedding"],
     },
     {
       id: "performance-aws",
-      name: "Performance Optimization & AWS Delivery",
+      title: "Performance & AWS delivery",
+      context: "Multiple client sites · 2024 — 2025",
       status: "delivered",
-      summary:
-        "Improved production websites through caching, image optimization, asset loading strategies and CloudFront-based delivery.",
-      architecture: ["WordPress", "Cache Layer", "CloudFront", "Optimized Assets", "User"],
-      stack: ["AWS EC2", "S3", "CloudFront", "Caching", "Core Web Vitals"],
-      impact: [
-        "Lifted PageSpeed from around 80 to 95+.",
+      problem:
+        "Several client sites scored around 80 on PageSpeed, hurting SEO and conversion. Bundle weight, uncached assets, and slow image delivery were the main offenders.",
+      solution:
+        "Set up CloudFront-based delivery, restructured caching layers, optimized image pipelines and asset loading. Established repeatable deployment patterns across projects.",
+      results: [
+        "Lifted PageSpeed from ~80 to 95+ on real production sites.",
         "Reduced payload and improved perceived loading.",
-        "Established consistent deployment and delivery patterns.",
+        "Consistent deployment and delivery standards in place.",
       ],
+      stack: ["AWS EC2", "S3", "CloudFront", "Caching", "Core Web Vitals"],
     },
     {
       id: "modular-cms",
-      name: "Custom WordPress Platforms with Modular Blocks",
+      title: "Modular WordPress platforms",
+      context: "florianmatthias · ongoing",
       status: "scaling",
-      summary:
-        "Built maintainable CMS platforms with ACF, custom blocks, plugins and API integrations for client-editable structures.",
-      architecture: ["ACF", "Custom Blocks", "Theme Layer", "API Integrations", "Client CMS"],
-      stack: ["WordPress", "ACF", "Custom Blocks", "REST APIs", "Theme Engineering"],
-      impact: [
-        "Enabled non-technical teams to operate content safely.",
-        "Improved maintainability through modular structure.",
-        "Lowered future implementation overhead for new features.",
+      problem:
+        "Clients need to edit content safely without breaking layout. Off-the-shelf themes don't give non-technical teams the structure they need.",
+      solution:
+        "Built maintainable CMS platforms with ACF, custom blocks, plugins, and API integrations. Editor-friendly, developer-friendly, consistent across projects.",
+      results: [
+        "Non-technical teams safely operate content.",
+        "Maintainability improved through modular structure.",
+        "Lower implementation overhead for new features.",
       ],
+      stack: ["WordPress", "ACF", "Custom blocks", "REST APIs", "Theme engineering"],
     },
   ],
   timeline: [
     {
-      period: "2025 - Present",
-      role: "Fullstack Developer (Lead responsibilities)",
+      period: "2025 — present",
+      role: "Lead Fullstack Developer",
       org: "florianmatthias",
       logs: [
         "Shipping production client systems end-to-end.",
         "Direct client communication and technical ownership.",
-        "Coordinating implementation across CMS, AI and cloud layers.",
+        "Coordinating implementation across CMS, AI, and cloud layers.",
       ],
     },
     {
@@ -320,111 +319,66 @@ const enContent: PortfolioContent = {
       role: "Software Development Intern",
       org: "Translogica",
       logs: [
-        "Worked in C# / ABP production environment.",
-        "Implemented and optimized roughly 20 product features.",
-        "Contributed to debugging, testing and iterative improvements.",
-      ],
-    },
-    {
-      period: "2022 - 2025",
-      role: "BSc Computer Science",
-      org: "University of Innsbruck",
-      logs: [
-        "Built practical software projects in web and data domains.",
-        "Strengthened software engineering and architecture fundamentals.",
-        "Completed thesis with grade \"Sehr gut\".",
+        "Worked in a C# / ABP production environment.",
+        "Implemented and optimized around 20 product features.",
+        "Contributed to debugging, testing, and iterative improvements.",
       ],
     },
   ],
-  matrixColumns: commonMatrixColumns,
-  matrixColumnLabels: {
-    Build: "Build",
-    Optimize: "Optimize",
-    Deploy: "Deploy",
-    Maintain: "Maintain",
-  },
-  capabilityMatrix: [
+  education: [
     {
-      area: "Frontend Systems",
-      cells: {
-        Build: ["Next.js", "TypeScript", "Tailwind"],
-        Optimize: ["Hydration strategy", "Bundle control", "UX motion"],
-        Deploy: ["Static + dynamic routing", "SEO metadata"],
-        Maintain: ["Refactoring", "Design-system consistency"],
-      },
+      degree: "BSc Computer Science",
+      school: "University of Innsbruck",
+      period: "2022 — 2025",
+      note: "Thesis graded \"Sehr gut\"",
     },
     {
-      area: "Backend APIs",
-      cells: {
-        Build: ["Node/PHP services", "Integration adapters"],
-        Optimize: ["Response shaping", "Error boundaries"],
-        Deploy: ["Versioned interfaces", "Runtime config"],
-        Maintain: ["Debugging", "Contract stability"],
-      },
+      degree: "BORG Innsbruck",
+      school: "Technical track",
+    },
+  ],
+  skills: [
+    {
+      title: "Frontend",
+      items: ["Next.js", "React", "TypeScript", "Tailwind", "Framer Motion"],
     },
     {
-      area: "WordPress Engineering",
-      cells: {
-        Build: ["Custom plugins", "ACF models", "Blocks"],
-        Optimize: ["Editorial workflow", "Plugin performance"],
-        Deploy: ["Client-ready CMS", "Theme integration"],
-        Maintain: ["Upgrades", "Plugin lifecycle"],
-      },
+      title: "Backend",
+      items: ["Node.js", "PHP", "REST APIs", "Java · Spring Boot", "PostgreSQL"],
     },
     {
-      area: "AI / RAG Systems",
-      cells: {
-        Build: ["Knowledge pipelines", "Prompt workflows"],
-        Optimize: ["Retrieval quality", "Answer relevance"],
-        Deploy: ["Website widgets", "Content ingestion"],
-        Maintain: ["Model iteration", "Source refresh"],
-      },
+      title: "AI · WordPress",
+      items: ["OpenAI", "RAG", "Vector retrieval", "Plugin API", "ACF"],
     },
     {
-      area: "Cloud & DevOps",
-      cells: {
-        Build: ["AWS infrastructure", "CDN delivery"],
-        Optimize: ["Caching", "Asset strategy"],
-        Deploy: ["EC2", "S3", "CloudFront"],
-        Maintain: ["Monitoring", "Operational fixes"],
-      },
-    },
-    {
-      area: "Performance Optimization",
-      cells: {
-        Build: ["Performance baselines", "Audit flows"],
-        Optimize: ["CWV and Lighthouse", "Image + script loading"],
-        Deploy: ["Measured improvements", "Regression checks"],
-        Maintain: ["Continuous tuning", "Client reporting"],
-      },
+      title: "Cloud · Performance",
+      items: ["AWS EC2", "S3", "CloudFront", "Caching", "Core Web Vitals"],
     },
   ],
   archiveProjects: [
     {
       title: "Transly",
-      description:
-        "SaaS translation platform for high-volume localization workflows, including XLIFF support.",
+      description: "SaaS translation platform for high-volume localization workflows, with XLIFF support.",
       stack: ["SaaS", "Localization", "XLIFF"],
       href: "https://github.com/hasanycdg/transly",
     },
     {
       title: "Agency Block CLI",
-      description:
-        "Node.js CLI for agency workflows that imports reusable WordPress components from a monorepo.",
+      description: "Node.js CLI for agency workflows that imports reusable WordPress components from a monorepo.",
       stack: ["Node.js", "CLI", "WordPress"],
       href: "https://github.com/florianmatthiashasan/agency-block",
     },
     {
-      title: "Codebase Complexity Visualizer (CCV)",
+      title: "Codebase Complexity Visualizer",
       description: "Local-first desktop app for repository hotspot and dependency-cycle analysis.",
       stack: ["Rust", "Tauri", "TypeScript", "SQLite"],
       href: "https://github.com/hasanycdg/Codebase-Complexity-Visualizer-CCV",
     },
     {
-      title: "Weather Application",
-      description: "Web app for real-time weather data visualization with API-driven backend.",
-      stack: ["Java", "Spring Boot", "PostgreSQL"],
-      href: "https://github.com/hasanycdg/github_projekt",
+      title: "Clarity — Overthink Helper",
+      description: "iOS app that helps users break out of overthinking loops with quick, structured prompts. Live on the App Store.",
+      stack: ["iOS", "Swift", "App Store"],
+      href: "https://apps.apple.com/us/app/clarity-overthink-helper/id6757189127",
     },
   ],
   publications: [
@@ -432,12 +386,12 @@ const enContent: PortfolioContent = {
       year: "2025",
       title: "Guess the Age of Photos",
       description:
-        "Interactive thesis project and research publication pipeline for historical image age estimation.",
+        "Interactive thesis project and research publication for historical image age estimation.",
       href: "https://www.researchgate.net/publication/392167840_Guess_the_Age_of_Photos_An_Interactive_Web_Platform_for_Historical_Image_Age_Estimation",
     },
     {
       year: "2024",
-      title: "IoT fur autonome Fahrzeuge",
+      title: "IoT für autonome Fahrzeuge",
       description:
         "Seminar paper on IoT communication and smart infrastructure for autonomous vehicle systems.",
       href: "/Semesterarbeit.pdf",
@@ -445,225 +399,216 @@ const enContent: PortfolioContent = {
   ],
   ui: {
     skipToMain: "Skip to main content",
-    topbarSubtitle: "Engineering Operating System",
-    openPalette: "Cmd+K",
     languageSwitcher: "Language",
-    layerLabel: "Layer",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
 
-    overviewLayerTitle: "System Overview",
-    currentLocation: "Current location",
-    relocation: "Relocation",
-    viewSystems: "View Systems",
-    downloadCv: "Download CV",
-    contact: "Contact",
+    navHome: "Index",
+    navServices: "Services",
+    navWork: "Work",
+    navAbout: "About",
+    navContact: "Contact",
 
-    systemsLayerTitle: "Deployed Systems",
-    systemsTitle: "Production modules with technical architecture visibility",
-    systemsCopy:
-      "Each module exposes problem, implementation path and production impact. Hover and inspect for detailed internals.",
-    moduleLabel: "module",
+    heroAvailable: "Available for new work",
+    heroHeadlineSegments: [
+      { text: "Modern interfaces. Scalable code. " },
+      { text: "Successful products.", emphasis: true },
+    ],
+    heroSubcopy:
+      "Fullstack engineering, AI integration, and performance work for teams that need serious software — not demos.",
+    heroPrimaryCta: "Selected work",
+    heroSecondaryCta: "Get in touch",
+
+    servicesEyebrow: "01 — Services",
+    servicesTitle: "What I build",
+    servicesCopy:
+      "Three areas where I deliver work that ships and stays. Each entry links to a real case study.",
+    serviceMore: "View case",
+
+    workEyebrow: "02 — Selected work",
+    workTitle: "Production projects with measurable outcomes",
+    workCopy:
+      "Each case follows the same structure: the problem the client had, what I built, and what changed afterwards.",
+    caseProblem: "Problem",
+    caseSolution: "Solution",
+    caseResults: "Results",
+    caseStack: "Stack",
     statusLabels: {
-      production: "Production",
+      production: "In production",
       scaling: "Scaling",
       delivered: "Delivered",
     },
-    layerMap: "Layer map",
-    layerMapValue: "Interface -> Logic -> Delivery -> Operations",
-    inspectInternals: "Inspect architecture internals",
-    hideInternals: "Hide architecture internals",
-    stackLabel: "Stack",
-    impactLabel: "Impact log",
 
-    timelineLayerTitle: "Execution Timeline",
-    timelineTitle: "Deployment-style log of experience and execution",
-    timelineCopy:
-      "Structured as operational logs to show progression from internship to lead-level fullstack ownership.",
+    aboutEyebrow: "03 — About",
+    aboutTitle: "Engineer with skin in the game",
+    aboutBody: [
+      "I'm a Software Engineer working on real client systems in production environments.",
+      "Since 2025 I've been Lead Fullstack Developer at florianmatthias, shipping production systems end-to-end across CMS, AI, and cloud layers.",
+      "I take ownership across implementation, architecture decisions, direct client communication, and long-term maintainability. No hand-offs, no half-finished demos.",
+    ],
 
-    matrixLayerTitle: "Capability Matrix",
-    matrixTitle: "Interactive capability matrix across engineering lifecycle",
-    matrixCopy:
-      "Rows represent capability domains, columns represent execution phase: Build, Optimize, Deploy and Maintain.",
-    matrixDomain: "Domain",
+    experienceEyebrow: "04 — Experience",
+    experienceTitle: "Where I've been working",
 
-    aboutLayerTitle: "Operator Profile",
-    aboutTitle: "Grounded engineering execution with technical ownership",
-    aboutCopy:
-      "I work directly on real client systems in production environments, taking ownership across implementation, architecture choices, communication and long-term maintainability. I am relocating to Zurich in August 2026 and actively pursuing Swiss software engineering roles.",
-    additionalSystems: "Additional Systems",
-    publications: "Papers & Publications",
+    educationLabel: "Education",
+
+    skillsEyebrow: "05 — Stack",
+    skillsTitle: "Day-to-day toolkit",
+
+    archiveEyebrow: "06 — More",
+    archiveTitle: "Side projects and publications",
+    additionalProjects: "Side projects",
+    publications: "Publications",
     openLink: "Open",
     readLink: "Read",
 
-    contactLayerTitle: "Collaboration Endpoint",
-    readyToConnect: "Ready to connect?",
-    contactTitle: "Open to Software Engineer / Fullstack roles in Zurich",
+    contactEyebrow: "07 — Contact",
+    contactTitle: "Let's build something.",
     contactCopy:
-      "If your team is building serious products and needs a fullstack engineer who can ship and own production systems, I am available for interviews and technical discussions.",
-    email: "Email",
-    linkedin: "LinkedIn",
-    linkedinMeta: "Professional profile",
-    github: "GitHub",
-    githubMeta: "Projects and repositories",
-    cv: "CV",
-    cvMeta: "Download PDF",
+      "Hiring, project inquiries, or a quick technical question — I respond within 24 hours.",
+    contactFormLabel: "Send a message",
+    contactChannelEmail: "Email",
+    contactChannelLinkedin: "LinkedIn",
+    contactChannelGithub: "GitHub",
+    contactChannelGithubWork: "Work GitHub",
+    contactChannelCv: "CV",
+    contactChannelLocation: "Based in",
 
-    footerBuiltWith: "Built with Next.js / TypeScript / Tailwind / Framer Motion",
-    floatingCommand: "Command Palette",
-    terminalChannel: "command.run",
-  },
-  palette: {
-    ariaLabel: "Command palette",
-    placeholder: "Search commands or sections",
-    noMatch: "No matching command.",
-    jumpPrefix: "Jump to",
-    downloadCv: "Download CV",
-    openLinkedin: "Open LinkedIn",
-    openGithub: "Open GitHub",
-    externalHint: "External",
-  },
-  boot: {
-    initMessage: "Initializing engineering command center...",
-    steps: [
-      "[01] Loading modules",
-      "[02] Wiring architecture graph",
-      "[03] Syncing deployment timeline",
-      "[04] Ready for recruiter inspection",
+    formName: "Name",
+    formNamePlaceholder: "Your name",
+    formEmail: "Email",
+    formEmailPlaceholder: "you@company.com",
+    formCompany: "Company",
+    formCompanyPlaceholder: "Optional",
+    formReason: "About",
+    formMessage: "Message",
+    formMessagePlaceholder: "Tell me a bit about the role or project…",
+    formSubmit: "Send message",
+    formSubmitting: "Sending…",
+    formErrorName: "Please enter your name (at least 2 characters).",
+    formErrorEmail: "Please enter a valid email address.",
+    formErrorReason: "Please pick one.",
+    formErrorMessage: "Please write at least 20 characters so I can respond properly.",
+    formErrorServer: "Server error. Please email me at yucedagh1@gmail.com.",
+    formSuccessTitle: "Message received.",
+    formSuccessText: "I'll get back to you within 24 hours.",
+    formSuccessReset: "Send another",
+    formDisclaimer: "Your details are used only to respond to your message.",
+    reasons: [
+      { value: "job", label: "Hiring" },
+      { value: "project", label: "Project" },
+      { value: "other", label: "Other" },
     ],
-  },
-  diagram: {
-    title: "Live architecture graph",
-    online: "online",
-    nodes: {
-      frontend: "Frontend",
-      backend: "Backend APIs",
-      ai: "AI / RAG",
-      wordpress: "WordPress",
-      cloud: "Cloud",
-      performance: "Performance",
-    },
+
+    footerName: "Hasan Yücedag",
+    footerLocation: "Software Engineer · Innsbruck",
+    footerStack: "Next.js · TypeScript · Tailwind",
+    footerBackToTop: "Back to top",
   },
 };
 
 const deContent: PortfolioContent = {
   profile: {
     ...profileBase,
-    location: "Innsbruck, Österreich",
-    relocation: "Umzug nach Zürich, Schweiz im August 2026",
-    headline: "Software Engineer für AI-gestützte, performance-fokussierte Websysteme.",
-    subcopy:
-      "Ich entwickle produktionsreife Softwaresysteme für reale Kunden — und verbinde dabei Fullstack Engineering, AI-gestützte Workflows, Cloud-Infrastruktur und performance-fokussierte Architektur.",
+    location: "Innsbruck",
   },
-  commandPreview: "deploy --target zurich --role software-engineer",
-  sections: [
-    { id: "overview", label: "Systemüberblick", short: "OVR" },
-    { id: "systems", label: "Ausgerollte Systeme", short: "SYS" },
-    { id: "timeline", label: "Umsetzungs-Timeline", short: "LOG" },
-    { id: "matrix", label: "Kompetenz-Matrix", short: "MAT" },
-    { id: "about", label: "Operator Profil", short: "BIO" },
-    { id: "contact", label: "Kontakt-Endpoint", short: "END" },
-  ],
-  metrics: [
+  sections: deSections,
+  services: [
     {
-      label: "PageSpeed",
-      from: 80,
-      to: 95,
-      suffix: "+",
-      note: "Performance-Optimierung für produktive Websites.",
+      id: "fullstack",
+      title: "Fullstack Engineering",
+      copy:
+        "End-to-end Produktentwicklung — vom Datenmodell bis zur UI. Produktionsreif, deployt, wartbar — mit voller technischer Verantwortung.",
+      stack: ["Next.js", "TypeScript", "Node.js", "PHP", "PostgreSQL"],
+      caseStudyId: "modular-cms",
     },
     {
-      label: "Kundensysteme",
-      from: 0,
-      to: 5,
-      suffix: "+",
-      note: "Custom Plugin- und AI-Workflows bei mehreren Kunden im Einsatz.",
+      id: "ai",
+      title: "AI-Integration",
+      copy:
+        "Praktische AI in echten Produkten — RAG-Chatbots, eigene WordPress-Plugins, Content-Workflows. Gebaut um zu liefern, nicht zu demonstrieren.",
+      stack: ["Python", "OpenAI", "RAG", "Vector DBs", "WordPress Plugin API"],
+      caseStudyId: "ai-seo-plugin",
     },
     {
-      label: "Cloud-Pfade",
-      from: 0,
-      to: 2,
-      note: "AWS Delivery plus Azure AZ-104 Zertifizierungsweg.",
-    },
-    {
-      label: "Kernbereiche",
-      from: 0,
-      to: 7,
-      note: "Fullstack, AI, WordPress, Cloud, Performance, APIs, Kundenauslieferung.",
+      id: "performance",
+      title: "Performance & Infrastruktur",
+      copy:
+        "PageSpeed-Werte heben, Bundles verkleinern, stabile AWS-Auslieferung aufsetzen. Messbar mit Vorher-Nachher-Zahlen.",
+      stack: ["AWS EC2", "S3", "CloudFront", "Core Web Vitals", "Caching"],
+      caseStudyId: "performance-aws",
     },
   ],
-  systems: [
+  cases: [
     {
       id: "ai-seo-plugin",
-      name: "AI SEO Optimierungs-Plugin für WordPress",
+      title: "AI-SEO-Plugin für WordPress",
+      context: "florianmatthias · 2024 — heute",
       status: "production",
-      summary:
-        "Von Grund auf entwickeltes AI-WordPress-Plugin, das bei mehreren Kunden eingesetzt wird. Es generiert Alt-Texte, befüllt Yoast-SEO-Metadaten, erstellt interne Verlinkungen automatisch und verbessert On-Page-SEO-Workflows.",
-      architecture: [
-        "WordPress Admin",
-        "AI Service",
-        "Yoast SEO",
-        "Media Library",
-        "Internal Linking Engine",
+      problem:
+        "Redaktionsteams verbringen Stunden mit der manuellen Pflege von Alt-Texten, Yoast-Metadaten und interner Verlinkung. Der Prozess skaliert nicht mit dem Content-Volumen.",
+      solution:
+        "Von Grund auf gebautes WordPress-Plugin, das AI-Pipelines in den Redaktions-Workflow integriert. Alt-Texte, Metadaten und interne Links werden automatisch vorgeschlagen — die Redaktion bestätigt mit einem Klick.",
+      results: [
+        "Im produktiven Einsatz bei mehreren Kundenseiten.",
+        "Spürbar weniger Aufwand pro publiziertem Artikel.",
+        "Konsistente SEO-Qualität über Redaktionsteams hinweg.",
       ],
-      stack: ["PHP", "WordPress", "Plugin API", "Yoast Hooks", "Prompt Pipelines"],
-      impact: [
-        "Weniger repetitive SEO-Aufgaben im Redaktionsalltag.",
-        "Konstantere Metadaten-Qualität über Teams hinweg.",
-        "Schnellere Publishing-Workflows mit besserer On-Page-Qualität.",
-      ],
+      stack: ["PHP", "WordPress Plugin API", "OpenAI", "Yoast Hooks", "Prompt Pipelines"],
     },
     {
       id: "rag-chatbot",
-      name: "RAG-basierter AI Chatbot für Kundenwebsites",
+      title: "RAG-Chatbot für Kundenwebsites",
+      context: "florianmatthias · 2025",
       status: "production",
-      summary:
-        "Chatbot-Systeme mit hochgeladenen und website-spezifischen Wissensquellen, um Fragen zu beantworten und manuellen Support-Aufwand zu reduzieren.",
-      architecture: [
-        "Documents / Website Content",
-        "Embeddings",
-        "Retrieval",
-        "LLM Answer",
-        "Website Widget",
+      problem:
+        "Kunden erhalten viele repetitive Support-Anfragen — auch außerhalb der Geschäftszeiten. Manuelle Bearbeitung blockiert das Team und verlängert Antwortzeiten.",
+      solution:
+        "Chatbot-System mit website-spezifischen Wissensquellen und hochgeladenen Dokumenten. Embeddings plus Retrieval füttern ein LLM, eingebettet als Widget auf der Kundenseite.",
+      results: [
+        "Repetitive Support-Last durch automatisierte Antworten reduziert.",
+        "24/7 Antworten — auch außerhalb der Kernzeiten.",
+        "Produktive AI-Features für kundennahe Websites ausgerollt.",
       ],
-      stack: ["Python", "RAG", "Vector Retrieval", "API Integrations", "Web Embedding"],
-      impact: [
-        "Deutlich weniger repetitiver Support durch automatisierte Antworten.",
-        "Bessere Verfügbarkeit von Antworten auch außerhalb von Kernzeiten.",
-        "Praktische AI-Features für kundennahe Websites produktiv ausgerollt.",
-      ],
+      stack: ["Python", "RAG", "Vector Retrieval", "API-Integrationen", "Web Embedding"],
     },
     {
       id: "performance-aws",
-      name: "Performance-Optimierung & AWS Delivery",
+      title: "Performance & AWS-Delivery",
+      context: "Mehrere Kundenseiten · 2024 — 2025",
       status: "delivered",
-      summary:
-        "Produktive Websites durch Caching, Bildoptimierung, Asset-Loading-Strategien und CloudFront-basierte Auslieferung verbessert.",
-      architecture: ["WordPress", "Cache Layer", "CloudFront", "Optimized Assets", "User"],
-      stack: ["AWS EC2", "S3", "CloudFront", "Caching", "Core Web Vitals"],
-      impact: [
-        "PageSpeed von ca. 80 auf 95+ gesteigert.",
-        "Payload reduziert und wahrgenommene Ladezeit verbessert.",
-        "Stabile Deployment- und Delivery-Standards etabliert.",
+      problem:
+        "Mehrere Kundenseiten lagen bei PageSpeed ~80 — schlecht für SEO und Conversion. Hauptursachen: Bundle-Gewicht, ungecachte Assets, langsame Bildauslieferung.",
+      solution:
+        "CloudFront-basierte Auslieferung aufgesetzt, Caching-Schichten neu strukturiert, Bild-Pipelines und Asset-Loading optimiert. Wiederholbare Deployment-Patterns über Projekte hinweg etabliert.",
+      results: [
+        "PageSpeed von ~80 auf 95+ in echten produktiven Sites gehoben.",
+        "Payload reduziert, wahrgenommene Ladezeit verbessert.",
+        "Konsistente Deployment- und Delivery-Standards etabliert.",
       ],
+      stack: ["AWS EC2", "S3", "CloudFront", "Caching", "Core Web Vitals"],
     },
     {
       id: "modular-cms",
-      name: "Custom WordPress Plattformen mit modularen Blocks",
+      title: "Modulare WordPress-Plattformen",
+      context: "florianmatthias · laufend",
       status: "scaling",
-      summary:
-        "Wartbare CMS-Plattformen mit ACF, Custom Blocks, Plugins und API-Integrationen für editierbare Kundenstrukturen gebaut.",
-      architecture: ["ACF", "Custom Blocks", "Theme Layer", "API Integrations", "Client CMS"],
-      stack: ["WordPress", "ACF", "Custom Blocks", "REST APIs", "Theme Engineering"],
-      impact: [
-        "Nicht-technische Teams können Inhalte sicher pflegen.",
+      problem:
+        "Kunden müssen Inhalte sicher pflegen können, ohne das Layout zu brechen. Standard-Themes bieten Nicht-Technikern nicht die nötige Struktur.",
+      solution:
+        "Wartbare CMS-Plattformen mit ACF, Custom Blocks, Plugins und API-Integrationen. Redakteur-freundlich, Entwickler-freundlich, projektübergreifend konsistent.",
+      results: [
+        "Nicht-technische Teams pflegen Inhalte sicher und selbstständig.",
         "Wartbarkeit durch modulare Struktur deutlich verbessert.",
         "Niedrigerer Aufwand für spätere Feature-Erweiterungen.",
       ],
+      stack: ["WordPress", "ACF", "Custom Blocks", "REST APIs", "Theme Engineering"],
     },
   ],
   timeline: [
     {
-      period: "2025 - Heute",
-      role: "Fullstack Developer (Lead-Verantwortung)",
+      period: "2025 — heute",
+      role: "Lead Fullstack Developer",
       org: "florianmatthias",
       logs: [
         "Produktive Kundensysteme End-to-End umgesetzt.",
@@ -681,106 +626,61 @@ const deContent: PortfolioContent = {
         "Debugging, Testing und iterative Verbesserungen mitgestaltet.",
       ],
     },
+  ],
+  education: [
     {
-      period: "2022 - 2025",
-      role: "BSc Informatik",
-      org: "Universität Innsbruck",
-      logs: [
-        "Praxisnahe Softwareprojekte in Web- und Datenbereichen umgesetzt.",
-        "Fundamente in Software Engineering und Architektur vertieft.",
-        "Bachelorarbeit mit Note \"Sehr gut\" abgeschlossen.",
-      ],
+      degree: "BSc Informatik",
+      school: "Universität Innsbruck",
+      period: "2022 — 2025",
+      note: "Bachelorarbeit Note „Sehr gut\"",
+    },
+    {
+      degree: "BORG Innsbruck",
+      school: "Technischer Zweig",
     },
   ],
-  matrixColumns: commonMatrixColumns,
-  matrixColumnLabels: {
-    Build: "Umsetzen",
-    Optimize: "Optimieren",
-    Deploy: "Ausrollen",
-    Maintain: "Betreiben",
-  },
-  capabilityMatrix: [
+  skills: [
     {
-      area: "Frontend-Systeme",
-      cells: {
-        Build: ["Next.js", "TypeScript", "Tailwind"],
-        Optimize: ["Hydration-Strategie", "Bundle-Kontrolle", "UX Motion"],
-        Deploy: ["Static + Dynamic Routing", "SEO Metadaten"],
-        Maintain: ["Refactoring", "Design-System Konsistenz"],
-      },
+      title: "Frontend",
+      items: ["Next.js", "React", "TypeScript", "Tailwind", "Framer Motion"],
     },
     {
-      area: "Backend-APIs",
-      cells: {
-        Build: ["Node/PHP Services", "Integrations-Adapter"],
-        Optimize: ["Response Shaping", "Error Boundaries"],
-        Deploy: ["Versionierte Interfaces", "Runtime Config"],
-        Maintain: ["Debugging", "Contract Stability"],
-      },
+      title: "Backend",
+      items: ["Node.js", "PHP", "REST APIs", "Java · Spring Boot", "PostgreSQL"],
     },
     {
-      area: "WordPress Engineering",
-      cells: {
-        Build: ["Custom Plugins", "ACF Modelle", "Blocks"],
-        Optimize: ["Editorial Workflow", "Plugin Performance"],
-        Deploy: ["Client-Ready CMS", "Theme Integration"],
-        Maintain: ["Upgrades", "Plugin Lifecycle"],
-      },
+      title: "AI · WordPress",
+      items: ["OpenAI", "RAG", "Vector Retrieval", "Plugin API", "ACF"],
     },
     {
-      area: "AI / RAG Systeme",
-      cells: {
-        Build: ["Knowledge Pipelines", "Prompt Workflows"],
-        Optimize: ["Retrieval-Qualität", "Answer Relevance"],
-        Deploy: ["Website Widgets", "Content Ingestion"],
-        Maintain: ["Model Iteration", "Source Refresh"],
-      },
-    },
-    {
-      area: "Cloud & DevOps",
-      cells: {
-        Build: ["AWS Infrastruktur", "CDN Delivery"],
-        Optimize: ["Caching", "Asset Strategie"],
-        Deploy: ["EC2", "S3", "CloudFront"],
-        Maintain: ["Monitoring", "Operational Fixes"],
-      },
-    },
-    {
-      area: "Performance Optimierung",
-      cells: {
-        Build: ["Performance Baselines", "Audit Flows"],
-        Optimize: ["CWV und Lighthouse", "Image + Script Loading"],
-        Deploy: ["Messbare Verbesserungen", "Regression Checks"],
-        Maintain: ["Kontinuierliches Tuning", "Client Reporting"],
-      },
+      title: "Cloud · Performance",
+      items: ["AWS EC2", "S3", "CloudFront", "Caching", "Core Web Vitals"],
     },
   ],
   archiveProjects: [
     {
       title: "Transly",
-      description:
-        "SaaS-Übersetzungsplattform für hohe Lokalisierungsvolumen inklusive XLIFF-Support.",
+      description: "SaaS-Übersetzungsplattform für hohe Lokalisierungsvolumen inkl. XLIFF-Support.",
       stack: ["SaaS", "Localization", "XLIFF"],
       href: "https://github.com/hasanycdg/transly",
     },
     {
       title: "Agency Block CLI",
-      description:
-        "Node.js CLI für Agentur-Workflows zum Import wiederverwendbarer WordPress-Komponenten aus einem Monorepo.",
+      description: "Node.js CLI für Agentur-Workflows zum Import wiederverwendbarer WordPress-Komponenten aus einem Monorepo.",
       stack: ["Node.js", "CLI", "WordPress"],
       href: "https://github.com/florianmatthiashasan/agency-block",
     },
     {
-      title: "Codebase Complexity Visualizer (CCV)",
-      description: "Local-first Desktop App zur Analyse von Hotspots und Abhängigkeitszyklen.",
+      title: "Codebase Complexity Visualizer",
+      description: "Local-first Desktop-App zur Analyse von Hotspots und Abhängigkeitszyklen.",
       stack: ["Rust", "Tauri", "TypeScript", "SQLite"],
       href: "https://github.com/hasanycdg/Codebase-Complexity-Visualizer-CCV",
     },
     {
-      title: "Weather Application",
-      description: "Web-App für Echtzeit-Wettervisualisierung mit API-getriebenem Backend.",
-      stack: ["Java", "Spring Boot", "PostgreSQL"],
-      href: "https://github.com/hasanycdg/github_projekt",
+      title: "Clarity — Overthink Helper",
+      description: "iOS-App, die hilft, aus Gedankenschleifen auszubrechen — mit kurzen, strukturierten Prompts. Live im App Store.",
+      stack: ["iOS", "Swift", "App Store"],
+      href: "https://apps.apple.com/us/app/clarity-overthink-helper/id6757189127",
     },
   ],
   publications: [
@@ -788,7 +688,7 @@ const deContent: PortfolioContent = {
       year: "2025",
       title: "Guess the Age of Photos",
       description:
-        "Interaktives Thesis-Projekt und Research-Pipeline zur Altersschatzung historischer Bilder.",
+        "Interaktives Thesis-Projekt und Research-Veröffentlichung zur Altersschätzung historischer Bilder.",
       href: "https://www.researchgate.net/publication/392167840_Guess_the_Age_of_Photos_An_Interactive_Web_Platform_for_Historical_Image_Age_Estimation",
     },
     {
@@ -801,106 +701,115 @@ const deContent: PortfolioContent = {
   ],
   ui: {
     skipToMain: "Zum Hauptinhalt springen",
-    topbarSubtitle: "Engineering Betriebssystem",
-    openPalette: "Cmd+K",
     languageSwitcher: "Sprache",
-    layerLabel: "Ebene",
+    openMenu: "Menü öffnen",
+    closeMenu: "Menü schließen",
 
-    overviewLayerTitle: "Systemüberblick",
-    currentLocation: "Aktueller Standort",
-    relocation: "Umzug",
-    viewSystems: "Systeme ansehen",
-    downloadCv: "CV herunterladen",
-    contact: "Kontakt",
+    navHome: "Index",
+    navServices: "Leistungen",
+    navWork: "Arbeiten",
+    navAbout: "Über",
+    navContact: "Kontakt",
 
-    systemsLayerTitle: "Ausgerollte Systeme",
-    systemsTitle: "Produktive Module mit sichtbarer technischer Architektur",
-    systemsCopy:
-      "Jedes Modul zeigt Problem, Implementierungspfad und produktiven Einfluss. Hover und Inspektion für tiefere Ebenen.",
-    moduleLabel: "modul",
+    heroAvailable: "Verfügbar für neue Projekte",
+    heroHeadlineSegments: [
+      { text: "Moderne Interfaces. Skalierbarer Code. " },
+      { text: "Erfolgreiche Produkte.", emphasis: true },
+    ],
+    heroSubcopy:
+      "Fullstack-Entwicklung, AI-Integration und Performance-Arbeit für Teams, die ernsthafte Software brauchen — keine Demos.",
+    heroPrimaryCta: "Ausgewählte Arbeiten",
+    heroSecondaryCta: "Kontakt aufnehmen",
+
+    servicesEyebrow: "01 — Leistungen",
+    servicesTitle: "Was ich baue",
+    servicesCopy:
+      "Drei Bereiche, in denen ich Arbeit liefere, die produktiv geht und bleibt. Jeder Eintrag führt zu einer echten Case Study.",
+    serviceMore: "Case ansehen",
+
+    workEyebrow: "02 — Ausgewählte Arbeiten",
+    workTitle: "Produktive Projekte mit messbaren Ergebnissen",
+    workCopy:
+      "Jede Case folgt derselben Struktur: das Problem des Kunden, was ich gebaut habe, was sich danach geändert hat.",
+    caseProblem: "Problem",
+    caseSolution: "Lösung",
+    caseResults: "Ergebnisse",
+    caseStack: "Stack",
     statusLabels: {
-      production: "Produktion",
-      scaling: "Skalierung",
+      production: "In Produktion",
+      scaling: "Skaliert",
       delivered: "Geliefert",
     },
-    layerMap: "Ebenenkarte",
-    layerMapValue: "Interface -> Logik -> Auslieferung -> Betrieb",
-    inspectInternals: "Architektur-Internals inspizieren",
-    hideInternals: "Architektur-Internals ausblenden",
-    stackLabel: "Stack",
-    impactLabel: "Wirkungsprotokoll",
 
-    timelineLayerTitle: "Umsetzungs-Timeline",
-    timelineTitle: "Deployment-Log von Erfahrung und Umsetzung",
-    timelineCopy:
-      "Als operatives Protokoll strukturiert, um den Weg vom Internship zur Lead-Verantwortung sichtbar zu machen.",
+    aboutEyebrow: "03 — Über",
+    aboutTitle: "Engineer mit echter Verantwortung",
+    aboutBody: [
+      "Ich bin Software Engineer und arbeite an realen Kundensystemen in produktiven Umgebungen.",
+      "Seit 2025 bin ich Lead Fullstack Developer bei florianmatthias und liefere produktive Systeme End-to-End über CMS-, AI- und Cloud-Layer.",
+      "Ich übernehme Verantwortung über Implementierung, Architekturentscheidungen, direkte Kundenkommunikation und langfristige Wartbarkeit. Keine Übergaben, keine halbfertigen Demos.",
+    ],
 
-    matrixLayerTitle: "Kompetenz-Matrix",
-    matrixTitle: "Interaktive Kompetenz-Matrix über den Engineering-Lifecycle",
-    matrixCopy:
-      "Zeilen stehen für Kompetenzbereiche, Spalten für die Phasen Umsetzen, Optimieren, Ausrollen und Betreiben.",
-    matrixDomain: "Bereich",
+    experienceEyebrow: "04 — Erfahrung",
+    experienceTitle: "Wo ich bisher gearbeitet habe",
 
-    aboutLayerTitle: "Operator Profil",
-    aboutTitle: "Bodenstandige Umsetzung mit technischer Verantwortung",
-    aboutCopy:
-      "Ich arbeite direkt an realen Kundensystemen in produktiven Umgebungen und übernehme Verantwortung für Implementierung, Architekturentscheidungen, Kommunikation und langfristige Wartbarkeit. Ich ziehe im August 2026 nach Zürich und suche aktiv Software-Engineering-Rollen in der Schweiz.",
-    additionalSystems: "Weitere Systeme",
+    educationLabel: "Ausbildung",
+
+    skillsEyebrow: "05 — Stack",
+    skillsTitle: "Tägliches Toolkit",
+
+    archiveEyebrow: "06 — Mehr",
+    archiveTitle: "Side Projects und Publikationen",
+    additionalProjects: "Side Projects",
     publications: "Publikationen",
     openLink: "Öffnen",
     readLink: "Lesen",
 
-    contactLayerTitle: "Kontakt-Endpoint",
-    readyToConnect: "Bereit für den Austausch?",
-    contactTitle: "Offen für Software Engineer / Fullstack Rollen in Zürich",
+    contactEyebrow: "07 — Kontakt",
+    contactTitle: "Lass uns etwas bauen.",
     contactCopy:
-      "Wenn euer Team ernsthafte Produkte baut und einen Fullstack Engineer sucht, der produktive Systeme liefern und verantworten kann, bin ich für Interviews und technische Gespräche verfügbar.",
-    email: "E-Mail",
-    linkedin: "LinkedIn",
-    linkedinMeta: "Professionelles Profil",
-    github: "GitHub",
-    githubMeta: "Projekte und Repositories",
-    cv: "CV",
-    cvMeta: "PDF herunterladen",
+      "Stellenangebote, Projektanfragen oder eine technische Frage — ich antworte innerhalb von 24 Stunden.",
+    contactFormLabel: "Nachricht senden",
+    contactChannelEmail: "E-Mail",
+    contactChannelLinkedin: "LinkedIn",
+    contactChannelGithub: "GitHub",
+    contactChannelGithubWork: "Work GitHub",
+    contactChannelCv: "CV",
+    contactChannelLocation: "Standort",
 
-    footerBuiltWith: "Gebaut mit Next.js / TypeScript / Tailwind / Framer Motion",
-    floatingCommand: "Befehlspalette",
-    terminalChannel: "command.run",
-  },
-  palette: {
-    ariaLabel: "Befehlspalette",
-    placeholder: "Befehle oder Bereiche suchen",
-    noMatch: "Kein passender Befehl gefunden.",
-    jumpPrefix: "Springe zu",
-    downloadCv: "CV herunterladen",
-    openLinkedin: "LinkedIn öffnen",
-    openGithub: "GitHub öffnen",
-    externalHint: "Extern",
-  },
-  boot: {
-    initMessage: "Engineering Command Center wird initialisiert...",
-    steps: [
-      "[01] Module werden geladen",
-      "[02] Architekturgraph wird verbunden",
-      "[03] Umsetzungs-Timeline wird synchronisiert",
-      "[04] Bereit für Recruiter-Review",
+    formName: "Name",
+    formNamePlaceholder: "Dein Name",
+    formEmail: "E-Mail",
+    formEmailPlaceholder: "du@firma.com",
+    formCompany: "Unternehmen",
+    formCompanyPlaceholder: "Optional",
+    formReason: "Anlass",
+    formMessage: "Nachricht",
+    formMessagePlaceholder: "Erzähl mir kurz, worum es geht…",
+    formSubmit: "Nachricht senden",
+    formSubmitting: "Wird gesendet…",
+    formErrorName: "Bitte gib deinen Namen ein (mindestens 2 Zeichen).",
+    formErrorEmail: "Bitte gib eine gültige E-Mail-Adresse ein.",
+    formErrorReason: "Bitte wähle eine Option.",
+    formErrorMessage: "Bitte schreib mindestens 20 Zeichen, damit ich sinnvoll antworten kann.",
+    formErrorServer: "Server-Fehler. Bitte schreib direkt an yucedagh1@gmail.com.",
+    formSuccessTitle: "Nachricht angekommen.",
+    formSuccessText: "Ich melde mich innerhalb von 24 Stunden bei dir.",
+    formSuccessReset: "Weitere senden",
+    formDisclaimer: "Deine Angaben werden ausschließlich zur Beantwortung deiner Nachricht genutzt.",
+    reasons: [
+      { value: "job", label: "Stelle" },
+      { value: "project", label: "Projekt" },
+      { value: "other", label: "Sonstiges" },
     ],
-  },
-  diagram: {
-    title: "Live Architekturgraph",
-    online: "online",
-    nodes: {
-      frontend: "Frontend",
-      backend: "Backend APIs",
-      ai: "AI / RAG",
-      wordpress: "WordPress",
-      cloud: "Cloud",
-      performance: "Performance",
-    },
+
+    footerName: "Hasan Yücedag",
+    footerLocation: "Software Engineer · Innsbruck",
+    footerStack: "Next.js · TypeScript · Tailwind",
+    footerBackToTop: "Nach oben",
   },
 };
 
-export const defaultLocale: Locale = "en";
+export const defaultLocale: Locale = "de";
 
 export const portfolioByLocale: Record<Locale, PortfolioContent> = {
   en: enContent,
