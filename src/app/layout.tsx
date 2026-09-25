@@ -5,6 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hasanyucedagportfolio.vercel.app"),
+  applicationName: "Hasan Yücedag",
   title: "Hasan Yücedag — Digital Product Studio",
   description:
     "Strategy, interface design, and fullstack engineering for digital products that look professional and perform reliably.",
@@ -30,9 +31,15 @@ export const metadata: Metadata = {
     title: "Hasan Yücedag — Digital Product Studio",
     description: "Strategy, interface design, and fullstack engineering for ambitious digital products.",
   },
+  manifest: "/site.webmanifest",
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 

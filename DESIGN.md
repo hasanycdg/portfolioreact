@@ -33,7 +33,7 @@
 ## 2. Strategische Positionierung
 
 **Zielgruppen (in dieser Reihenfolge):**
-1. **Recruiter / Hiring Manager in Zürich** (Hauptziel — Umzug 08/2026)
+1. **Recruiter / Hiring Manager** (Hauptziel)
 2. **Kleine bis mittlere Unternehmen / Agenturen**, die Fullstack-, AI- oder WordPress-Arbeit auslagern wollen
 3. **Andere Entwickler / Tech-Leads**, die deine Arbeit referenzieren
 
@@ -131,7 +131,7 @@ caption:    13px    / 1.5            weight 500 uppercase tracking 0.08em
 ```
 ┌───────────────────────────────────────────────────────┐
 │  [Foto Hasan] Hasan Yücedag                           │
-│               Software Engineer · Innsbruck → Zürich  │
+│               Software Engineer · Innsbruck           │
 │               • Verfügbar ab 08/2026  [grüner Dot]    │
 │                                                       │
 │  Ich baue Webprodukte, die                            │
@@ -240,9 +240,8 @@ Vier Projekte = vier solche Karten, **untereinander**, mit großzügigem vertika
 │                     2025 als Lead-Fullstack-Entwickler │
 │                     bei florianmatthias.               │
 │                                                        │
-│                     Im August 2026 ziehe ich nach      │
-│                     Zürich und bin offen für Software- │
-│                     Engineer-Rollen in der Schweiz.    │
+│                     Ich bin offen für passende         │
+│                     Software-Engineer-Rollen.          │
 │                                                        │
 │                     [LinkedIn] [GitHub] [E-Mail]       │
 └────────────────────────────────────────────────────────┘
@@ -269,7 +268,7 @@ Statt nur eines Mailto-Links bekommt der Kunde ein **richtiges Kontaktformular**
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
 │  Lass uns reden.                                                     │
-│  Ob Stelle in Zürich oder Projektanfrage — ich antworte              │
+│  Ob Stelle oder Projektanfrage — ich antworte                         │
 │  innerhalb von 24 Stunden.                                           │
 │                                                                      │
 │  ┌────────────────────────────┐  ┌────────────────────────────────┐ │
@@ -281,7 +280,6 @@ Statt nur eines Mailto-Links bekommt der Kunde ein **richtiges Kontaktformular**
 │  │  ⬇  CV herunterladen (PDF)  │  │  E-Mail *                      │ │
 │  │                             │  │  [____________________]        │ │
 │  │  Standort: Innsbruck        │  │                                │ │
-│  │  Ab 08/2026: Zürich         │  │  Unternehmen / Kontext          │ │
 │  │  Verfügbar [grüner Dot]     │  │  [____________________]        │ │
 │  │  Antwortzeit < 24h          │  │                                │ │
 │  │                             │  │  Worum geht es? *              │ │
