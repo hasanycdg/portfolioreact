@@ -1,22 +1,7 @@
 import type { Metadata } from "next";
-import { Manrope, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-
-const sans = Manrope({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-mono",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hasanyucedagportfolio.vercel.app"),
@@ -58,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de">
-      <body className={`${sans.variable} ${mono.variable}`}>
+      <body>
         {children}
         <Analytics />
         <SpeedInsights />
