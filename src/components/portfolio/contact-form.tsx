@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, Send } from "lucide-react";
 import { contactSchema, type ContactPayload } from "@/lib/contact-schema";
 import type { Locale, UiCopy } from "@/lib/portfolio-data";
 
@@ -17,6 +16,22 @@ type ContactFormProps = {
   ui: UiCopy;
   locale: Locale;
 };
+
+function FormArrow() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" width="15" height="15" fill="none">
+      <path d="M4 16 16 4M7 4h9v9" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+function Checkmark() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" width="20" height="20" fill="none">
+      <path d="m4 10 4 4 8-9" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
 
 export function ContactForm({ ui, locale }: ContactFormProps) {
   const [status, setStatus] = useState<FormStatus>({ kind: "idle" });
@@ -62,9 +77,7 @@ export function ContactForm({ ui, locale }: ContactFormProps) {
   if (status.kind === "success") {
     return (
       <div className="form-success-card" role="status" aria-live="polite">
-        <span className="form-success-icon">
-          <Check size={22} />
-        </span>
+        <span className="form-success-icon"><Checkmark /></span>
         <h3 className="form-success-title">{ui.formSuccessTitle}</h3>
         <p className="form-success-text">{ui.formSuccessText}</p>
         <button
@@ -203,15 +216,11 @@ export function ContactForm({ ui, locale }: ContactFormProps) {
           type="submit"
           className="btn btn-primary"
           disabled={status.kind === "submitting"}
-          style={{ alignSelf: "flex-start" }}
         >
           {status.kind === "submitting" ? (
             ui.formSubmitting
           ) : (
-            <>
-              {ui.formSubmit}
-              <Send size={14} />
-            </>
+            <>{ui.formSubmit}<FormArrow /></>
           )}
         </button>
         <p className="form-disclaimer">{ui.formDisclaimer}</p>
