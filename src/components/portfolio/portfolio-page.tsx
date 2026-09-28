@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { defaultLocale, portfolioByLocale, type Locale } from "@/lib/portfolio-data";
+import { ConsentSettingsButton } from "@/components/consent/consent-manager";
 import { GithubIcon, LinkedinIcon, MailIcon, WhatsappIcon } from "./brand-icons";
 
 const easing = [0.22, 1, 0.36, 1] as const;
@@ -60,7 +62,7 @@ const copy = {
     contactWhatsappText: "Der schnellste Weg – schreib mir direkt.", contactMailText: "Für ausführliche Anfragen und Unterlagen.",
     whatsappGreeting: "Hallo Hasan, ich habe ein Projekt, über das ich mit dir sprechen möchte.", mailSubject: "Projektanfrage", contactNote: "Ich antworte üblicherweise innerhalb von 24 Stunden.",
     contactLabel: "Projektanfrage", contactTitle: "Was möchtest du als Nächstes bauen?", contactText: "Schreib mir ein paar Zeilen zu deinem Projekt, deinem Ziel und dem gewünschten Zeitrahmen – per WhatsApp oder E-Mail, ganz wie es dir lieber ist.",
-    footer: "Websites · Software · AI",
+    footer: "Websites · Software · AI", imprint: "Impressum", privacy: "Datenschutz", cookieSettings: "Cookie-Einstellungen",
   },
   en: {
     navWork: "Projects", navServices: "Services", navAbout: "About", contact: "Discuss a project", menu: "Menu", close: "Close",
@@ -105,7 +107,7 @@ const copy = {
     contactWhatsappText: "The fastest way – message me directly.", contactMailText: "For detailed inquiries and documents.",
     whatsappGreeting: "Hi Hasan, I have a project I'd like to discuss with you.", mailSubject: "Project inquiry", contactNote: "I usually respond within 24 hours.",
     contactLabel: "Project inquiry", contactTitle: "What would you like to build next?", contactText: "Send me a few lines about your project, goal, and desired timeline – via WhatsApp or email, whichever you prefer.",
-    footer: "Websites · Software · AI",
+    footer: "Websites · Software · AI", imprint: "Legal notice", privacy: "Privacy", cookieSettings: "Cookie settings",
   },
 } as const;
 
@@ -304,7 +306,7 @@ export function PortfolioPage() {
         </div></section>
       </main>
 
-      <footer className="footer"><div className="container footer-row"><a className="brand footer-brand" href="#home">hasan<span>yücedag</span></a><p>© {new Date().getFullYear()} · {t.footer}</p><div><a href={content.profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a><a href={content.profile.github} target="_blank" rel="noreferrer">GitHub</a></div></div></footer>
+      <footer className="footer"><div className="container footer-row"><a className="brand footer-brand" href="#home">hasan<span>yücedag</span></a><p>© {new Date().getFullYear()} · {t.footer}</p><div><a href={content.profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a><a href={content.profile.github} target="_blank" rel="noreferrer">GitHub</a><Link href="/impressum">{t.imprint}</Link><Link href="/datenschutz">{t.privacy}</Link><ConsentSettingsButton label={t.cookieSettings} /></div></div></footer>
     </>
   );
 }
