@@ -34,11 +34,11 @@ const copy = {
     regiereTitle: "Regiere Deutschland", regiereText: "Eine satirische Politik-Simulation, in der Wahlen, Koalitionen und politische Entscheidungen den Weg ins Kanzleramt bestimmen.",
     ccvTitle: "Codebase Visualizer", ccvText: "Local-first Desktop-App zur Analyse von Hotspots, Abhängigkeiten und Komplexität in großen Repositories.",
     learnMore: "Projekt öffnen", servicesLabel: "Leistungen", servicesTitle: "Drei Leistungen. Drei konkrete Ergebnisse.",
-    servicesText: "Ich verbinde Produktdenken, visuelles Design und Software Engineering. So bleibt die Idee vom ersten Wireframe bis zum produktiven Code konsistent.",
+    servicesText: "Ich verbinde Produktdenken, visuelles Design und Software Engineering. So bleibt die Idee vom ersten Wireframe bis zum produktiven Code konsistent.", serviceDeliverableLabel: "Ergebnis",
     serviceItems: [
-      ["01", "Websites & Plattformen", "Individuelle Websites, Portale und Webanwendungen, die schnell laden, klar führen und einfach weiterentwickelt werden können."],
-      ["02", "UI/UX & Designsysteme", "Klare Interfaces und wiederverwendbare Komponenten, damit ein Produkt über Seiten, Features und Jahre hinweg zusammenhält."],
-      ["03", "Fullstack & AI", "Saubere Frontends, belastbare Backends und sinnvolle AI-Integrationen für produktive Anwendungen statt isolierter Demos."],
+      { number: "01", title: "Websites & Plattformen", description: "Eine veröffentlichte Website mit CMS, responsivem Frontend und dokumentiertem Deployment.", deliverable: "Live-Website" },
+      { number: "02", title: "UI/UX & Designsysteme", description: "Ein klickbarer Prototyp plus Komponentenbibliothek für konsistente Produktoberflächen.", deliverable: "Figma-Prototyp + Komponentenbibliothek" },
+      { number: "03", title: "Fullstack & AI", description: "Eine produktive Web-App mit API, Datenmodell und gezielter AI-Funktion.", deliverable: "Deploybare Anwendung" },
     ],
     operationsLabel: "Betrieb & Verantwortung", operationsTitle: "Nach dem Launch beginnt die eigentliche Arbeit.",
     operationsText: "Ich kümmere mich um die technische Basis, die im Alltag oft unsichtbar bleibt – aber darüber entscheidet, ob eine Website sicher, messbar, schnell und dauerhaft zuverlässig arbeitet.",
@@ -72,11 +72,11 @@ const copy = {
     regiereTitle: "Regiere Deutschland", regiereText: "A satirical political simulation where elections, coalitions, and policy decisions shape the path to the chancellery.",
     ccvTitle: "Codebase Visualizer", ccvText: "A local-first desktop app for analyzing hotspots, dependencies, and complexity in large repositories.",
     learnMore: "Open project", servicesLabel: "Services", servicesTitle: "Three services. Three concrete outcomes.",
-    servicesText: "I combine product thinking, visual design, and software engineering, keeping the idea consistent from the first wireframe to production code.",
+    servicesText: "I combine product thinking, visual design, and software engineering, keeping the idea consistent from the first wireframe to production code.", serviceDeliverableLabel: "Outcome",
     serviceItems: [
-      ["01", "Websites & platforms", "Custom websites, portals, and web applications that load quickly, guide clearly, and remain easy to extend."],
-      ["02", "UI/UX & design systems", "Clear interfaces and reusable components that keep a product consistent across pages, features, and years."],
-      ["03", "Fullstack & AI", "Clean frontends, reliable backends, and useful AI integrations for production applications rather than isolated demos."],
+      { number: "01", title: "Websites & platforms", description: "A published website with CMS, responsive frontend, and documented deployment.", deliverable: "Live website" },
+      { number: "02", title: "UI/UX & design systems", description: "A clickable prototype plus component library for consistent product interfaces.", deliverable: "Figma prototype + component library" },
+      { number: "03", title: "Fullstack & AI", description: "A production web app with API, data model, and focused AI feature.", deliverable: "Deployable application" },
     ],
     operationsLabel: "Operations & responsibility", operationsTitle: "The real work starts after launch.",
     operationsText: "I handle the technical foundation that often stays invisible in daily use but determines whether a website remains private, measurable, fast, and dependable.",
@@ -213,7 +213,11 @@ export function PortfolioPage() {
 
         <section id="services" className="services-section section-space container">
           <motion.div className="services-intro" {...reveal}><p className="eyebrow">{t.servicesLabel}</p><div><h2>{t.servicesTitle}</h2><p>{t.servicesText}</p></div></motion.div>
-          <div className="service-list">{t.serviceItems.map(([number, title, description]) => <motion.article key={number} className="service-item" {...reveal}><span>{number}</span><h3>{title}</h3><p>{description}</p></motion.article>)}</div>
+          <div className="service-deliverables">{t.serviceItems.map((item) => <motion.article key={item.number} className="service-deliverable-card" {...reveal}>
+            <span className="service-number">{item.number}</span>
+            <div className="service-copy"><h3>{item.title}</h3><p>{item.description}</p></div>
+            <div className="service-output"><span>{t.serviceDeliverableLabel}</span><strong>{item.deliverable}</strong></div>
+          </motion.article>)}</div>
           <div className="operations-block" aria-labelledby="operations-title">
             <motion.div className="operations-intro" {...reveal}><p className="eyebrow">{t.operationsLabel}</p><div><h3 id="operations-title">{t.operationsTitle}</h3><p>{t.operationsText}</p></div></motion.div>
             <div className="operation-grid">{t.operationItems.map((item) => <motion.article key={item.number} className={`operation-card operation-${item.kind}`} {...reveal}>

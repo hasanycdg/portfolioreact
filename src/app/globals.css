@@ -147,11 +147,15 @@ img, svg { display: block; }
 .services-intro h2 { max-width: 15ch; margin: 0; font-size: clamp(2.8rem, 5vw, 5.2rem); line-height: 1.02; letter-spacing: -.06em; font-weight: 650; text-wrap: balance; }
 .services-intro .eyebrow + div { margin-top: 1.25rem; }
 .services-intro > div > p { max-width: 47rem; margin: 1.8rem 0 0; color: var(--text); line-height: 1.75; }
-.service-list { border-top: 1px solid var(--line); }
-.service-item { display: grid; grid-template-columns: .7fr 1.2fr 1.4fr; gap: 2rem; align-items: start; padding-block: 2.3rem; border-bottom: 1px solid var(--line); }
-.service-item > span { color: var(--muted); font-family: var(--font-mono), monospace; font-size: .68rem; }
-.service-item h3 { margin: 0; font-size: clamp(1.45rem, 2.6vw, 2.6rem); line-height: 1.1; letter-spacing: -.045em; font-weight: 620; }
-.service-item p { max-width: 38rem; margin: 0; color: var(--text); font-size: .9rem; line-height: 1.7; }
+.service-deliverables { display: grid; gap: .8rem; }
+.service-deliverable-card { display: grid; grid-template-columns: minmax(4rem, .35fr) 1.25fr 1fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: center; min-height: 13rem; padding: clamp(1.5rem, 3.5vw, 3rem); background: var(--surface-muted); border-radius: 1.25rem; }
+.service-deliverable-card:nth-child(2) { margin-left: clamp(0rem, 5vw, 5rem); }
+.service-number { align-self: start; color: #666963; font-family: var(--font-mono), monospace; font-size: 1rem; font-variant-numeric: tabular-nums; }
+.service-copy h3 { margin: 0; font-size: clamp(1.7rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.05em; font-weight: 650; }
+.service-copy p { max-width: 34rem; margin: 1rem 0 0; color: var(--text); font-size: 1rem; line-height: 1.65; }
+.service-output { align-self: stretch; display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; padding: 1.1rem; background: var(--surface); border-radius: .8rem; }
+.service-output span { color: #666963; font-size: .72rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
+.service-output strong { max-width: 21rem; font-size: clamp(1.05rem, 1.7vw, 1.35rem); line-height: 1.25; letter-spacing: -.025em; }
 .operations-block { margin-top: clamp(6rem, 10vw, 10rem); padding-top: clamp(3rem, 5vw, 5rem); border-top: 1px solid var(--line); }
 .operations-intro { display: block; max-width: 64rem; margin-bottom: clamp(3.5rem, 6vw, 6rem); }
 .operations-intro h3 { max-width: 14ch; margin: 0; font-size: clamp(2.4rem, 4.5vw, 4.7rem); line-height: 1.02; letter-spacing: -.06em; font-weight: 650; text-wrap: balance; }
@@ -298,8 +302,9 @@ img, svg { display: block; }
   .services-intro, .operations-intro { grid-template-columns: 1fr; gap: 1.2rem; }
   .services-intro h2 { font-size: clamp(2.7rem, 12vw, 4rem); }
   .operations-intro h3 { font-size: clamp(2.5rem, 11vw, 3.8rem); }
-  .service-item { grid-template-columns: 2rem 1fr; gap: .8rem; }
-  .service-item p { grid-column: 2; }
+  .service-deliverable-card { grid-template-columns: 2.2rem 1fr; gap: 1rem; }
+  .service-deliverable-card:nth-child(2) { margin-left: 0; }
+  .service-output { grid-column: 2; min-height: 8rem; }
   .operation-grid { grid-template-columns: 1fr; }
   .operation-card, .operation-privacy, .operation-tracking, .operation-hosting, .operation-performance, .operation-care { grid-column: auto; min-height: 25rem; }
   .operation-care { display: flex; }
