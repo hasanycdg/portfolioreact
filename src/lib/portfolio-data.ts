@@ -380,6 +380,18 @@ const enContent: PortfolioContent = {
       stack: ["iOS", "Swift", "App Store"],
       href: "https://apps.apple.com/us/app/clarity-overthink-helper/id6757189127",
     },
+    {
+      title: "SilaYolu",
+      description: "Smart iOS travel companion for road trips between Europe and Türkiye, with border updates, route costs, and checklists.",
+      stack: ["iOS", "Swift", "Travel"],
+      href: "https://apps.apple.com/de/app/silayolu/id6769356177",
+    },
+    {
+      title: "Regiere Deutschland",
+      description: "Satirical iOS political simulation about elections, coalitions, and governing Germany.",
+      stack: ["iOS", "Swift", "Simulation"],
+      href: "https://apps.apple.com/de/app/regiere-deutschland/id6802046575",
+    },
   ],
   publications: [
     {
@@ -681,6 +693,18 @@ const deContent: PortfolioContent = {
       description: "iOS-App, die hilft, aus Gedankenschleifen auszubrechen — mit kurzen, strukturierten Prompts. Live im App Store.",
       stack: ["iOS", "Swift", "App Store"],
       href: "https://apps.apple.com/us/app/clarity-overthink-helper/id6757189127",
+    },
+    {
+      title: "SilaYolu",
+      description: "Smarter iOS-Reisebegleiter für Autofahrten zwischen Europa und Türkiye – mit Grenzinfos, Routenkosten und Checklisten.",
+      stack: ["iOS", "Swift", "Reise"],
+      href: "https://apps.apple.com/de/app/silayolu/id6769356177",
+    },
+    {
+      title: "Regiere Deutschland",
+      description: "Satirische iOS-Politiksimulation rund um Wahlen, Koalitionen und das Regieren Deutschlands.",
+      stack: ["iOS", "Swift", "Simulation"],
+      href: "https://apps.apple.com/de/app/regiere-deutschland/id6802046575",
     },
   ],
   publications: [

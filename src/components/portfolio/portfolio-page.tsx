@@ -30,6 +30,8 @@ const copy = {
     productsLabel: "Produkte & Tools", productsTitle: "Software, die echte Arbeit abnimmt.",
     aiTitle: "AI SEO Assistant", aiText: "WordPress-Plugin für Alt-Texte, Metadaten und interne Verlinkung – direkt im redaktionellen Workflow.",
     clarityTitle: "Clarity für iOS", clarityText: "Eine veröffentlichte iOS-App, die Menschen mit kurzen, strukturierten Prompts aus Gedankenschleifen hilft.",
+    silaYoluTitle: "SilaYolu", silaYoluText: "Der smarte Reisebegleiter für Autofahrten zwischen Europa und Türkiye – mit Grenzinfos, Routenkosten und Reise-Checklisten.",
+    regiereTitle: "Regiere Deutschland", regiereText: "Eine satirische Politik-Simulation, in der Wahlen, Koalitionen und politische Entscheidungen den Weg ins Kanzleramt bestimmen.",
     ccvTitle: "Codebase Visualizer", ccvText: "Local-first Desktop-App zur Analyse von Hotspots, Abhängigkeiten und Komplexität in großen Repositories.",
     learnMore: "Projekt öffnen", servicesLabel: "Leistungen", servicesTitle: "Von der ersten Idee bis zum stabilen Produkt.",
     servicesText: "Ich verbinde Produktdenken, visuelles Design und Software Engineering. So bleibt die Idee vom ersten Wireframe bis zum produktiven Code konsistent.",
@@ -37,6 +39,15 @@ const copy = {
       ["01", "Websites & Plattformen", "Individuelle Websites, Portale und Webanwendungen, die schnell laden, klar führen und einfach weiterentwickelt werden können."],
       ["02", "UI/UX & Designsysteme", "Klare Interfaces und wiederverwendbare Komponenten, damit ein Produkt über Seiten, Features und Jahre hinweg zusammenhält."],
       ["03", "Fullstack & AI", "Saubere Frontends, belastbare Backends und sinnvolle AI-Integrationen für produktive Anwendungen statt isolierter Demos."],
+    ],
+    operationsLabel: "Betrieb & Verantwortung", operationsTitle: "Nach dem Launch beginnt die eigentliche Arbeit.",
+    operationsText: "Ich kümmere mich um die technische Basis, die im Alltag oft unsichtbar bleibt – aber darüber entscheidet, ob eine Website sicher, messbar, schnell und dauerhaft zuverlässig arbeitet.",
+    operationItems: [
+      { number: "01", kind: "privacy", kicker: "Kontrolle statt Checkbox", title: "Datenschutz & Cookie-Management", description: "Consent-Lösungen werden technisch sauber nach deinen rechtlichen Vorgaben umgesetzt. Externe Dienste laden erst dann, wenn die passende Einwilligung vorliegt.", points: ["CMP & Consent-Banner", "Google Consent Mode v2", "Prüfung externer Dienste"] },
+      { number: "02", kind: "tracking", kicker: "Verstehen, was funktioniert", title: "Tracking & Analytics", description: "Ein nachvollziehbares Messkonzept zeigt, welche Inhalte, Kampagnen und Anfragen wirklich funktionieren – ohne wahllos Daten zu sammeln.", points: ["GA4, Matomo & Tag Manager", "Events und Conversions", "Consent-basierte Datenerfassung"] },
+      { number: "03", kind: "hosting", kicker: "Stabile technische Basis", title: "Hosting & Server", description: "Vom DNS-Eintrag bis zum produktiven Deployment: Die Infrastruktur wird passend zur Website eingerichtet, abgesichert und dokumentiert.", points: ["SSL, DNS & Deployments", "Backups und Monitoring", "CDN- und Cache-Setup"] },
+      { number: "04", kind: "performance", kicker: "Geschwindigkeit, die man spürt", title: "Performance & Core Web Vitals", description: "Ich finde echte Engpässe und optimiere Bilder, Code, Fonts und Caching gezielt – besonders für mobile Geräte und langsame Verbindungen.", points: ["Lighthouse-Analyse", "Bild- und Code-Optimierung", "Messbarer Vorher-nachher-Vergleich"] },
+      { number: "05", kind: "care", kicker: "Ein verlässlicher Ansprechpartner", title: "Technische Betreuung", description: "Websites brauchen Updates, Kontrolle und schnelle Hilfe, wenn etwas hakt. Ich begleite den laufenden Betrieb und halte das System gesund.", points: ["Updates und Wartung", "Fehleranalyse und Support", "Kleine Weiterentwicklungen"] },
     ],
     aboutLabel: "Über mich", aboutTitle: "Ein Entwickler, der das ganze Produkt sieht.",
     aboutText: "Ich bin Hasan Yücedag, Software Engineer und Lead Fullstack Developer aus Innsbruck. Mein Schwerpunkt liegt auf digitalen Produkten, bei denen Gestaltung, Nutzerführung und technische Qualität gemeinsam funktionieren müssen.",
@@ -57,6 +68,8 @@ const copy = {
     productsLabel: "Products & tools", productsTitle: "Software that removes real work.",
     aiTitle: "AI SEO Assistant", aiText: "A WordPress plugin for alt text, metadata, and internal links, built directly into the editorial workflow.",
     clarityTitle: "Clarity for iOS", clarityText: "A published iOS app that helps people break out of overthinking loops with short, structured prompts.",
+    silaYoluTitle: "SilaYolu", silaYoluText: "A smart travel companion for road trips between Europe and Türkiye, with border updates, route costs, and travel checklists.",
+    regiereTitle: "Regiere Deutschland", regiereText: "A satirical political simulation where elections, coalitions, and policy decisions shape the path to the chancellery.",
     ccvTitle: "Codebase Visualizer", ccvText: "A local-first desktop app for analyzing hotspots, dependencies, and complexity in large repositories.",
     learnMore: "Open project", servicesLabel: "Services", servicesTitle: "From the first idea to a stable product.",
     servicesText: "I combine product thinking, visual design, and software engineering, keeping the idea consistent from the first wireframe to production code.",
@@ -64,6 +77,15 @@ const copy = {
       ["01", "Websites & platforms", "Custom websites, portals, and web applications that load quickly, guide clearly, and remain easy to extend."],
       ["02", "UI/UX & design systems", "Clear interfaces and reusable components that keep a product consistent across pages, features, and years."],
       ["03", "Fullstack & AI", "Clean frontends, reliable backends, and useful AI integrations for production applications rather than isolated demos."],
+    ],
+    operationsLabel: "Operations & responsibility", operationsTitle: "The real work starts after launch.",
+    operationsText: "I handle the technical foundation that often stays invisible in daily use but determines whether a website remains private, measurable, fast, and dependable.",
+    operationItems: [
+      { number: "01", kind: "privacy", kicker: "Control beyond the checkbox", title: "Privacy & cookie management", description: "Consent solutions are implemented cleanly according to your legal requirements. External services only load after the appropriate consent is given.", points: ["CMP and consent banner", "Google Consent Mode v2", "Third-party service audit"] },
+      { number: "02", kind: "tracking", kicker: "Understand what works", title: "Tracking & analytics", description: "A transparent measurement plan shows which content, campaigns, and inquiries perform without collecting data indiscriminately.", points: ["GA4, Matomo, and Tag Manager", "Events and conversions", "Consent-based data collection"] },
+      { number: "03", kind: "hosting", kicker: "A stable technical foundation", title: "Hosting & servers", description: "From DNS records to production deployment, I set up, secure, and document infrastructure that fits the website.", points: ["SSL, DNS, and deployments", "Backups and monitoring", "CDN and cache setup"] },
+      { number: "04", kind: "performance", kicker: "Speed people can feel", title: "Performance & Core Web Vitals", description: "I identify real bottlenecks and optimize images, code, fonts, and caching, with particular attention to mobile devices and slower connections.", points: ["Lighthouse analysis", "Image and code optimization", "Measured before-and-after results"] },
+      { number: "05", kind: "care", kicker: "A reliable technical partner", title: "Ongoing technical care", description: "Websites need updates, oversight, and quick help when something breaks. I support day-to-day operations and keep the system healthy.", points: ["Updates and maintenance", "Troubleshooting and support", "Continuous improvements"] },
     ],
     aboutLabel: "About", aboutTitle: "An engineer who sees the entire product.",
     aboutText: "I'm Hasan Yücedag, a Software Engineer and Lead Fullstack Developer based in Innsbruck. I focus on digital products where visual design, user experience, and technical quality need to work together.",
@@ -95,10 +117,29 @@ function ClientProject({ title, category, description, role, href, image, alt }:
   );
 }
 
-function ProductGraphic({ kind }: { kind: "ai" | "ios" | "code" }) {
+function ProductGraphic({ kind }: { kind: "ai" | "code" }) {
   if (kind === "ai") return <div className="product-graphic graphic-ai" aria-hidden="true"><div className="ai-sidebar"><span /><span /><span /></div><div className="ai-main"><b>SEO Assistant</b><div className="ai-field" /><div className="ai-field short" /><div className="ai-suggestion"><span>Suggested metadata</span><i /></div></div></div>;
-  if (kind === "ios") return <div className="product-graphic graphic-ios" aria-hidden="true"><div className="phone"><span className="phone-notch" /><p>What is on your mind?</p><div /><div /><button>Continue</button></div></div>;
   return <div className="product-graphic graphic-code" aria-hidden="true"><div className="code-map"><span className="node n1" /><span className="node n2" /><span className="node n3" /><span className="node n4" /><svg viewBox="0 0 400 220"><path d="M70 65 C145 10 205 80 320 45M70 65 C150 140 230 100 335 170M320 45 C280 100 280 130 335 170" /></svg></div><div className="code-score"><span>Complexity</span><strong>7.4</strong></div></div>;
+}
+
+const appScreenshots = {
+  clarity: ["/images/apps/clarity-01.jpg", "/images/apps/clarity-02.jpg"],
+  silayolu: ["/images/apps/silayolu-01.jpg", "/images/apps/silayolu-02.jpg"],
+  regiere: ["/images/apps/regiere-deutschland-01.jpg", "/images/apps/regiere-deutschland-02.jpg"],
+} as const;
+
+function AppScreenshots({ app }: { app: keyof typeof appScreenshots }) {
+  return <div className={`product-graphic app-screenshots app-screenshots-${app}`} aria-hidden="true">{appScreenshots[app].map((src, index) => <Image key={src} src={src} alt="" width={555} height={1200} sizes="(max-width: 700px) 42vw, 210px" className={`app-screenshot app-screenshot-${index + 1}`} />)}</div>;
+}
+
+type ServiceKind = "privacy" | "tracking" | "hosting" | "performance" | "care";
+
+function ServiceMark({ kind }: { kind: ServiceKind }) {
+  if (kind === "privacy") return <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="10" width="34" height="28" rx="8" /><path d="M14 19h20M14 29h9" /><circle cx="29" cy="29" r="4" /></svg>;
+  if (kind === "tracking") return <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 36 18 25l8 5 14-18" /><circle cx="8" cy="36" r="3" /><circle cx="18" cy="25" r="3" /><circle cx="26" cy="30" r="3" /><circle cx="40" cy="12" r="3" /></svg>;
+  if (kind === "hosting") return <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="8" width="34" height="13" rx="4" /><rect x="7" y="27" width="34" height="13" rx="4" /><path d="M14 14.5h12M14 33.5h12" /><circle cx="34" cy="14.5" r="1.5" /><circle cx="34" cy="33.5" r="1.5" /></svg>;
+  if (kind === "performance") return <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 34a17 17 0 1 1 32 0M24 31l9-12" /><circle cx="24" cy="31" r="4" /></svg>;
+  return <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M38 18a15 15 0 1 0 1 9" /><path d="m34 10 4 8 7-5M16 24l5 5 11-12" /></svg>;
 }
 
 export function PortfolioPage() {
@@ -159,7 +200,9 @@ export function PortfolioPage() {
           <motion.div className="section-heading compact" {...reveal}><p className="eyebrow">{t.productsLabel}</p><h2>{t.productsTitle}</h2></motion.div>
           <div className="product-grid">
             <motion.a href="#contact" className="product-card product-card-wide" {...reveal}><ProductGraphic kind="ai" /><div className="product-info"><span>AI · WordPress</span><h3>{t.aiTitle}</h3><p>{t.aiText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
-            <motion.a href="https://apps.apple.com/us/app/clarity-overthink-helper/id6757189127" target="_blank" rel="noreferrer" className="product-card" {...reveal}><ProductGraphic kind="ios" /><div className="product-info"><span>iOS · Swift</span><h3>{t.clarityTitle}</h3><p>{t.clarityText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
+            <motion.a href="https://apps.apple.com/us/app/clarity-overthink-helper/id6757189127" target="_blank" rel="noreferrer" className="product-card" {...reveal}><AppScreenshots app="clarity" /><div className="product-info"><span>iOS · Swift</span><h3>{t.clarityTitle}</h3><p>{t.clarityText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
+            <motion.a href="https://apps.apple.com/de/app/silayolu/id6769356177" target="_blank" rel="noreferrer" className="product-card" {...reveal}><AppScreenshots app="silayolu" /><div className="product-info"><span>iOS · Swift</span><h3>{t.silaYoluTitle}</h3><p>{t.silaYoluText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
+            <motion.a href="https://apps.apple.com/de/app/regiere-deutschland/id6802046575" target="_blank" rel="noreferrer" className="product-card" {...reveal}><AppScreenshots app="regiere" /><div className="product-info"><span>iOS · Swift</span><h3>{t.regiereTitle}</h3><p>{t.regiereText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
             <motion.a href="https://github.com/hasanycdg/Codebase-Complexity-Visualizer-CCV" target="_blank" rel="noreferrer" className="product-card" {...reveal}><ProductGraphic kind="code" /><div className="product-info"><span>Desktop · Rust</span><h3>{t.ccvTitle}</h3><p>{t.ccvText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
           </div>
         </div></section>
@@ -167,6 +210,14 @@ export function PortfolioPage() {
         <section id="services" className="services-section section-space container">
           <motion.div className="services-intro" {...reveal}><p className="eyebrow">{t.servicesLabel}</p><div><h2>{t.servicesTitle}</h2><p>{t.servicesText}</p></div></motion.div>
           <div className="service-list">{t.serviceItems.map(([number, title, description]) => <motion.article key={number} className="service-item" {...reveal}><span>{number}</span><h3>{title}</h3><p>{description}</p></motion.article>)}</div>
+          <div className="operations-block" aria-labelledby="operations-title">
+            <motion.div className="operations-intro" {...reveal}><p className="eyebrow">{t.operationsLabel}</p><div><h3 id="operations-title">{t.operationsTitle}</h3><p>{t.operationsText}</p></div></motion.div>
+            <div className="operation-grid">{t.operationItems.map((item) => <motion.article key={item.number} className={`operation-card operation-${item.kind}`} {...reveal}>
+              <div className="operation-card-top"><span>{item.number} · {item.kicker}</span><i><ServiceMark kind={item.kind} /></i></div>
+              <div className="operation-copy"><h4>{item.title}</h4><p>{item.description}</p></div>
+              <ul>{item.points.map((point) => <li key={point}>{point}</li>)}</ul>
+            </motion.article>)}</div>
+          </div>
         </section>
 
         <section id="about" className="about-section section-space"><div className="container about-grid">
