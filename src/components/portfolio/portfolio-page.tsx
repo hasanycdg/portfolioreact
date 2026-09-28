@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { defaultLocale, portfolioByLocale, type Locale } from "@/lib/portfolio-data";
 import { ContactForm } from "./contact-form";
@@ -97,15 +97,15 @@ const copy = {
 } as const;
 
 type ClientProjectProps = {
-  title: string; category: string; description: string; role: string; href: string; image: string; alt: string;
+  title: string; category: string; description: string; role: string; href: string; image: string; alt: string; priority?: boolean;
 };
 
-function ClientProject({ title, category, description, role, href, image, alt }: ClientProjectProps) {
+function ClientProject({ title, category, description, role, href, image, alt, priority = false }: ClientProjectProps) {
   return (
     <motion.article className="client-project" initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.75, ease: easing }}>
       <a className="project-shot" href={href} target="_blank" rel="noreferrer" aria-label={`${title} — ${href}`}>
         <div className="browser-bar"><span /><span /><span /><b>{href.replace("https://", "")}</b></div>
-        <Image src={image} alt={alt} fill sizes="(max-width: 768px) 100vw, 1280px" className="project-image" />
+        <Image src={image} alt={alt} fill priority={priority} sizes="(max-width: 768px) 100vw, 1280px" className="project-image" />
         <span className="project-open"><Arrow /></span>
       </a>
       <div className="project-details">
@@ -143,7 +143,6 @@ function ServiceMark({ kind }: { kind: ServiceKind }) {
 }
 
 export function PortfolioPage() {
-  const reduceMotion = useReducedMotion();
   const [locale, setLocale] = useState<Locale>(defaultLocale);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -155,7 +154,7 @@ export function PortfolioPage() {
   useEffect(() => { const onScroll = () => setScrolled(window.scrollY > 20); onScroll(); window.addEventListener("scroll", onScroll, { passive: true }); return () => window.removeEventListener("scroll", onScroll); }, []);
   useEffect(() => { document.body.style.overflow = menuOpen ? "hidden" : ""; return () => { document.body.style.overflow = ""; }; }, [menuOpen]);
 
-  const reveal = reduceMotion ? {} : { initial: { opacity: 0, y: 28 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.2 }, transition: { duration: 0.7, ease: easing } };
+  const reveal = { initial: { opacity: 0, y: 28 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.2 }, transition: { duration: 0.7, ease: easing } };
 
   return (
     <>
@@ -165,26 +164,26 @@ export function PortfolioPage() {
           <a className="brand" href="#home">hasan<span>yücedag</span></a>
           <nav className="desktop-nav" aria-label="Primary"><a href="#work">{t.navWork}</a><a href="#services">{t.navServices}</a><a href="#about">{t.navAbout}</a></nav>
           <div className="header-actions">
-            <div className="language">{(["de", "en"] as const).map((item) => <button type="button" key={item} data-active={locale === item} onClick={() => setLocale(item)}>{item.toUpperCase()}</button>)}</div>
+            <div className="language" role="group" aria-label={content.ui.languageSwitcher}>{(["de", "en"] as const).map((item) => <button type="button" key={item} data-active={locale === item} aria-pressed={locale === item} onClick={() => setLocale(item)}>{item.toUpperCase()}</button>)}</div>
             <a className="contact-pill" href="#contact"><span className="mini-portrait"><Image src="/images/hasan-yucedag.jpeg" alt="" fill sizes="36px" /></span>{t.contact}</a>
             <button className="menu-button" type="button" aria-expanded={menuOpen} onClick={() => setMenuOpen((value) => !value)}>{menuOpen ? t.close : t.menu}</button>
           </div>
         </div>
       </header>
 
-      <AnimatePresence>{menuOpen && <motion.nav className="mobile-menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <AnimatePresence>{menuOpen && <motion.nav className="mobile-menu" aria-label="Primary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
         {[{ href: "#work", label: t.navWork }, { href: "#services", label: t.navServices }, { href: "#about", label: t.navAbout }, { href: "#contact", label: t.contact }].map((item, index) => <motion.a key={item.href} href={item.href} onClick={() => setMenuOpen(false)} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * .06 }}><span>0{index + 1}</span>{item.label}</motion.a>)}
       </motion.nav>}</AnimatePresence>
 
       <main id="main">
         <section id="home" className="hero container">
           <div className="hero-main">
-            <motion.div className="hero-copy" initial={reduceMotion ? undefined : { opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, ease: easing }}>
+            <motion.div className="hero-copy" initial={{ opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, ease: easing }}>
               <h1><strong>{t.heroStrong}</strong><strong>{t.heroLine}</strong></h1>
               <p className="hero-sub">{t.heroSub}</p>
               <div className="hero-actions"><a className="text-link" href="#work">{t.viewWork}<Arrow down /></a><span className="available"><i />{t.availability}</span></div>
             </motion.div>
-            <motion.a className="hero-case" href="https://www.serhatphotographie.com" target="_blank" rel="noreferrer" initial={reduceMotion ? undefined : { opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, delay: .12, ease: easing }}>
+            <motion.a className="hero-case" href="https://www.serhatphotographie.com" target="_blank" rel="noreferrer" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, delay: .12, ease: easing }}>
               <div className="hero-case-top"><span>{t.heroCaseLabel}</span><span>serhatphotographie.com <Arrow /></span></div>
               <div className="hero-case-media"><Image src="/images/projects/serhat-photographie.jpg" alt="Serhat Photographie Website" fill priority sizes="(max-width: 700px) 100vw, 45vw" /></div>
               <div className="hero-case-caption"><strong>Serhat Photographie</strong><span>{t.heroCaseRole}</span><b>{t.heroCaseLink}<Arrow /></b></div>
@@ -195,7 +194,7 @@ export function PortfolioPage() {
         <section id="work" className="projects-section section-space container">
           <motion.div className="section-heading" {...reveal}><p className="eyebrow">{t.workLabel}</p><h2>{t.workTitle}</h2><p>{t.workText}</p></motion.div>
           <div className="client-projects">
-            <ClientProject title="Serhat Photographie" category="Web Experience · 2026" description={t.serhatDesc} role={t.serhatRole} href="https://www.serhatphotographie.com" image="/images/projects/serhat-photographie.jpg" alt="Startseite von Serhat Photographie" />
+            <ClientProject title="Serhat Photographie" category="Web Experience · 2026" description={t.serhatDesc} role={t.serhatRole} href="https://www.serhatphotographie.com" image="/images/projects/serhat-photographie.jpg" alt="Startseite von Serhat Photographie" priority />
             <ClientProject title="Hagis Pizza & Döner" category="Business Website · 2026" description={t.hagiDesc} role={t.hagiRole} href="https://hagisdöner.at" image="/images/projects/hagis-doener.jpg" alt="Startseite von Hagis Pizza und Döner" />
           </div>
           <motion.div className="section-cta-row" {...reveal}><a className="btn btn-primary" href="#contact">{t.casesCta}<Arrow /></a></motion.div>
