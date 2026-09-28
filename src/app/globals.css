@@ -156,7 +156,7 @@ img, svg { display: block; }
 .service-output { align-self: stretch; display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; padding: 1.1rem; background: var(--surface); border-radius: .8rem; }
 .service-output span { color: #666963; font-size: .72rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
 .service-output strong { max-width: 21rem; font-size: clamp(1.05rem, 1.7vw, 1.35rem); line-height: 1.25; letter-spacing: -.025em; }
-.operations-block { margin-top: clamp(6rem, 10vw, 10rem); padding-top: clamp(3rem, 5vw, 5rem); border-top: 1px solid var(--line); }
+.operations-section { background: var(--surface-muted); }
 .operations-intro { display: block; max-width: 64rem; margin-bottom: clamp(3.5rem, 6vw, 6rem); }
 .operations-intro h3 { max-width: 14ch; margin: 0; font-size: clamp(2.4rem, 4.5vw, 4.7rem); line-height: 1.02; letter-spacing: -.06em; font-weight: 650; text-wrap: balance; }
 .operations-intro .eyebrow + div { margin-top: 1.25rem; }

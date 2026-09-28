@@ -200,6 +200,11 @@ export function PortfolioPage() {
           </div>
         </section>
 
+        <section id="about" className="about-section section-space"><div className="container about-grid">
+          <motion.div className="about-photo" {...reveal}><div className="about-photo-media"><Image src="/images/hasan-yucedag.jpeg" alt="Hasan Yücedag" fill sizes="(max-width: 800px) 100vw, 38vw" className="about-photo-image" /></div></motion.div>
+          <motion.div className="about-copy" {...reveal}><p className="eyebrow">{t.aboutLabel}</p><h2>{t.aboutTitle}</h2><p className="about-lead">{t.aboutText}</p><p>{t.aboutTextTwo}</p><dl>{t.facts.map(([term, value]) => <div key={term}><dt>{term}</dt><dd>{value}</dd></div>)}</dl><div className="socials"><a href={content.profile.linkedin} target="_blank" rel="noreferrer"><LinkedinIcon size={16} />LinkedIn</a><a href={content.profile.github} target="_blank" rel="noreferrer"><GithubIcon size={16} />GitHub</a><a href={content.profile.cvPath} download>CV PDF<Arrow /></a></div></motion.div>
+        </div></section>
+
         <section className="products-section section-space"><div className="container">
           <motion.div className="section-heading compact" {...reveal}><p className="eyebrow">{t.productsLabel}</p><h2>{t.productsTitle}</h2></motion.div>
           <div className="product-grid">
@@ -218,19 +223,15 @@ export function PortfolioPage() {
             <div className="service-copy"><h3>{item.title}</h3><p>{item.description}</p></div>
             <div className="service-output"><span>{t.serviceDeliverableLabel}</span><strong>{item.deliverable}</strong></div>
           </motion.article>)}</div>
-          <div className="operations-block" aria-labelledby="operations-title">
+        </section>
+
+        <section id="operations" className="operations-section section-space" aria-labelledby="operations-title"><div className="container">
             <motion.div className="operations-intro" {...reveal}><p className="eyebrow">{t.operationsLabel}</p><div><h3 id="operations-title">{t.operationsTitle}</h3><p>{t.operationsText}</p></div></motion.div>
             <div className="operation-grid">{t.operationItems.map((item) => <motion.article key={item.number} className={`operation-card operation-${item.kind}`} {...reveal}>
               <div className="operation-card-top"><span>{item.number} · {item.kicker}</span><i><ServiceMark kind={item.kind} /></i></div>
               <div className="operation-copy"><h4>{item.title}</h4><p>{item.description}</p></div>
               <ul>{item.points.map((point) => <li key={point}>{point}</li>)}</ul>
             </motion.article>)}</div>
-          </div>
-        </section>
-
-        <section id="about" className="about-section section-space"><div className="container about-grid">
-          <motion.div className="about-photo" {...reveal}><div className="about-photo-media"><Image src="/images/hasan-yucedag.jpeg" alt="Hasan Yücedag" fill sizes="(max-width: 800px) 100vw, 38vw" className="about-photo-image" /></div></motion.div>
-          <motion.div className="about-copy" {...reveal}><p className="eyebrow">{t.aboutLabel}</p><h2>{t.aboutTitle}</h2><p className="about-lead">{t.aboutText}</p><p>{t.aboutTextTwo}</p><dl>{t.facts.map(([term, value]) => <div key={term}><dt>{term}</dt><dd>{value}</dd></div>)}</dl><div className="socials"><a href={content.profile.linkedin} target="_blank" rel="noreferrer"><LinkedinIcon size={16} />LinkedIn</a><a href={content.profile.github} target="_blank" rel="noreferrer"><GithubIcon size={16} />GitHub</a><a href={content.profile.cvPath} download>CV PDF<Arrow /></a></div></motion.div>
         </div></section>
 
         <section id="contact" className="contact-section section-space"><div className="container contact-grid">
