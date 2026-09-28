@@ -22,7 +22,7 @@ const copy = {
     navWork: "Projekte", navServices: "Leistungen", navAbout: "Über mich", contact: "Projekt besprechen", menu: "Menü", close: "Schließen",
     heroStrong: "2 Live-Websites. 3 veröffentlichte Apps.", heroLine: "Von Innsbruck in Produktion.", heroSub: "Websites und digitale Produkte für Unternehmen, die professionell auftreten und digital wachsen wollen.",
     heroCaseLabel: "Live-Projekt", heroCaseRole: "Konzeption · UX/UI · Frontend", heroCaseLink: "Case ansehen",
-    viewWork: "Projekte ansehen", availability: "Verfügbar für ausgewählte Projekte",
+    viewWork: "Projekte ansehen", availability: "Verfügbar für ausgewählte Projekte", casesCta: "Ähnliches Projekt besprechen", aboutCta: "Projekt kurz einordnen",
     workLabel: "Ausgewählte Projekte", workTitle: "Zwei Websites im echten Betrieb.", workText: "Keine Konzeptbilder und keine fiktiven Marken. Diese Projekte sind live, werden von echten Kunden genutzt und zeigen, was ich von der Idee bis zum Launch umsetzen kann.",
     visit: "Live-Website öffnen", role: "Meine Arbeit", serhatRole: "Konzeption · UX/UI · Frontend-Entwicklung", hagiRole: "Webdesign · Entwicklung · Local SEO",
     serhatDesc: "Ein atmosphärischer Webauftritt für einen Hochzeitsfotografen und Videografen aus Tirol – mit Video-Hero, Portfolio, Leistungen, Social Proof und direkter Anfrageführung.",
@@ -60,7 +60,7 @@ const copy = {
     navWork: "Projects", navServices: "Services", navAbout: "About", contact: "Discuss a project", menu: "Menu", close: "Close",
     heroStrong: "2 live websites. 3 published apps.", heroLine: "Built in Innsbruck. Shipped to production.", heroSub: "Websites and digital products for companies that want to look professional and grow online.",
     heroCaseLabel: "Live project", heroCaseRole: "Concept · UX/UI · Frontend", heroCaseLink: "View case",
-    viewWork: "View projects", availability: "Available for selected projects",
+    viewWork: "View projects", availability: "Available for selected projects", casesCta: "Discuss a similar project", aboutCta: "Outline your project",
     workLabel: "Selected projects", workTitle: "Two websites in active use.", workText: "No concept art and no fictional brands. These projects are live, used by real customers, and show what I can deliver from the first idea to launch.",
     visit: "Open live website", role: "My work", serhatRole: "Concept · UX/UI · Frontend development", hagiRole: "Web design · Development · Local SEO",
     serhatDesc: "An atmospheric web presence for a wedding photographer and filmmaker in Tyrol, featuring a video hero, portfolio, services, social proof, and a clear inquiry flow.",
@@ -198,11 +198,12 @@ export function PortfolioPage() {
             <ClientProject title="Serhat Photographie" category="Web Experience · 2026" description={t.serhatDesc} role={t.serhatRole} href="https://www.serhatphotographie.com" image="/images/projects/serhat-photographie.jpg" alt="Startseite von Serhat Photographie" />
             <ClientProject title="Hagis Pizza & Döner" category="Business Website · 2026" description={t.hagiDesc} role={t.hagiRole} href="https://hagisdöner.at" image="/images/projects/hagis-doener.jpg" alt="Startseite von Hagis Pizza und Döner" />
           </div>
+          <motion.div className="section-cta-row" {...reveal}><a className="btn btn-primary" href="#contact">{t.casesCta}<Arrow /></a></motion.div>
         </section>
 
         <section id="about" className="about-section section-space"><div className="container about-grid">
           <motion.div className="about-photo" {...reveal}><div className="about-photo-media"><Image src="/images/hasan-yucedag.jpeg" alt="Hasan Yücedag" fill sizes="(max-width: 800px) 100vw, 38vw" className="about-photo-image" /></div></motion.div>
-          <motion.div className="about-copy" {...reveal}><p className="eyebrow">{t.aboutLabel}</p><h2>{t.aboutTitle}</h2><p className="about-lead">{t.aboutText}</p><p>{t.aboutTextTwo}</p><dl>{t.facts.map(([term, value]) => <div key={term}><dt>{term}</dt><dd>{value}</dd></div>)}</dl><div className="socials"><a href={content.profile.linkedin} target="_blank" rel="noreferrer"><LinkedinIcon size={16} />LinkedIn</a><a href={content.profile.github} target="_blank" rel="noreferrer"><GithubIcon size={16} />GitHub</a><a href={content.profile.cvPath} download>CV PDF<Arrow /></a></div></motion.div>
+          <motion.div className="about-copy" {...reveal}><p className="eyebrow">{t.aboutLabel}</p><h2>{t.aboutTitle}</h2><p className="about-lead">{t.aboutText}</p><p>{t.aboutTextTwo}</p><dl>{t.facts.map(([term, value]) => <div key={term}><dt>{term}</dt><dd>{value}</dd></div>)}</dl><div className="socials"><a href={content.profile.linkedin} target="_blank" rel="noreferrer"><LinkedinIcon size={16} />LinkedIn</a><a href={content.profile.github} target="_blank" rel="noreferrer"><GithubIcon size={16} />GitHub</a><a href={content.profile.cvPath} download>CV PDF<Arrow /></a></div><a className="about-cta" href="#contact">{t.aboutCta}<Arrow /></a></motion.div>
         </div></section>
 
         <section className="products-section section-space"><div className="container">
