@@ -20,8 +20,9 @@ function Arrow({ down = false }: { down?: boolean }) {
 const copy = {
   de: {
     navWork: "Projekte", navServices: "Leistungen", navAbout: "Über mich", contact: "Projekt besprechen", menu: "Menü", close: "Schließen",
-    heroStrong: "2 Live-Websites. 3 veröffentlichte Apps.", heroLine: "Von Innsbruck in Produktion.", heroSub: "Für Selbstständige, lokale Unternehmen und Produktteams, die wirklich veröffentlichen wollen.",
-    heroCaseLabel: "Live-Projekt", heroCaseRole: "Konzeption · UX/UI · Frontend", heroCaseLink: "Case ansehen",
+    heroStrong: "Websites, Apps und Tools", heroLine: "mit Produktlogik.", heroSub: "Ich entwerfe und entwickle digitale Produkte, die verständlich starten, schnell laden und nach dem Launch betreubar bleiben.",
+    heroProofLabel: "Arbeitsweise", heroProofTitle: "Von der ersten Skizze bis zum laufenden System.", heroProofText: "Strategie, Interface, Code und Betrieb bleiben in einer Hand.",
+    heroProofItems: ["Produktstruktur", "UI-System", "Next.js / App-Logik", "Launch & Betreuung"],
     viewWork: "Projekte ansehen", availability: "Verfügbar für ausgewählte Projekte", casesCta: "Ähnliches Projekt besprechen", aboutCta: "Projekt kurz einordnen",
     workLabel: "Ausgewählte Projekte", workTitle: "Zwei Websites im echten Betrieb.", workText: "Keine Konzeptbilder und keine fiktiven Marken. Diese Projekte sind live, werden von echten Kunden genutzt und zeigen, was ich von der Idee bis zum Launch umsetzen kann.",
     visit: "Live-Website öffnen", role: "Meine Arbeit", serhatRole: "Konzeption · UX/UI · Frontend-Entwicklung", hagiRole: "Webdesign · Entwicklung · Local SEO",
@@ -33,8 +34,8 @@ const copy = {
     silaYoluTitle: "SilaYolu", silaYoluText: "Der smarte Reisebegleiter für Autofahrten zwischen Europa und Türkiye – mit Grenzinfos, Routenkosten und Reise-Checklisten.",
     regiereTitle: "Regiere Deutschland", regiereText: "Eine satirische Politik-Simulation, in der Wahlen, Koalitionen und politische Entscheidungen den Weg ins Kanzleramt bestimmen.",
     ccvTitle: "Codebase Visualizer", ccvText: "Local-first Desktop-App zur Analyse von Hotspots, Abhängigkeiten und Komplexität in großen Repositories.",
-    learnMore: "Projekt öffnen", servicesLabel: "Leistungen", servicesTitle: "Drei Leistungen. Drei konkrete Ergebnisse.",
-    servicesText: "Ich verbinde Produktdenken, visuelles Design und Software Engineering. So bleibt die Idee vom ersten Wireframe bis zum produktiven Code konsistent.", serviceDeliverableLabel: "Ergebnis",
+    learnMore: "Projekt öffnen", servicesLabel: "Leistungen", servicesTitle: "Drei Leistungen. Klare Lieferobjekte.",
+    servicesText: "Ich verbinde Produktdenken, visuelles Design und Software Engineering. So bleibt die Idee vom ersten Wireframe bis zum produktiven Code konsistent.", serviceDeliverableLabel: "Lieferobjekt",
     serviceItems: [
       { number: "01", title: "Websites & Plattformen", description: "Eine veröffentlichte Website mit CMS, responsivem Frontend und dokumentiertem Deployment.", deliverable: "Live-Website" },
       { number: "02", title: "UI/UX & Designsysteme", description: "Ein klickbarer Prototyp plus Komponentenbibliothek für konsistente Produktoberflächen.", deliverable: "Figma-Prototyp + Komponentenbibliothek" },
@@ -58,8 +59,9 @@ const copy = {
   },
   en: {
     navWork: "Projects", navServices: "Services", navAbout: "About", contact: "Discuss a project", menu: "Menu", close: "Close",
-    heroStrong: "2 live websites. 3 published apps.", heroLine: "Built in Innsbruck. Shipped to production.", heroSub: "For independents, local businesses, and product teams ready to ship.",
-    heroCaseLabel: "Live project", heroCaseRole: "Concept · UX/UI · Frontend", heroCaseLink: "View case",
+    heroStrong: "Websites, apps, and tools", heroLine: "with product logic.", heroSub: "I design and build digital products that start clearly, load fast, and remain maintainable after launch.",
+    heroProofLabel: "Working method", heroProofTitle: "From the first sketch to a running system.", heroProofText: "Strategy, interface, code, and operations stay in one hand.",
+    heroProofItems: ["Product structure", "UI system", "Next.js / app logic", "Launch & care"],
     viewWork: "View projects", availability: "Available for selected projects", casesCta: "Discuss a similar project", aboutCta: "Outline your project",
     workLabel: "Selected projects", workTitle: "Two websites in active use.", workText: "No concept art and no fictional brands. These projects are live, used by real customers, and show what I can deliver from the first idea to launch.",
     visit: "Open live website", role: "My work", serhatRole: "Concept · UX/UI · Frontend development", hagiRole: "Web design · Development · Local SEO",
@@ -71,8 +73,8 @@ const copy = {
     silaYoluTitle: "SilaYolu", silaYoluText: "A smart travel companion for road trips between Europe and Türkiye, with border updates, route costs, and travel checklists.",
     regiereTitle: "Regiere Deutschland", regiereText: "A satirical political simulation where elections, coalitions, and policy decisions shape the path to the chancellery.",
     ccvTitle: "Codebase Visualizer", ccvText: "A local-first desktop app for analyzing hotspots, dependencies, and complexity in large repositories.",
-    learnMore: "Open project", servicesLabel: "Services", servicesTitle: "Three services. Three concrete outcomes.",
-    servicesText: "I combine product thinking, visual design, and software engineering, keeping the idea consistent from the first wireframe to production code.", serviceDeliverableLabel: "Outcome",
+    learnMore: "Open project", servicesLabel: "Services", servicesTitle: "Three services. Clear deliverables.",
+    servicesText: "I combine product thinking, visual design, and software engineering, keeping the idea consistent from the first wireframe to production code.", serviceDeliverableLabel: "Deliverable",
     serviceItems: [
       { number: "01", title: "Websites & platforms", description: "A published website with CMS, responsive frontend, and documented deployment.", deliverable: "Live website" },
       { number: "02", title: "UI/UX & design systems", description: "A clickable prototype plus component library for consistent product interfaces.", deliverable: "Figma prototype + component library" },
@@ -179,15 +181,20 @@ export function PortfolioPage() {
         <section id="home" className="hero container">
           <div className="hero-main">
             <motion.div className="hero-copy" initial={{ opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, ease: easing }}>
-              <h1><strong>{t.heroStrong}</strong><strong>{t.heroLine}</strong></h1>
+              <h1><strong>{t.heroStrong}</strong>{" "}<strong>{t.heroLine}</strong></h1>
               <p className="hero-sub">{t.heroSub}</p>
               <div className="hero-actions"><a className="text-link" href="#work">{t.viewWork}<Arrow down /></a><span className="available"><i />{t.availability}</span></div>
             </motion.div>
-            <motion.a className="hero-case" href="https://www.serhatphotographie.com" target="_blank" rel="noreferrer" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, delay: .12, ease: easing }}>
-              <div className="hero-case-top"><span>{t.heroCaseLabel}</span><span>serhatphotographie.com <Arrow /></span></div>
-              <div className="hero-case-media"><Image src="/images/projects/serhat-photographie.jpg" alt="Serhat Photographie Website" fill priority sizes="(max-width: 700px) 100vw, 45vw" /></div>
-              <div className="hero-case-caption"><strong>Serhat Photographie</strong><span>{t.heroCaseRole}</span><b>{t.heroCaseLink}<Arrow /></b></div>
-            </motion.a>
+            <motion.aside className="hero-proof" aria-label={t.heroProofLabel} initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, delay: .12, ease: easing }}>
+              <div className="hero-proof-top"><span>{t.heroProofLabel}</span><span>01-04</span></div>
+              <div className="hero-proof-main">
+                <p>{t.heroProofTitle}</p>
+                <span>{t.heroProofText}</span>
+              </div>
+              <ol className="hero-proof-list">
+                {t.heroProofItems.map((item, index) => <li key={item}><span>0{index + 1}</span>{item}</li>)}
+              </ol>
+            </motion.aside>
           </div>
         </section>
 
