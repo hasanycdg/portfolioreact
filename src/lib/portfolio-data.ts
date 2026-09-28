@@ -59,11 +59,6 @@ export type Publication = {
   href: string;
 };
 
-export type ContactReason = {
-  value: "job" | "project" | "other";
-  label: string;
-};
-
 export type UiCopy = {
   skipToMain: string;
   languageSwitcher: string;
@@ -121,35 +116,12 @@ export type UiCopy = {
   contactEyebrow: string;
   contactTitle: string;
   contactCopy: string;
-  contactFormLabel: string;
   contactChannelEmail: string;
   contactChannelLinkedin: string;
   contactChannelGithub: string;
   contactChannelGithubWork: string;
   contactChannelCv: string;
   contactChannelLocation: string;
-
-  formName: string;
-  formNamePlaceholder: string;
-  formEmail: string;
-  formEmailPlaceholder: string;
-  formCompany: string;
-  formCompanyPlaceholder: string;
-  formReason: string;
-  formMessage: string;
-  formMessagePlaceholder: string;
-  formSubmit: string;
-  formSubmitting: string;
-  formErrorName: string;
-  formErrorEmail: string;
-  formErrorReason: string;
-  formErrorMessage: string;
-  formErrorServer: string;
-  formSuccessTitle: string;
-  formSuccessText: string;
-  formSuccessReset: string;
-  formDisclaimer: string;
-  reasons: ContactReason[];
 
   footerName: string;
   footerLocation: string;
@@ -163,6 +135,8 @@ export type PortfolioContent = {
     role: string;
     location: string;
     email: string;
+    whatsapp: string;
+    phoneDisplay: string;
     linkedin: string;
     github: string;
     githubWork: string;
@@ -183,6 +157,8 @@ const profileBase = {
   name: "Hasan Yücedag",
   role: "Software Engineer",
   email: "yucedagh1@gmail.com",
+  whatsapp: "436602499111",
+  phoneDisplay: "+43 660 2499111",
   linkedin: "https://www.linkedin.com/in/hasan-yuecedag",
   github: "https://github.com/hasanycdg",
   githubWork: "https://github.com/florianmatthiashasan",
@@ -478,39 +454,12 @@ const enContent: PortfolioContent = {
     contactTitle: "Let's build something.",
     contactCopy:
       "Hiring, project inquiries, or a quick technical question — I respond within 24 hours.",
-    contactFormLabel: "Send a message",
     contactChannelEmail: "Email",
     contactChannelLinkedin: "LinkedIn",
     contactChannelGithub: "GitHub",
     contactChannelGithubWork: "Work GitHub",
     contactChannelCv: "CV",
     contactChannelLocation: "Based in",
-
-    formName: "Name",
-    formNamePlaceholder: "Your name",
-    formEmail: "Email",
-    formEmailPlaceholder: "you@company.com",
-    formCompany: "Company",
-    formCompanyPlaceholder: "Optional",
-    formReason: "About",
-    formMessage: "Message",
-    formMessagePlaceholder: "Tell me a bit about the role or project…",
-    formSubmit: "Send message",
-    formSubmitting: "Sending…",
-    formErrorName: "Please enter your name (at least 2 characters).",
-    formErrorEmail: "Please enter a valid email address.",
-    formErrorReason: "Please pick one.",
-    formErrorMessage: "Please write at least 20 characters so I can respond properly.",
-    formErrorServer: "Server error. Please email me at yucedagh1@gmail.com.",
-    formSuccessTitle: "Message received.",
-    formSuccessText: "I'll get back to you within 24 hours.",
-    formSuccessReset: "Send another",
-    formDisclaimer: "Your details are used only to respond to your message.",
-    reasons: [
-      { value: "job", label: "Hiring" },
-      { value: "project", label: "Project" },
-      { value: "other", label: "Other" },
-    ],
 
     footerName: "Hasan Yücedag",
     footerLocation: "Software Engineer · Innsbruck",
@@ -792,39 +741,12 @@ const deContent: PortfolioContent = {
     contactTitle: "Lass uns etwas bauen.",
     contactCopy:
       "Stellenangebote, Projektanfragen oder eine technische Frage — ich antworte innerhalb von 24 Stunden.",
-    contactFormLabel: "Nachricht senden",
     contactChannelEmail: "E-Mail",
     contactChannelLinkedin: "LinkedIn",
     contactChannelGithub: "GitHub",
     contactChannelGithubWork: "Work GitHub",
     contactChannelCv: "CV",
     contactChannelLocation: "Standort",
-
-    formName: "Name",
-    formNamePlaceholder: "Dein Name",
-    formEmail: "E-Mail",
-    formEmailPlaceholder: "du@firma.com",
-    formCompany: "Unternehmen",
-    formCompanyPlaceholder: "Optional",
-    formReason: "Anlass",
-    formMessage: "Nachricht",
-    formMessagePlaceholder: "Erzähl mir kurz, worum es geht…",
-    formSubmit: "Nachricht senden",
-    formSubmitting: "Wird gesendet…",
-    formErrorName: "Bitte gib deinen Namen ein (mindestens 2 Zeichen).",
-    formErrorEmail: "Bitte gib eine gültige E-Mail-Adresse ein.",
-    formErrorReason: "Bitte wähle eine Option.",
-    formErrorMessage: "Bitte schreib mindestens 20 Zeichen, damit ich sinnvoll antworten kann.",
-    formErrorServer: "Server-Fehler. Bitte schreib direkt an yucedagh1@gmail.com.",
-    formSuccessTitle: "Nachricht angekommen.",
-    formSuccessText: "Ich melde mich innerhalb von 24 Stunden bei dir.",
-    formSuccessReset: "Weitere senden",
-    formDisclaimer: "Deine Angaben werden ausschließlich zur Beantwortung deiner Nachricht genutzt.",
-    reasons: [
-      { value: "job", label: "Stelle" },
-      { value: "project", label: "Projekt" },
-      { value: "other", label: "Sonstiges" },
-    ],
 
     footerName: "Hasan Yücedag",
     footerLocation: "Software Engineer · Innsbruck",

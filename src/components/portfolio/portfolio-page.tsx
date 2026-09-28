@@ -4,8 +4,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { defaultLocale, portfolioByLocale, type Locale } from "@/lib/portfolio-data";
-import { ContactForm } from "./contact-form";
-import { GithubIcon, LinkedinIcon } from "./brand-icons";
+import { GithubIcon, LinkedinIcon, MailIcon, WhatsappIcon } from "./brand-icons";
 
 const easing = [0.22, 1, 0.36, 1] as const;
 
@@ -21,8 +20,7 @@ const copy = {
   de: {
     navWork: "Projekte", navServices: "Leistungen", navAbout: "Über mich", contact: "Projekt besprechen", menu: "Menü", close: "Schließen",
     heroStrong: "Websites, Apps und Tools", heroLine: "mit Produktlogik.", heroSub: "Ich entwerfe und entwickle digitale Produkte, die verständlich starten, schnell laden und nach dem Launch betreubar bleiben.",
-    heroProofLabel: "Arbeitsweise", heroProofTitle: "Von der ersten Skizze bis zum laufenden System.", heroProofText: "Strategie, Interface, Code und Betrieb bleiben in einer Hand.",
-    heroProofItems: ["Produktstruktur", "UI-System", "Next.js / App-Logik", "Launch & Betreuung"],
+    heroRole: "Fullstack Developer · Innsbruck", heroVisualLabel: "Ausgewählte Projekte ansehen", heroLive: "Live",
     viewWork: "Projekte ansehen", availability: "Verfügbar für ausgewählte Projekte", casesCta: "Ähnliches Projekt besprechen", aboutCta: "Projekt kurz einordnen",
     workLabel: "Ausgewählte Projekte", workTitle: "Zwei Websites im echten Betrieb.", workText: "Keine Konzeptbilder und keine fiktiven Marken. Diese Projekte sind live, werden von echten Kunden genutzt und zeigen, was ich von der Idee bis zum Launch umsetzen kann.",
     visit: "Live-Website öffnen", role: "Meine Arbeit", serhatRole: "Konzeption · UX/UI · Frontend-Entwicklung", hagiRole: "Webdesign · Entwicklung · Local SEO",
@@ -54,14 +52,20 @@ const copy = {
     aboutText: "Ich bin Hasan Yücedag, Software Engineer und Lead Fullstack Developer aus Innsbruck. Mein Schwerpunkt liegt auf digitalen Produkten, bei denen Gestaltung, Nutzerführung und technische Qualität gemeinsam funktionieren müssen.",
     aboutTextTwo: "Ich begleite Projekte vom ersten Gespräch über Design und Architektur bis zum Launch – mit direkter Kommunikation und Verantwortung für das Ergebnis.",
     facts: [["Rolle", "Lead Fullstack Developer"], ["Ausbildung", "BSc Informatik · Universität Innsbruck"], ["Standort", "Innsbruck · Remote"]],
-    contactLabel: "Projektanfrage", contactTitle: "Was möchtest du als Nächstes bauen?", contactText: "Schick mir ein paar Zeilen zu deinem Projekt, deinem Ziel und dem gewünschten Zeitrahmen. Ich antworte üblicherweise innerhalb von 24 Stunden.",
+    testimonialsLabel: "Kundenstimmen", testimonialsTitle: "Was Kunden über die Zusammenarbeit sagen.",
+    testimonials: [
+      { quote: "Die Zusammenarbeit hat sehr gut geklappt. Hasan entwickelt genau nach deinen Wünschen, und auch preislich hat alles gepasst. Von Anfang bis Ende hat alles wunderbar funktioniert.", name: "Hagi", company: "Hagis Pizza & Döner · Innsbruck" },
+      { quote: "Hasan hat sofort verstanden, wie meine Arbeit wirken soll. Die Website fühlt sich an wie meine Bilder. Die Abstimmung war unkompliziert, und Änderungswünsche wurden schnell umgesetzt.", name: "Serhat Sabuncu", company: "Serhat Photographie · Tirol" },
+    ],
+    contactWhatsappText: "Der schnellste Weg – schreib mir direkt.", contactMailText: "Für ausführliche Anfragen und Unterlagen.",
+    whatsappGreeting: "Hallo Hasan, ich habe ein Projekt, über das ich mit dir sprechen möchte.", mailSubject: "Projektanfrage", contactNote: "Ich antworte üblicherweise innerhalb von 24 Stunden.",
+    contactLabel: "Projektanfrage", contactTitle: "Was möchtest du als Nächstes bauen?", contactText: "Schreib mir ein paar Zeilen zu deinem Projekt, deinem Ziel und dem gewünschten Zeitrahmen – per WhatsApp oder E-Mail, ganz wie es dir lieber ist.",
     footer: "Websites · Software · AI",
   },
   en: {
     navWork: "Projects", navServices: "Services", navAbout: "About", contact: "Discuss a project", menu: "Menu", close: "Close",
     heroStrong: "Websites, apps, and tools", heroLine: "with product logic.", heroSub: "I design and build digital products that start clearly, load fast, and remain maintainable after launch.",
-    heroProofLabel: "Working method", heroProofTitle: "From the first sketch to a running system.", heroProofText: "Strategy, interface, code, and operations stay in one hand.",
-    heroProofItems: ["Product structure", "UI system", "Next.js / app logic", "Launch & care"],
+    heroRole: "Fullstack Developer · Innsbruck", heroVisualLabel: "View selected projects", heroLive: "Live",
     viewWork: "View projects", availability: "Available for selected projects", casesCta: "Discuss a similar project", aboutCta: "Outline your project",
     workLabel: "Selected projects", workTitle: "Two websites in active use.", workText: "No concept art and no fictional brands. These projects are live, used by real customers, and show what I can deliver from the first idea to launch.",
     visit: "Open live website", role: "My work", serhatRole: "Concept · UX/UI · Frontend development", hagiRole: "Web design · Development · Local SEO",
@@ -93,7 +97,14 @@ const copy = {
     aboutText: "I'm Hasan Yücedag, a Software Engineer and Lead Fullstack Developer based in Innsbruck. I focus on digital products where visual design, user experience, and technical quality need to work together.",
     aboutTextTwo: "I guide projects from the first conversation through design and architecture to launch, with direct communication and responsibility for the outcome.",
     facts: [["Role", "Lead Fullstack Developer"], ["Education", "BSc Computer Science · University of Innsbruck"], ["Location", "Innsbruck · Remote"]],
-    contactLabel: "Project inquiry", contactTitle: "What would you like to build next?", contactText: "Send me a few lines about your project, goal, and desired timeline. I usually respond within 24 hours.",
+    testimonialsLabel: "Client voices", testimonialsTitle: "What clients say about working together.",
+    testimonials: [
+      { quote: "Working together went really well. Hasan builds exactly what you have in mind, and the price was right too. From start to finish, everything worked out wonderfully.", name: "Hagi", company: "Hagis Pizza & Döner · Innsbruck" },
+      { quote: "Hasan understood right away how my work should feel. The website feels like my photographs. Coordination was easy, and change requests were handled quickly.", name: "Serhat Sabuncu", company: "Serhat Photographie · Tyrol" },
+    ],
+    contactWhatsappText: "The fastest way – message me directly.", contactMailText: "For detailed inquiries and documents.",
+    whatsappGreeting: "Hi Hasan, I have a project I'd like to discuss with you.", mailSubject: "Project inquiry", contactNote: "I usually respond within 24 hours.",
+    contactLabel: "Project inquiry", contactTitle: "What would you like to build next?", contactText: "Send me a few lines about your project, goal, and desired timeline – via WhatsApp or email, whichever you prefer.",
     footer: "Websites · Software · AI",
   },
 } as const;
@@ -181,20 +192,32 @@ export function PortfolioPage() {
         <section id="home" className="hero container">
           <div className="hero-main">
             <motion.div className="hero-copy" initial={{ opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, ease: easing }}>
+              <div className="hero-id">
+                <span className="hero-portrait"><Image src="/images/hasan-yucedag.jpeg" alt="" fill priority sizes="44px" /></span>
+                <p><b>Hasan Yücedag</b><span>{t.heroRole}</span></p>
+              </div>
               <h1><strong>{t.heroStrong}</strong>{" "}<strong>{t.heroLine}</strong></h1>
               <p className="hero-sub">{t.heroSub}</p>
-              <div className="hero-actions"><a className="text-link" href="#work">{t.viewWork}<Arrow down /></a><span className="available"><i />{t.availability}</span></div>
-            </motion.div>
-            <motion.aside className="hero-proof" aria-label={t.heroProofLabel} initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, delay: .12, ease: easing }}>
-              <div className="hero-proof-top"><span>{t.heroProofLabel}</span><span>01-04</span></div>
-              <div className="hero-proof-main">
-                <p>{t.heroProofTitle}</p>
-                <span>{t.heroProofText}</span>
+              <div className="hero-actions">
+                <a className="btn btn-primary btn-lg" href="#contact">{t.contact}<Arrow /></a>
+                <a className="text-link" href="#work">{t.viewWork}<Arrow down /></a>
               </div>
-              <ol className="hero-proof-list">
-                {t.heroProofItems.map((item, index) => <li key={item}><span>0{index + 1}</span>{item}</li>)}
-              </ol>
-            </motion.aside>
+              <p className="available hero-available"><i />{t.availability}</p>
+            </motion.div>
+            <motion.a className="hero-visual" href="#work" aria-label={t.heroVisualLabel} initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, delay: .12, ease: easing }}>
+              <span className="hero-frame hero-frame-back" aria-hidden="true">
+                <span className="browser-bar"><span /><span /><span /><b>hagisdöner.at</b></span>
+                <Image src="/images/projects/hagis-doener.jpg" alt="" fill priority sizes="(max-width: 700px) 70vw, 560px" className="hero-frame-image" />
+              </span>
+              <span className="hero-frame hero-frame-front" aria-hidden="true">
+                <span className="browser-bar"><span /><span /><span /><b>serhatphotographie.com</b></span>
+                <Image src="/images/projects/serhat-photographie.jpg" alt="" fill priority sizes="(max-width: 700px) 85vw, 620px" className="hero-frame-image" />
+                <span className="hero-live"><i />{t.heroLive}</span>
+              </span>
+              <span className="hero-phone" aria-hidden="true">
+                <Image src="/images/apps/clarity-01.jpg" alt="" fill priority sizes="(max-width: 700px) 28vw, 180px" />
+              </span>
+            </motion.a>
           </div>
         </section>
 
@@ -203,6 +226,18 @@ export function PortfolioPage() {
           <div className="client-projects">
             <ClientProject title="Serhat Photographie" category="Web Experience · 2026" description={t.serhatDesc} role={t.serhatRole} href="https://www.serhatphotographie.com" image="/images/projects/serhat-photographie.jpg" alt="Startseite von Serhat Photographie" priority />
             <ClientProject title="Hagis Pizza & Döner" category="Business Website · 2026" description={t.hagiDesc} role={t.hagiRole} href="https://hagisdöner.at" image="/images/projects/hagis-doener.jpg" alt="Startseite von Hagis Pizza und Döner" />
+          </div>
+          <div className="testimonials" aria-labelledby="testimonials-title">
+            <motion.div className="testimonials-heading" {...reveal}><p className="eyebrow">{t.testimonialsLabel}</p><h3 id="testimonials-title">{t.testimonialsTitle}</h3></motion.div>
+            <div className="testimonial-grid">
+              {t.testimonials.map((item) => (
+                <motion.figure key={item.name} className="testimonial" {...reveal}>
+                  <span className="testimonial-mark" aria-hidden="true">“</span>
+                  <blockquote>{item.quote}</blockquote>
+                  <figcaption><b>{item.name}</b><span>{item.company}</span></figcaption>
+                </motion.figure>
+              ))}
+            </div>
           </div>
           <motion.div className="section-cta-row" {...reveal}><a className="btn btn-primary" href="#contact">{t.casesCta}<Arrow /></a></motion.div>
         </section>
@@ -252,8 +287,20 @@ export function PortfolioPage() {
         </div></section>
 
         <section id="contact" className="contact-section section-space"><div className="container contact-grid">
-          <motion.div className="contact-copy" {...reveal}><p className="eyebrow">{t.contactLabel}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p><a href={`mailto:${content.profile.email}`} className="email-link">{content.profile.email}<Arrow /></a></motion.div>
-          <motion.div className="form-panel" {...reveal}><ContactForm ui={content.ui} locale={locale} /></motion.div>
+          <motion.div className="contact-copy" {...reveal}><p className="eyebrow">{t.contactLabel}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p></motion.div>
+          <motion.div className="contact-panel" {...reveal}>
+            <a className="contact-channel contact-channel-whatsapp" href={`https://wa.me/${content.profile.whatsapp}?text=${encodeURIComponent(t.whatsappGreeting)}`} target="_blank" rel="noreferrer">
+              <span className="contact-channel-icon"><WhatsappIcon size={22} /></span>
+              <span className="contact-channel-copy"><b>WhatsApp</b><span>{t.contactWhatsappText}</span><small>{content.profile.phoneDisplay}</small></span>
+              <Arrow />
+            </a>
+            <a className="contact-channel" href={`mailto:${content.profile.email}?subject=${encodeURIComponent(t.mailSubject)}`}>
+              <span className="contact-channel-icon"><MailIcon size={22} /></span>
+              <span className="contact-channel-copy"><b>E-Mail</b><span>{t.contactMailText}</span><small>{content.profile.email}</small></span>
+              <Arrow />
+            </a>
+            <p className="contact-note"><i />{t.contactNote}</p>
+          </motion.div>
         </div></section>
       </main>
 
