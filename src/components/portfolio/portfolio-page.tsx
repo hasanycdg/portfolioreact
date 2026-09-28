@@ -27,7 +27,7 @@ const copy = {
     visit: "Live-Website öffnen", role: "Meine Arbeit", serhatRole: "Konzeption · UX/UI · Frontend-Entwicklung", hagiRole: "Webdesign · Entwicklung · Local SEO",
     serhatDesc: "Ein atmosphärischer Webauftritt für einen Hochzeitsfotografen und Videografen aus Tirol – mit Video-Hero, Portfolio, Leistungen, Social Proof und direkter Anfrageführung.",
     hagiDesc: "Eine schnelle, suchmaschinenoptimierte Restaurant-Website mit Speisekarte, Blog, Standortinformationen, Kontakt und datenschutzkonformer Einbindung externer Dienste.",
-    productsLabel: "Produkte & Tools", productsTitle: "Software, die echte Arbeit abnimmt.",
+    productsLabel: "Produkte & Tools", productsTitle: "Software, die echte Arbeit abnimmt.", clientWorkLabel: "Kundenarbeit", ownProductsLabel: "Eigenprodukte",
     aiTitle: "AI SEO Assistant", aiText: "WordPress-Plugin für Alt-Texte, Metadaten und interne Verlinkung – direkt im redaktionellen Workflow.",
     clarityTitle: "Clarity für iOS", clarityText: "Eine veröffentlichte iOS-App, die Menschen mit kurzen, strukturierten Prompts aus Gedankenschleifen hilft.",
     silaYoluTitle: "SilaYolu", silaYoluText: "Der smarte Reisebegleiter für Autofahrten zwischen Europa und Türkiye – mit Grenzinfos, Routenkosten und Reise-Checklisten.",
@@ -65,7 +65,7 @@ const copy = {
     visit: "Open live website", role: "My work", serhatRole: "Concept · UX/UI · Frontend development", hagiRole: "Web design · Development · Local SEO",
     serhatDesc: "An atmospheric web presence for a wedding photographer and filmmaker in Tyrol, featuring a video hero, portfolio, services, social proof, and a clear inquiry flow.",
     hagiDesc: "A fast, search-optimized restaurant website with menu, blog, location details, contact flow, and privacy-compliant external services.",
-    productsLabel: "Products & tools", productsTitle: "Software that removes real work.",
+    productsLabel: "Products & tools", productsTitle: "Software that removes real work.", clientWorkLabel: "Client work", ownProductsLabel: "Independent products",
     aiTitle: "AI SEO Assistant", aiText: "A WordPress plugin for alt text, metadata, and internal links, built directly into the editorial workflow.",
     clarityTitle: "Clarity for iOS", clarityText: "A published iOS app that helps people break out of overthinking loops with short, structured prompts.",
     silaYoluTitle: "SilaYolu", silaYoluText: "A smart travel companion for road trips between Europe and Türkiye, with border updates, route costs, and travel checklists.",
@@ -206,14 +206,24 @@ export function PortfolioPage() {
           <motion.div className="about-copy" {...reveal}><p className="eyebrow">{t.aboutLabel}</p><h2>{t.aboutTitle}</h2><p className="about-lead">{t.aboutText}</p><p>{t.aboutTextTwo}</p><dl>{t.facts.map(([term, value]) => <div key={term}><dt>{term}</dt><dd>{value}</dd></div>)}</dl><div className="socials"><a href={content.profile.linkedin} target="_blank" rel="noreferrer"><LinkedinIcon size={16} />LinkedIn</a><a href={content.profile.github} target="_blank" rel="noreferrer"><GithubIcon size={16} />GitHub</a><a href={content.profile.cvPath} download>CV PDF<Arrow /></a></div><a className="about-cta" href="#contact">{t.aboutCta}<Arrow /></a></motion.div>
         </div></section>
 
-        <section className="products-section section-space"><div className="container">
+        <section id="products" className="products-section section-space"><div className="container">
           <motion.div className="section-heading compact" {...reveal}><p className="eyebrow">{t.productsLabel}</p><h2>{t.productsTitle}</h2></motion.div>
-          <div className="product-grid">
-            <motion.a href="#contact" className="product-card product-card-wide" {...reveal}><ProductGraphic kind="ai" /><div className="product-info"><span>AI · WordPress</span><h3>{t.aiTitle}</h3><p>{t.aiText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
-            <motion.a href="https://apps.apple.com/us/app/clarity-overthink-helper/id6757189127" target="_blank" rel="noreferrer" className="product-card" {...reveal}><AppScreenshots app="clarity" /><div className="product-info"><span>iOS · Swift</span><h3>{t.clarityTitle}</h3><p>{t.clarityText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
-            <motion.a href="https://apps.apple.com/de/app/silayolu/id6769356177" target="_blank" rel="noreferrer" className="product-card" {...reveal}><AppScreenshots app="silayolu" /><div className="product-info"><span>iOS · Swift</span><h3>{t.silaYoluTitle}</h3><p>{t.silaYoluText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
-            <motion.a href="https://apps.apple.com/de/app/regiere-deutschland/id6802046575" target="_blank" rel="noreferrer" className="product-card" {...reveal}><AppScreenshots app="regiere" /><div className="product-info"><span>iOS · Swift</span><h3>{t.regiereTitle}</h3><p>{t.regiereText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
-            <motion.a href="https://github.com/hasanycdg/Codebase-Complexity-Visualizer-CCV" target="_blank" rel="noreferrer" className="product-card" {...reveal}><ProductGraphic kind="code" /><div className="product-info"><span>Desktop · Rust</span><h3>{t.ccvTitle}</h3><p>{t.ccvText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
+          <div className="product-groups">
+            <section className="product-group" aria-labelledby="client-work-title">
+              <div className="product-group-heading"><h3 id="client-work-title">{t.clientWorkLabel}</h3><span>01</span></div>
+              <div className="product-grid product-grid-client">
+                <motion.a href="#contact" className="product-card product-card-wide" {...reveal}><ProductGraphic kind="ai" /><div className="product-info"><span>AI · WordPress</span><h3>{t.aiTitle}</h3><p>{t.aiText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
+              </div>
+            </section>
+            <section className="product-group" aria-labelledby="own-products-title">
+              <div className="product-group-heading"><h3 id="own-products-title">{t.ownProductsLabel}</h3><span>04</span></div>
+              <div className="product-grid product-grid-independent">
+                <motion.a href="https://apps.apple.com/us/app/clarity-overthink-helper/id6757189127" target="_blank" rel="noreferrer" className="product-card" {...reveal}><AppScreenshots app="clarity" /><div className="product-info"><span>iOS · Swift</span><h3>{t.clarityTitle}</h3><p>{t.clarityText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
+                <motion.a href="https://apps.apple.com/de/app/silayolu/id6769356177" target="_blank" rel="noreferrer" className="product-card" {...reveal}><AppScreenshots app="silayolu" /><div className="product-info"><span>iOS · Swift</span><h3>{t.silaYoluTitle}</h3><p>{t.silaYoluText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
+                <motion.a href="https://apps.apple.com/de/app/regiere-deutschland/id6802046575" target="_blank" rel="noreferrer" className="product-card" {...reveal}><AppScreenshots app="regiere" /><div className="product-info"><span>iOS · Swift</span><h3>{t.regiereTitle}</h3><p>{t.regiereText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
+                <motion.a href="https://github.com/hasanycdg/Codebase-Complexity-Visualizer-CCV" target="_blank" rel="noreferrer" className="product-card" {...reveal}><ProductGraphic kind="code" /><div className="product-info"><span>Desktop · Rust</span><h3>{t.ccvTitle}</h3><p>{t.ccvText}</p><b>{t.learnMore}<Arrow /></b></div></motion.a>
+              </div>
+            </section>
           </div>
         </div></section>
 
