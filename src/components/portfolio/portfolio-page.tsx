@@ -20,8 +20,8 @@ function Arrow({ down = false }: { down?: boolean }) {
 const copy = {
   de: {
     navWork: "Projekte", navServices: "Leistungen", navAbout: "Über mich", contact: "Projekt besprechen", menu: "Menü", close: "Schließen",
-    heroStrong: "Design, das überzeugt.", heroLine: "Technik, die funktioniert.", heroSub: "Websites und digitale Produkte für Unternehmen, die professionell auftreten und digital wachsen wollen.",
-    heroMeta: "Fullstack Development · UI/UX · AI Integration", heroProof: "Konzept, Design und Entwicklung aus einer Hand.",
+    heroStrong: "2 Live-Websites. 3 veröffentlichte Apps.", heroLine: "Von Innsbruck in Produktion.", heroSub: "Websites und digitale Produkte für Unternehmen, die professionell auftreten und digital wachsen wollen.",
+    heroCaseLabel: "Live-Projekt", heroCaseRole: "Konzeption · UX/UI · Frontend", heroCaseLink: "Case ansehen",
     viewWork: "Projekte ansehen", availability: "Verfügbar für ausgewählte Projekte",
     workLabel: "Ausgewählte Projekte", workTitle: "Websites, die bereits online arbeiten.", workText: "Keine Konzeptbilder und keine fiktiven Marken. Diese Projekte sind live, werden von echten Kunden genutzt und zeigen, was ich von der Idee bis zum Launch umsetzen kann.",
     visit: "Live-Website öffnen", role: "Meine Arbeit", serhatRole: "Konzeption · UX/UI · Frontend-Entwicklung", hagiRole: "Webdesign · Entwicklung · Local SEO",
@@ -58,8 +58,8 @@ const copy = {
   },
   en: {
     navWork: "Projects", navServices: "Services", navAbout: "About", contact: "Discuss a project", menu: "Menu", close: "Close",
-    heroStrong: "Design that convinces.", heroLine: "Technology that performs.", heroSub: "Websites and digital products for companies that want to look professional and grow online.",
-    heroMeta: "Fullstack Development · UI/UX · AI Integration", heroProof: "Concept, design, and development from one partner.",
+    heroStrong: "2 live websites. 3 published apps.", heroLine: "Built in Innsbruck. Shipped to production.", heroSub: "Websites and digital products for companies that want to look professional and grow online.",
+    heroCaseLabel: "Live project", heroCaseRole: "Concept · UX/UI · Frontend", heroCaseLink: "View case",
     viewWork: "View projects", availability: "Available for selected projects",
     workLabel: "Selected projects", workTitle: "Websites already doing real work.", workText: "No concept art and no fictional brands. These projects are live, used by real customers, and show what I can deliver from the first idea to launch.",
     visit: "Open live website", role: "My work", serhatRole: "Concept · UX/UI · Frontend development", hagiRole: "Web design · Development · Local SEO",
@@ -178,13 +178,17 @@ export function PortfolioPage() {
 
       <main id="main">
         <section id="home" className="hero container">
-          <motion.div className="hero-copy" initial={reduceMotion ? undefined : { opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, ease: easing }}>
-            <h1><strong>{t.heroStrong}</strong><strong>{t.heroLine}</strong><span>{t.heroSub}</span></h1>
-            <p className="hero-meta">{t.heroMeta}</p>
-          </motion.div>
-          <div className="hero-bottom">
-            <p>{t.heroProof}</p>
-            <div><a className="text-link" href="#work">{t.viewWork}<Arrow down /></a><span className="available"><i />{t.availability}</span></div>
+          <div className="hero-main">
+            <motion.div className="hero-copy" initial={reduceMotion ? undefined : { opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, ease: easing }}>
+              <h1><strong>{t.heroStrong}</strong><strong>{t.heroLine}</strong></h1>
+              <p className="hero-sub">{t.heroSub}</p>
+              <div className="hero-actions"><a className="text-link" href="#work">{t.viewWork}<Arrow down /></a><span className="available"><i />{t.availability}</span></div>
+            </motion.div>
+            <motion.a className="hero-case" href="https://www.serhatphotographie.com" target="_blank" rel="noreferrer" initial={reduceMotion ? undefined : { opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, delay: .12, ease: easing }}>
+              <div className="hero-case-top"><span>{t.heroCaseLabel}</span><span>serhatphotographie.com <Arrow /></span></div>
+              <div className="hero-case-media"><Image src="/images/projects/serhat-photographie.jpg" alt="Serhat Photographie Website" fill priority sizes="(max-width: 700px) 100vw, 45vw" /></div>
+              <div className="hero-case-caption"><strong>Serhat Photographie</strong><span>{t.heroCaseRole}</span><b>{t.heroCaseLink}<Arrow /></b></div>
+            </motion.a>
           </div>
         </section>
 
