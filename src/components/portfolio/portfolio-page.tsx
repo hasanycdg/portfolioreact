@@ -20,7 +20,7 @@ function Arrow({ down = false }: { down?: boolean }) {
 const copy = {
   de: {
     navWork: "Projekte", navServices: "Leistungen", navAbout: "Über mich", contact: "Projekt besprechen", menu: "Menü", close: "Schließen",
-    heroStrong: "2 Live-Websites. 3 veröffentlichte Apps.", heroLine: "Von Innsbruck in Produktion.", heroSub: "Websites und digitale Produkte für Unternehmen, die professionell auftreten und digital wachsen wollen.",
+    heroStrong: "2 Live-Websites. 3 veröffentlichte Apps.", heroLine: "Von Innsbruck in Produktion.", heroSub: "Für Selbstständige, lokale Unternehmen und Produktteams, die wirklich veröffentlichen wollen.",
     heroCaseLabel: "Live-Projekt", heroCaseRole: "Konzeption · UX/UI · Frontend", heroCaseLink: "Case ansehen",
     viewWork: "Projekte ansehen", availability: "Verfügbar für ausgewählte Projekte", casesCta: "Ähnliches Projekt besprechen", aboutCta: "Projekt kurz einordnen",
     workLabel: "Ausgewählte Projekte", workTitle: "Zwei Websites im echten Betrieb.", workText: "Keine Konzeptbilder und keine fiktiven Marken. Diese Projekte sind live, werden von echten Kunden genutzt und zeigen, was ich von der Idee bis zum Launch umsetzen kann.",
@@ -58,7 +58,7 @@ const copy = {
   },
   en: {
     navWork: "Projects", navServices: "Services", navAbout: "About", contact: "Discuss a project", menu: "Menu", close: "Close",
-    heroStrong: "2 live websites. 3 published apps.", heroLine: "Built in Innsbruck. Shipped to production.", heroSub: "Websites and digital products for companies that want to look professional and grow online.",
+    heroStrong: "2 live websites. 3 published apps.", heroLine: "Built in Innsbruck. Shipped to production.", heroSub: "For independents, local businesses, and product teams ready to ship.",
     heroCaseLabel: "Live project", heroCaseRole: "Concept · UX/UI · Frontend", heroCaseLink: "View case",
     viewWork: "View projects", availability: "Available for selected projects", casesCta: "Discuss a similar project", aboutCta: "Outline your project",
     workLabel: "Selected projects", workTitle: "Two websites in active use.", workText: "No concept art and no fictional brands. These projects are live, used by real customers, and show what I can deliver from the first idea to launch.",
