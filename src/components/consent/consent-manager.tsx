@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Script from "next/script";
 import { useEffect, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -9,11 +10,38 @@ type Consent = "granted" | "denied";
 
 const STORAGE_KEY = "consent-v1";
 const OPEN_EVENT = "consent:open";
+const GA_ID = "G-H2VEST0RR3";
+
+// Removes the Google Analytics cookies (_ga, _ga_<id>) after consent is withdrawn.
+function clearGaCookies() {
+  const host = window.location.hostname;
+  for (const entry of document.cookie.split(";")) {
+    const name = entry.split("=")[0].trim();
+    if (!name.startsWith("_ga")) continue;
+    for (const domain of ["", host, `.${host}`, `.${host.split(".").slice(-2).join(".")}`]) {
+      document.cookie = `${name}=; Max-Age=0; path=/${domain ? `; domain=${domain}` : ""}`;
+    }
+  }
+}
+
+function GoogleAnalytics() {
+  return (
+    <>
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+      <Script id="ga-init" strategy="afterInteractive">
+        {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_ID}');`}
+      </Script>
+    </>
+  );
+}
 
 const copy = {
   de: {
     title: "Datenschutz-Einstellungen",
-    text: "Diese Website nutzt keine Werbe- oder Tracking-Cookies. Mit deiner Zustimmung messe ich anonym Reichweite und Ladezeiten über Vercel Analytics, um die Seite zu verbessern.",
+    text: "Mit deiner Zustimmung nutze ich Google Analytics und Vercel Analytics, um Besuche und Ladezeiten zu messen und die Seite zu verbessern. Google Analytics setzt dafür Cookies. Ohne Zustimmung wird nichts davon geladen.",
     accept: "Akzeptieren",
     decline: "Nur notwendige",
     more: "Mehr erfahren",
@@ -21,7 +49,7 @@ const copy = {
   },
   en: {
     title: "Privacy settings",
-    text: "This website uses no advertising or tracking cookies. With your consent, I measure reach and load times anonymously via Vercel Analytics to improve the site.",
+    text: "With your consent, I use Google Analytics and Vercel Analytics to measure visits and load times and improve the site. Google Analytics sets cookies for this. Without consent, none of it is loaded.",
     accept: "Accept",
     decline: "Essential only",
     more: "Learn more",
@@ -62,7 +90,7 @@ export function ConsentManager() {
   const choose = (value: Consent) => {
     try { window.localStorage.setItem(STORAGE_KEY, value); } catch { /* storage blocked: choice lasts for this visit */ }
     // Already-loaded analytics scripts cannot be unloaded, so a revocation reloads the page.
-    if (consent === "granted" && value === "denied") { window.location.reload(); return; }
+    if (consent === "granted" && value === "denied") { clearGaCookies(); window.location.reload(); return; }
     setConsent(value);
     setOpen(false);
   };
@@ -71,7 +99,7 @@ export function ConsentManager() {
 
   return (
     <>
-      {consent === "granted" ? <><Analytics /><SpeedInsights /></> : null}
+      {consent === "granted" ? <><GoogleAnalytics /><Analytics /><SpeedInsights /></> : null}
       {open ? (
         <div className="consent" role="dialog" aria-live="polite" aria-labelledby="consent-title" aria-describedby="consent-text">
           <p id="consent-title" className="consent-title">{t.title}</p>

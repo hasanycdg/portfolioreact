@@ -23,7 +23,7 @@ export default function DatenschutzPage() {
       <section>
         <h2>2. Überblick</h2>
         <p>
-          Diese Website setzt keine Werbe- oder Tracking-Cookies, verwendet kein Kontaktformular und bindet keine Social-Media-Tracker ein. Die Reichweitenmessung (Abschnitt 4) wird nur geladen, wenn du im Datenschutz-Banner zustimmst.
+          Diese Website verwendet kein Kontaktformular und bindet keine Werbe- oder Social-Media-Tracker ein. Cookies setzt ausschließlich Google Analytics – und nur, wenn du im Datenschutz-Banner zustimmst. Dasselbe gilt für die übrige Reichweitenmessung (Abschnitte 4 und 5).
           Personenbezogene Daten werden nur in dem Umfang verarbeitet, der für den technischen Betrieb, eine datensparsame Reichweitenmessung und die Beantwortung deiner Anfrage erforderlich ist.
         </p>
       </section>
@@ -52,7 +52,24 @@ export default function DatenschutzPage() {
       </section>
 
       <section>
-        <h2>5. Lokale Speicherung von Einstellungen</h2>
+        <h2>5. Google Analytics</h2>
+        <p>
+          Mit deiner Einwilligung nutze ich Google Analytics 4, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland („Google“).
+          Google Analytics setzt Cookies (<code>_ga</code>, <code>_ga_&lt;ID&gt;</code>, Laufzeit bis zu 2 Jahre), um wiederkehrende Besuche zu erkennen, und erfasst u. a. aufgerufene Seiten,
+          Verweildauer, Referrer, ungefähren Standort (Land/Region), Gerätetyp, Browser und Betriebssystem. Die IP-Adresse wird von Google Analytics 4 nicht gespeichert.
+        </p>
+        <p>
+          Dabei können Daten an die Google LLC in den USA übermittelt werden. Google ist unter dem EU-U.S. Data Privacy Framework zertifiziert; zusätzlich gelten die EU-Standardvertragsklauseln.
+          Die Analysedaten werden nach 14 Monaten automatisch gelöscht.
+        </p>
+        <p>
+          Rechtsgrundlage ist deine Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO und § 165 Abs. 3 TKG 2021. Du kannst sie jederzeit über „Cookie-Einstellungen“ im Footer widerrufen;
+          die Google-Analytics-Cookies werden dabei gelöscht. Weitere Informationen: <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">policies.google.com/privacy</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Lokale Speicherung von Einstellungen</h2>
         <p>
           Deine Spracheinstellung (Deutsch/Englisch) und deine Entscheidung im Datenschutz-Banner werden im lokalen Speicher deines Browsers (Local Storage) abgelegt, damit du beim nächsten Besuch nicht erneut gefragt wirst.
           Diese Information verlässt dein Gerät nicht und wird nicht an mich übermittelt. Die Speicherung ist für diese von dir gewünschten Funktionen unbedingt erforderlich (§ 165 Abs. 3 TKG 2021).
@@ -61,7 +78,7 @@ export default function DatenschutzPage() {
       </section>
 
       <section>
-        <h2>6. Kontaktaufnahme per E-Mail, Telefon oder WhatsApp</h2>
+        <h2>7. Kontaktaufnahme per E-Mail, Telefon oder WhatsApp</h2>
         <p>
           Wenn du mich per E-Mail, telefonisch oder über WhatsApp kontaktierst, verarbeite ich die von dir übermittelten Daten (z. B. Name, Kontaktdaten, Inhalt der Nachricht), um deine Anfrage zu beantworten
           und ein mögliches Projekt anzubahnen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung von Anfragen).
@@ -74,7 +91,7 @@ export default function DatenschutzPage() {
       </section>
 
       <section>
-        <h2>7. Externe Links</h2>
+        <h2>8. Externe Links</h2>
         <p>
           Diese Website verlinkt auf externe Angebote wie LinkedIn, GitHub, den App Store sowie Websites meiner Kund:innen. Beim Laden dieser Website werden keine Daten an diese Anbieter übertragen.
           Erst wenn du einen Link anklickst, gelten die Datenschutzbestimmungen des jeweiligen Anbieters.
@@ -82,7 +99,7 @@ export default function DatenschutzPage() {
       </section>
 
       <section>
-        <h2>8. Deine Rechte</h2>
+        <h2>9. Deine Rechte</h2>
         <p>
           Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruch gegen Verarbeitungen auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
           Wende dich dafür formlos an <a href={`mailto:${legal.email}`}>{legal.email}</a>.
