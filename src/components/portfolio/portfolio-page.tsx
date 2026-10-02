@@ -24,7 +24,9 @@ const copy = {
     heroStrong: "Websites, Apps und Tools", heroLine: "mit Produktlogik.", heroSub: "Ich entwerfe und entwickle digitale Produkte, die verständlich starten, schnell laden und nach dem Launch betreubar bleiben.",
     heroRole: "Fullstack Developer · Innsbruck", heroVisualLabel: "Ausgewählte Projekte ansehen", heroLive: "Live",
     viewWork: "Projekte ansehen", availability: "Verfügbar für ausgewählte Projekte", casesCta: "Ähnliches Projekt besprechen", aboutCta: "Projekt kurz einordnen",
-    workLabel: "Ausgewählte Projekte", workTitle: "Echte Kunden. Live im Einsatz.", workText: "Ein Auszug aus meiner Kundenarbeit – keine Konzeptbilder, keine fiktiven Marken. Jedes Projekt ist live im Einsatz und zeigt, wie ich von der ersten Idee bis zum Launch arbeite.",
+    workLabel: "Ausgewählte Projekte", workTitle: "Live im Einsatz. Nicht nur im Mockup.", workText: "Ein Auszug aus meiner Arbeit – Kundenwebsites und eigene Produkte, keine Konzeptbilder und keine fiktiven Marken. Jedes Projekt ist live und zeigt, wie ich von der ersten Idee bis zum Launch arbeite.",
+    folioCategory: "SaaS · 2026", folioRole: "Produkt · Design · Fullstack-Entwicklung", folioAlt: "Startseite von Folio CV",
+    folioDesc: "Ein Lebenslauf-Builder mit Live-A4-Vorschau, mehreren Layouts und kostenlosem PDF-Export – ganz ohne Konto. Wer mehr braucht, bekommt mit Pro gespeicherte Versionen, AI-Texte und Bewerbungs-Tracking.",
     visit: "Live-Website öffnen", role: "Meine Arbeit", serhatRole: "Konzeption · UX/UI · Frontend-Entwicklung", hagiRole: "Webdesign · Entwicklung · Local SEO",
     serhatDesc: "Ein atmosphärischer Webauftritt für einen Hochzeitsfotografen und Videografen aus Tirol – mit Video-Hero, Portfolio, Leistungen, Social Proof und direkter Anfrageführung.",
     hagiDesc: "Eine schnelle, suchmaschinenoptimierte Restaurant-Website mit Speisekarte, Blog, Standortinformationen, Kontakt und datenschutzkonformer Einbindung externer Dienste.",
@@ -69,7 +71,9 @@ const copy = {
     heroStrong: "Websites, apps, and tools", heroLine: "with product logic.", heroSub: "I design and build digital products that start clearly, load fast, and remain maintainable after launch.",
     heroRole: "Fullstack Developer · Innsbruck", heroVisualLabel: "View selected projects", heroLive: "Live",
     viewWork: "View projects", availability: "Available for selected projects", casesCta: "Discuss a similar project", aboutCta: "Outline your project",
-    workLabel: "Selected projects", workTitle: "Real clients. Live in production.", workText: "A selection of my client work – no concept art, no fictional brands. Every project is live and shows how I work from the first idea to launch.",
+    workLabel: "Selected projects", workTitle: "Live in production. Not just in a mockup.", workText: "A selection of my work – client websites and my own products, no concept art and no fictional brands. Every project is live and shows how I work from the first idea to launch.",
+    folioCategory: "SaaS · 2026", folioRole: "Product · Design · Fullstack development", folioAlt: "Folio CV home page",
+    folioDesc: "A resume builder with live A4 preview, multiple layouts, and free PDF export – no account needed. Pro adds saved versions, AI writing, and application tracking.",
     visit: "Open live website", role: "My work", serhatRole: "Concept · UX/UI · Frontend development", hagiRole: "Web design · Development · Local SEO",
     serhatDesc: "An atmospheric web presence for a wedding photographer and filmmaker in Tyrol, featuring a video hero, portfolio, services, social proof, and a clear inquiry flow.",
     hagiDesc: "A fast, search-optimized restaurant website with menu, blog, location details, contact flow, and privacy-compliant external services.",
@@ -228,6 +232,7 @@ export function PortfolioPage() {
           <div className="client-projects">
             <ClientProject title="Serhat Photographie" category="Web Experience · 2026" description={t.serhatDesc} role={t.serhatRole} href="https://www.serhatphotographie.com" image="/images/projects/serhat-photographie.jpg" alt="Startseite von Serhat Photographie" priority />
             <ClientProject title="Hagis Pizza & Döner" category="Business Website · 2026" description={t.hagiDesc} role={t.hagiRole} href="https://hagisdöner.at" image="/images/projects/hagis-doener.jpg" alt="Startseite von Hagis Pizza und Döner" />
+            <ClientProject title="Folio CV" category={t.folioCategory} description={t.folioDesc} role={t.folioRole} href="https://www.folio-cv.com" image="/images/projects/folio-cv.jpg" alt={t.folioAlt} />
           </div>
           <div className="testimonials" aria-labelledby="testimonials-title">
             <motion.div className="testimonials-heading" {...reveal}><p className="eyebrow">{t.testimonialsLabel}</p><h3 id="testimonials-title">{t.testimonialsTitle}</h3></motion.div>
